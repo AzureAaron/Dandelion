@@ -1,0 +1,42 @@
+{
+	"schemaVersion": 1,
+	"id": "dandelion",
+	"version": "${version}",
+	"name": "Dandelion",
+	"description": "Dandelion is a config abstraction that supports both YACL and MoulConfig backends.",
+	"authors": [
+		"AzureAaron"
+	],
+	"contributors": [
+		"nea89"
+	],
+	"contact": {
+		"homepage": "https://azureaaron.net/",
+		"sources": "https://github.com/AzureAaron/Dandelion"
+	},
+	"license": "LGPL-3.0-or-later",
+	"icon": "assets/dandelion/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"client": [
+			"net.azureaaron.dandelion.Dandelion"
+		]
+	},
+	"mixins": [
+		"dandelion.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.14",
+		"minecraft": "~1.21.5",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"custom": {
+		"modmenu": {
+			"badges": [
+				"library"
+			],
+			"update_checker": false
+		}
+	}
+}

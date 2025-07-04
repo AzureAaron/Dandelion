@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "net.azureaaron.dandelion.mixins",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

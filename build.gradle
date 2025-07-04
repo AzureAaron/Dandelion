@@ -1,0 +1,103 @@
+plugins {
+	id 'fabric-loom' version "${loom_version}"
+	id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+	archivesName = project.archives_base_name
+}
+
+repositories {
+	maven {
+		url = "https://maven.isxander.dev/releases"
+
+		content {
+			includeGroup "dev.isxander"
+			includeGroup "org.quiltmc.parsers"
+		}
+	}
+
+	maven {
+		url = "https://maven.notenoughupdates.org/releases"
+
+		content {
+			includeGroup "org.notenoughupdates.moulconfig"
+		}
+	}
+
+	//mavenLocal()
+}
+
+dependencies {
+	// To change the versions see the gradle.properties file
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+	// Fabric API. This is technically optional, but you probably want it anyway.
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+	//YACL
+	modImplementation("dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric")
+
+	//MoulConfig
+	modImplementation("org.notenoughupdates.moulconfig:${project.moulconfig_flavour}:${project.moulconfig_version}")
+}
+
+loom {
+	mixin {
+		useLegacyMixinAp = false
+	}
+}
+
+processResources {
+	inputs.property "version", project.version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": inputs.properties.version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 21
+}
+
+java {
+	withSourcesJar()
+
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
+}
+
+jar {
+	inputs.property "archivesName", project.base.archivesName
+
+	from("LICENSE") {
+		rename { "${it}_${inputs.properties.archivesName}"}
+	}
+}
+
+// configure the maven publication
+publishing {
+	publications {
+		create("mavenJava", MavenPublication) {
+			groupId = "net.azureaaron"
+			artifactId = project.archives_base_name
+			from components.java
+		}
+	}
+
+	repositories {
+		maven {
+			url = "https://maven.azureaaron.net/releases"
+
+			credentials(PasswordCredentials) {
+				username = System.getenv("AARON_MAVEN_USER");
+				password = System.getenv("AARON_MAVEN_PASS");
+			}
+		}
+	}
+}
