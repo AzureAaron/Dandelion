@@ -1,6 +1,7 @@
 package net.azureaaron.dandelion.moulconfig;
 
 import java.lang.reflect.Type;
+import java.util.Optional;
 
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -51,7 +52,7 @@ public abstract class DandelionProcessedEditableOption<T> extends DandelionProce
 	public boolean set(Object value) {
 		try {
 			this.option.binding().set((T) value);
-			this.option.listeners().forEach(listener -> listener.onUpdate(this.option, OptionListener.UpdateType.VALUE_CHANGE));
+			this.explicitNotifyChange();
 
 			return true;
 		} catch (Exception e) {
@@ -59,6 +60,11 @@ public abstract class DandelionProcessedEditableOption<T> extends DandelionProce
 		}
 
 		return false;
+	}
+
+	@Override
+	public void explicitNotifyChange() {
+		this.option.listeners().forEach(listener -> listener.onUpdate(option, OptionListener.UpdateType.VALUE_CHANGE));
 	}
 
 	@Override
