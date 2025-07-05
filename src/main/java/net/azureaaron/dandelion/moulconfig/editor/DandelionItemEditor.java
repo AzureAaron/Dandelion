@@ -54,7 +54,7 @@ public class DandelionItemEditor extends ComponentEditor {
 				Identifier id = Identifier.tryParse(newValue);
 
 				//Only update the value when a valid item is has been typed in
-				if (newValue != null) {
+				if (id != null) {
 					option.set(Registries.ITEM.get(id));
 				}
 			}
