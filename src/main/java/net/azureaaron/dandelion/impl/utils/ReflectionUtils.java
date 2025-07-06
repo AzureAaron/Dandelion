@@ -18,12 +18,15 @@ public class ReflectionUtils {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Class<? extends T> getActualClass(T object) {
-		Class<? extends T> enclosingClass = (Class<? extends T>) object.getClass().getEnclosingClass();
+		Class<? extends T> originalClass = (Class<? extends T>) object.getClass();
+		Class<? extends T> enclosingClass = (Class<? extends T>) originalClass.getEnclosingClass();
 
-		if (enclosingClass != null && enclosingClass.isEnum()) {
+		//If the original class is not an enum then check if the enclosing one is and if so return that
+		//which allows us to get the actual type of the enum when the constants are defined with anonymous inner classes
+		if (!originalClass.isEnum() && enclosingClass != null && enclosingClass.isEnum()) {
 			return enclosingClass;
 		} else {
-			return (Class<? extends T>) object.getClass();
+			return originalClass;
 		}
 	}
 }

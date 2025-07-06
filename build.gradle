@@ -1,10 +1,15 @@
 plugins {
 	id 'fabric-loom' version "${loom_version}"
 	id 'maven-publish'
+	id 'com.gradleup.shadow' version "9.0.0-rc1"
 }
 
 version = project.mod_version
 group = project.maven_group
+
+configurations {
+	shadowMe
+}
 
 base {
 	archivesName = project.archives_base_name
@@ -44,10 +49,12 @@ dependencies {
 	modImplementation("dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric")
 
 	//MoulConfig
-	modImplementation("org.notenoughupdates.moulconfig:${project.moulconfig_flavour}:${project.moulconfig_version}")
+	shadowMe(modImplementation("org.notenoughupdates.moulconfig:${project.moulconfig_flavour}:${project.moulconfig_version}"))
 }
 
 loom {
+	accessWidenerPath = file("src/main/resources/dandelion.accesswidener")
+
 	mixin {
 		useLegacyMixinAp = false
 	}
@@ -63,6 +70,56 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
 	it.options.release = 21
+}
+
+tasks.named("shadowJar").configure {
+	configurations = [project.configurations.shadowMe]
+
+	relocate("io.github.notenoughupdates.moulconfig", "net.azureaaron.dandelion.deps.moulconfig")
+	exclude("fabric.mod.json")
+	exclude("*.accesswidener")
+	exclude("LICENSE")
+	mergeServiceFiles()
+}
+
+//Adds our original FMJ, AW, and license into the shadow jar (to overwrite the MoulConfig ones)
+task mergeResourcesIntoShadowJar(type: Copy) {
+	dependsOn(tasks.shadowJar, processResources, jar)
+
+	def shadowJarFile = tasks.shadowJar.archiveFile.get().asFile
+	def tempDir = new File(buildDir, "tmp/shadowResources")
+
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE 
+
+	doFirst {
+		tempDir.deleteDir()
+		tempDir.mkdirs()
+	}
+
+	from(zipTree(shadowJarFile))
+
+	from(tasks.processResources.destinationDir) {
+		include("fabric.mod.json", "*.accesswidener")
+	}
+
+	from('.') {
+		include("LICENSE")
+	}
+
+	into(tempDir)
+
+	doLast {
+		ant.jar(destfile: shadowJarFile) {
+			fileset(dir: tempDir)
+		}
+
+		tempDir.deleteDir()
+	}
+}
+
+tasks.named("remapJar").configure {
+	dependsOn(mergeResourcesIntoShadowJar)
+	inputFile.set(tasks.named("shadowJar").flatMap { it.archiveFile } )
 }
 
 java {
