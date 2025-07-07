@@ -5,10 +5,12 @@ import java.lang.reflect.Type;
 import org.jetbrains.annotations.Nullable;
 
 import io.github.notenoughupdates.moulconfig.Config;
+import io.github.notenoughupdates.moulconfig.annotations.SearchTag;
 import io.github.notenoughupdates.moulconfig.gui.GuiOptionEditor;
 import io.github.notenoughupdates.moulconfig.gui.editors.GuiOptionEditorAccordion;
 import net.azureaaron.dandelion.systems.OptionGroup;
 import net.minecraft.text.StringVisitable;
+import net.minecraft.text.Text;
 
 /**
  * This class represents a {@code ProcessedOption} that maps to an {@code OptionGroup} or accordion (in MoulConfig terms) which
@@ -32,6 +34,15 @@ public class DandelionProcessedGroupOption extends DandelionProcessedOption {
 	@Override
 	public String getDescription() {
 		return StringVisitable.concat(this.group.description()).getString();
+	}
+
+	@Override
+	public SearchTag[] getSearchTags() {
+		SearchTag[] tags = this.group.tags().stream()
+				.map(Text::getString)
+				.map(DandelionSearchTag::new)
+				.toArray(DandelionSearchTag[]::new);
+		return tags;
 	}
 
 	@Override

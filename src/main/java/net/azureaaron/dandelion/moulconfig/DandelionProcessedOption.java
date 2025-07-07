@@ -1,7 +1,6 @@
 package net.azureaaron.dandelion.moulconfig;
 
 import io.github.notenoughupdates.moulconfig.Config;
-import io.github.notenoughupdates.moulconfig.annotations.SearchTag;
 import io.github.notenoughupdates.moulconfig.gui.GuiOptionEditor;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedCategory;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedOption;
@@ -18,11 +17,6 @@ public abstract class DandelionProcessedOption implements ProcessedOption {
 	protected DandelionProcessedOption(int accordionId, Config config) {
 		this.accordionId = accordionId;
 		this.config = config;
-	}
-
-	@Override
-	public SearchTag[] getSearchTags() {
-		return new SearchTag[0];
 	}
 
 	@Override

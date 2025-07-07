@@ -92,7 +92,7 @@ public class ConfigCategoryImpl implements ConfigCategory {
 
 		@Override
 		public ConfigCategory build() {
-			return new ConfigCategoryImpl(this.id, this.name, this.description, new OptionGroupImpl(null, Text.empty(), List.of(), false, List.copyOf(this.rootOptions)), List.copyOf(this.groups));
+			return new ConfigCategoryImpl(this.id, this.name, this.description, new OptionGroupImpl(null, Text.empty(), List.of(), List.of(), false, List.copyOf(this.rootOptions)), List.copyOf(this.groups));
 		}
 	}
 }

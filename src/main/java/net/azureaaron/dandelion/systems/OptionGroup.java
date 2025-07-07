@@ -21,6 +21,8 @@ public interface OptionGroup {
 
 	List<Text> description();
 
+	List<Text> tags();
+
 	boolean collapsed();
 
 	List<Option<?>> options();
@@ -31,6 +33,8 @@ public interface OptionGroup {
 		Builder name(Text name);
 
 		Builder description(Text... texts);
+
+		Builder tags(Text... tags);
 
 		Builder collapsed(boolean collapsed);
 

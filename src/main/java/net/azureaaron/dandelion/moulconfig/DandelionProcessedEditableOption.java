@@ -8,9 +8,11 @@ import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 
 import io.github.notenoughupdates.moulconfig.Config;
+import io.github.notenoughupdates.moulconfig.annotations.SearchTag;
 import net.azureaaron.dandelion.systems.Option;
 import net.azureaaron.dandelion.systems.OptionListener;
 import net.minecraft.text.StringVisitable;
+import net.minecraft.text.Text;
 
 /**
  * Represents an actual option which can be edited in the config, this option will either lie within a group or under the
@@ -34,6 +36,15 @@ public abstract class DandelionProcessedEditableOption<T> extends DandelionProce
 	@Override
 	public String getDescription() {
 		return StringVisitable.concat(this.option.description()).getString();
+	}
+
+	@Override
+	public SearchTag[] getSearchTags() {
+		SearchTag[] tags = this.option.tags().stream()
+				.map(Text::getString)
+				.map(DandelionSearchTag::new)
+				.toArray(DandelionSearchTag[]::new);
+		return tags;
 	}
 
 	@Override

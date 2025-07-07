@@ -49,6 +49,11 @@ public class ButtonOptionImpl implements ButtonOption {
 	}
 
 	@Override
+	public List<Text> tags() {
+		return List.of();
+	}
+
+	@Override
 	public OptionBinding<Consumer<Screen>> binding() {
 		throw new UnsupportedOperationException();
 	}

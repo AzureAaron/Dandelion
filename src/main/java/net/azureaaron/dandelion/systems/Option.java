@@ -24,6 +24,8 @@ public interface Option<T> {
 
 	List<Text> description();
 
+	List<Text> tags();
+
 	OptionBinding<T> binding();
 
 	Controller<T> controller();
@@ -42,6 +44,8 @@ public interface Option<T> {
 		Builder<T> name(Text name);
 
 		Builder<T> description(Text... texts);
+
+		Builder<T> tags(Text... tags);
 
 		Builder<T> binding(T defaultValue, Supplier<T> getter, Consumer<T> setter);
 

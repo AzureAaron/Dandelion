@@ -22,6 +22,7 @@ public class OptionImpl<T> implements Option<T> {
 	private final Identifier id;
 	private final Text name;
 	private final List<Text> description;
+	private final List<Text> tags;
 	private final OptionBinding<T> binding;
 	private final Controller<T> controller;
 	private final boolean modifiable;
@@ -30,10 +31,11 @@ public class OptionImpl<T> implements Option<T> {
 	private final Class<T> type;
 
 	@SuppressWarnings("unchecked")
-	protected OptionImpl(@Nullable Identifier id, Text name, List<Text> description, OptionBinding<T> binding, Controller<T> controller, boolean modifiable, List<OptionFlag> flags, List<OptionListener<T>> listeners) {
+	protected OptionImpl(@Nullable Identifier id, Text name, List<Text> description, List<Text> tags, OptionBinding<T> binding, Controller<T> controller, boolean modifiable, List<OptionFlag> flags, List<OptionListener<T>> listeners) {
 		this.id = id;
 		this.name = Objects.requireNonNull(name, "name must not be null");
 		this.description = Objects.requireNonNull(description, "description must not be null");
+		this.tags = Objects.requireNonNull(tags, "tags must not be null");
 		this.binding = Objects.requireNonNull(binding, "binding must not be null");
 		this.controller = Objects.requireNonNull(controller, "controller must not be null");
 		this.modifiable = modifiable;
@@ -56,6 +58,11 @@ public class OptionImpl<T> implements Option<T> {
 	@Override
 	public List<Text> description() {
 		return this.description;
+	}
+
+	@Override
+	public List<Text> tags() {
+		return this.tags;
 	}
 
 	@Override
@@ -92,6 +99,7 @@ public class OptionImpl<T> implements Option<T> {
 		private Identifier id = null;
 		private Text name = Text.empty();
 		private List<Text> description = List.of();
+		private List<Text> tags = List.of();
 		private OptionBinding<T> binding = null;
 		private Controller<T> controller = null;
 		private boolean modifiable = true;
@@ -113,6 +121,12 @@ public class OptionImpl<T> implements Option<T> {
 		@Override
 		public Builder<T> description(Text... texts) {
 			this.description = List.of(texts);
+			return this;
+		}
+
+		@Override
+		public Builder<T> tags(Text... tags) {
+			this.tags = List.of(tags);
 			return this;
 		}
 
@@ -148,7 +162,7 @@ public class OptionImpl<T> implements Option<T> {
 
 		@Override
 		public Option<T> build() {
-			return new OptionImpl<>(this.id, this.name, this.description, this.binding, this.controller, this.modifiable, this.flags, List.copyOf(this.listeners));
+			return new OptionImpl<>(this.id, this.name, this.description, this.tags, this.binding, this.controller, this.modifiable, this.flags, List.copyOf(this.listeners));
 		}
 	}
 }

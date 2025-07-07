@@ -39,6 +39,11 @@ public class LabelOptionImpl implements LabelOption {
 	}
 
 	@Override
+	public List<Text> tags() {
+		return List.of();
+	}
+
+	@Override
 	public OptionBinding<Text> binding() {
 		throw new UnsupportedOperationException();
 	}

@@ -16,13 +16,15 @@ public class OptionGroupImpl implements OptionGroup {
 	private final Identifier id;
 	private final Text name;
 	private final List<Text> description;
+	private final List<Text> tags;
 	private final boolean collapsed;
 	private final List<Option<?>> options;
 
-	protected OptionGroupImpl(@Nullable Identifier id, Text name, List<Text> description, boolean collapsed, List<Option<?>> options) {
+	protected OptionGroupImpl(@Nullable Identifier id, Text name, List<Text> description, List<Text> tags, boolean collapsed, List<Option<?>> options) {
 		this.id = id;
 		this.name = Objects.requireNonNull(name, "name must not be null");
 		this.description = Objects.requireNonNull(description, "description must not be null");
+		this.tags = Objects.requireNonNull(tags, "tags must not be null");
 		this.collapsed = collapsed;
 		this.options = Objects.requireNonNull(options, "options must not be null");
 	}
@@ -44,6 +46,11 @@ public class OptionGroupImpl implements OptionGroup {
 	}
 
 	@Override
+	public List<Text> tags() {
+		return this.tags;
+	}
+
+	@Override
 	public boolean collapsed() {
 		return this.collapsed;
 	}
@@ -57,6 +64,7 @@ public class OptionGroupImpl implements OptionGroup {
 		private Identifier id = null;
 		private Text name = Text.empty();
 		private List<Text> description = List.of();
+		private List<Text> tags = List.of();
 		private boolean collapsed = false;
 		private List<Option<?>> options = new ArrayList<>();
 
@@ -79,6 +87,12 @@ public class OptionGroupImpl implements OptionGroup {
 		}
 
 		@Override
+		public Builder tags(Text... tags) {
+			this.tags = List.of(tags);
+			return this;
+		}
+
+		@Override
 		public Builder collapsed(boolean collapsed) {
 			this.collapsed = collapsed;
 			return this;
@@ -92,7 +106,7 @@ public class OptionGroupImpl implements OptionGroup {
 
 		@Override
 		public OptionGroup build() {
-			return new OptionGroupImpl(this.id, this.name, this.description, this.collapsed, List.copyOf(this.options));
+			return new OptionGroupImpl(this.id, this.name, this.description, this.tags, this.collapsed, List.copyOf(this.options));
 		}
 	}
 }
