@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import io.github.notenoughupdates.moulconfig.ChromaColour;
 import io.github.notenoughupdates.moulconfig.GuiTextures;
+import io.github.notenoughupdates.moulconfig.common.MyResourceLocation;
 import io.github.notenoughupdates.moulconfig.common.RenderContext;
 import io.github.notenoughupdates.moulconfig.gui.GuiComponent;
 import io.github.notenoughupdates.moulconfig.gui.GuiImmediateContext;
@@ -16,6 +17,8 @@ import io.github.notenoughupdates.moulconfig.observer.GetSetter;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedOption;
 
 public class DandelionColourEditor extends ComponentEditor {
+	private static final MyResourceLocation ALPHA_BUTTON = new MyResourceLocation("dandelion", "textures/gui/button_alpha.png");
+	private static final MyResourceLocation ALPHA_BUTTON_OVERLAY = new MyResourceLocation("dandelion", "textures/gui/button_alpha_overlay.png");
 	private final GuiComponent component;
 
 	@SuppressWarnings("unchecked")
@@ -58,13 +61,26 @@ public class DandelionColourEditor extends ComponentEditor {
 			int red = colour.getRed();
 			int green = colour.getGreen();
 			int blue = colour.getBlue();
+			int alpha = colour.getAlpha();
 			RenderContext renderContext = context.getRenderContext();
 
-			//TODO this needs alpha support - use special button texture for this
-			renderContext.color(red / 255f, green / 255f, blue / 255f, 1f);
-			renderContext.bindTexture(GuiTextures.BUTTON_WHITE);
-			renderContext.drawTexturedRect(0f, 0f, context.getWidth(), context.getHeight());
-			renderContext.color(1, 1, 1, 1);
+			if (this.hasAlpha) {
+				//Draw alpha button
+				renderContext.color(1f, 1f, 1f, 1f);
+				renderContext.bindTexture(ALPHA_BUTTON);
+				renderContext.drawTexturedRect(0, 0, context.getWidth(), context.getHeight());
+
+				//Draw tinted overlay
+				renderContext.color(red / 255f, green / 255f, blue / 255f, alpha / 255f);
+				renderContext.bindTexture(ALPHA_BUTTON_OVERLAY);
+				renderContext.drawTexturedRect(0, 0, context.getWidth(), context.getHeight());
+				renderContext.color(1f, 1f, 1f, 1f);
+			} else {
+				renderContext.color(red / 255f, green / 255f, blue / 255f, 1f);
+				renderContext.bindTexture(GuiTextures.BUTTON_WHITE);
+				renderContext.drawTexturedRect(0f, 0f, context.getWidth(), context.getHeight());
+				renderContext.color(1, 1, 1, 1);
+			}
 		}
 
 		@SuppressWarnings("deprecation")
