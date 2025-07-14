@@ -15,7 +15,10 @@ import io.github.notenoughupdates.moulconfig.gui.component.ColorSelectComponent;
 import io.github.notenoughupdates.moulconfig.gui.editors.ComponentEditor;
 import io.github.notenoughupdates.moulconfig.observer.GetSetter;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedOption;
+import net.minecraft.util.Colors;
+import net.minecraft.util.math.ColorHelper;
 
+//GuiOptionEditorColour
 public class DandelionColourEditor extends ComponentEditor {
 	private static final MyResourceLocation ALPHA_BUTTON = new MyResourceLocation("dandelion", "textures/gui/button_alpha.png");
 	private static final MyResourceLocation ALPHA_BUTTON_OVERLAY = new MyResourceLocation("dandelion", "textures/gui/button_alpha_overlay.png");
@@ -56,30 +59,23 @@ public class DandelionColourEditor extends ComponentEditor {
 
 		@Override
 		public void render(@NotNull GuiImmediateContext context) {
-			Color colour = this.getSetter.get();
-
-			int red = colour.getRed();
-			int green = colour.getGreen();
-			int blue = colour.getBlue();
-			int alpha = colour.getAlpha();
+			int colour = this.getSetter.get().getRGB();
 			RenderContext renderContext = context.getRenderContext();
 
 			if (this.hasAlpha) {
 				//Draw alpha button
-				renderContext.color(1f, 1f, 1f, 1f);
-				renderContext.bindTexture(ALPHA_BUTTON);
-				renderContext.drawTexturedRect(0, 0, context.getWidth(), context.getHeight());
+				renderContext.drawComplexTexture(ALPHA_BUTTON, 0, 0, context.getWidth(), context.getHeight(), block -> {
+					block.color(Colors.WHITE);
+				});
 
 				//Draw tinted overlay
-				renderContext.color(red / 255f, green / 255f, blue / 255f, alpha / 255f);
-				renderContext.bindTexture(ALPHA_BUTTON_OVERLAY);
-				renderContext.drawTexturedRect(0, 0, context.getWidth(), context.getHeight());
-				renderContext.color(1f, 1f, 1f, 1f);
+				renderContext.drawComplexTexture(ALPHA_BUTTON_OVERLAY, 0, 0, context.getWidth(), context.getHeight(), block -> {
+					block.color(colour);
+				});
 			} else {
-				renderContext.color(red / 255f, green / 255f, blue / 255f, 1f);
-				renderContext.bindTexture(GuiTextures.BUTTON_WHITE);
-				renderContext.drawTexturedRect(0f, 0f, context.getWidth(), context.getHeight());
-				renderContext.color(1, 1, 1, 1);
+				renderContext.drawComplexTexture(GuiTextures.BUTTON_WHITE, 0, 0, context.getWidth(), context.getHeight(), block -> {
+					block.color(ColorHelper.fullAlpha(colour));
+				});
 			}
 		}
 
