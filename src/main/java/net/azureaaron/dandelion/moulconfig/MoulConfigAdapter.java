@@ -8,6 +8,8 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
+import io.github.notenoughupdates.moulconfig.gui.GuiContext;
+import io.github.notenoughupdates.moulconfig.gui.GuiElementComponent;
 import io.github.notenoughupdates.moulconfig.gui.MoulConfigEditor;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedCategory;
 import net.azureaaron.dandelion.systems.ConfigCategory;
@@ -39,9 +41,9 @@ public class MoulConfigAdapter {
 
 		List<DandelionProcessedCategory> processedCategories = this.generateProcessedCategories(categories);
 		MoulConfigEditor<MoulConfigDefinition> editor = new MoulConfigEditor<>(ProcessedCategory.collect(processedCategories), this.configDefinition);
-		DandelionGuiElementWrapper moulConfigScreenWrapper = new DandelionGuiElementWrapper(editor, this.title, parent, this.manager::save);
+		DandelionConfigScreenComponent moulConfigScreenComponent = new DandelionConfigScreenComponent(this.title, new GuiContext(new GuiElementComponent(editor)), parent, this.manager::save);
 
-		return moulConfigScreenWrapper;
+		return moulConfigScreenComponent;
 	}
 
 	private void generateEditableOptions(List<ConfigCategory> categories) {

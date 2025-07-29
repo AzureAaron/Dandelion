@@ -18,7 +18,6 @@ import io.github.notenoughupdates.moulconfig.processor.ProcessedOption;
 import net.minecraft.util.Colors;
 import net.minecraft.util.math.ColorHelper;
 
-//GuiOptionEditorColour
 public class DandelionColourEditor extends ComponentEditor {
 	private static final MyResourceLocation ALPHA_BUTTON = new MyResourceLocation("dandelion", "textures/gui/button_alpha.png");
 	private static final MyResourceLocation ALPHA_BUTTON_OVERLAY = new MyResourceLocation("dandelion", "textures/gui/button_alpha_overlay.png");

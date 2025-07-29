@@ -6,10 +6,11 @@ import org.jetbrains.annotations.Nullable;
 
 import io.github.notenoughupdates.moulconfig.Config;
 import io.github.notenoughupdates.moulconfig.annotations.SearchTag;
+import io.github.notenoughupdates.moulconfig.common.text.StructuredText;
 import io.github.notenoughupdates.moulconfig.gui.GuiOptionEditor;
 import io.github.notenoughupdates.moulconfig.gui.editors.GuiOptionEditorAccordion;
+import io.github.notenoughupdates.moulconfig.platform.MoulConfigPlatform;
 import net.azureaaron.dandelion.systems.OptionGroup;
-import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Text;
 
 /**
@@ -27,13 +28,16 @@ public class DandelionProcessedGroupOption extends DandelionProcessedOption {
 	}
 
 	@Override
-	public String getName() {
-		return this.group.name().getString();
+	public StructuredText getName() {
+		return MoulConfigPlatform.wrap(this.group.name());
 	}
 
 	@Override
-	public String getDescription() {
-		return StringVisitable.concat(this.group.description()).getString();
+	public StructuredText getDescription() {
+		Text concat = Text.empty();
+		concat.getSiblings().addAll(this.group.description());
+
+		return MoulConfigPlatform.wrap(concat);
 	}
 
 	@Override
@@ -63,7 +67,7 @@ public class DandelionProcessedGroupOption extends DandelionProcessedOption {
 	@Override
 	@Nullable
 	public String getDebugDeclarationLocation() {
-		return this.group.id() != null ? this.group.id().toString() : this.getName();
+		return this.group.id() != null ? this.group.id().toString() : this.getName().getText();
 	}
 
 	@Override

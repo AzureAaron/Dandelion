@@ -3,7 +3,6 @@
 	"package": "net.azureaaron.dandelion.mixins",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
-		"EditorComponentWrapperMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

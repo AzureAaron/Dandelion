@@ -8,7 +8,9 @@ import java.util.stream.Collectors;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;
 
+import io.github.notenoughupdates.moulconfig.common.text.StructuredText;
 import io.github.notenoughupdates.moulconfig.gui.editors.GuiOptionEditorAccordion;
+import io.github.notenoughupdates.moulconfig.platform.MoulConfigPlatform;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedCategory;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedOption;
 import net.azureaaron.dandelion.systems.ConfigCategory;
@@ -25,7 +27,7 @@ public class DandelionProcessedCategory implements ProcessedCategory {
 	 * under groups/accordions.
 	 */
 	private final List<DandelionProcessedOption> options;
-	/** Mapping of accordion ids to accordion/group option instances this category holds*/
+	/** Mapping of accordion ids to accordion/group option instances this category holds */
 	private final Map<Integer, DandelionProcessedOption> accordions;
 
 	protected DandelionProcessedCategory(ConfigCategory category, List<DandelionProcessedOption> options) {
@@ -48,13 +50,13 @@ public class DandelionProcessedCategory implements ProcessedCategory {
 	}
 
 	@Override
-	public String getDisplayName() {
-		return this.category.name().getString();
+	public StructuredText getDisplayName() {
+		return MoulConfigPlatform.wrap(this.category.name());
 	}
 
 	@Override
-	public String getDescription() {
-		return this.category.description().getString();
+	public StructuredText getDescription() {
+		return MoulConfigPlatform.wrap(this.category.description());
 	}
 
 	@Override

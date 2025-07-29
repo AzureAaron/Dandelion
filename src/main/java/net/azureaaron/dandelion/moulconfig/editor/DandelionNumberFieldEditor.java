@@ -37,7 +37,7 @@ public class DandelionNumberFieldEditor extends ComponentEditor {
 				80,
 				() -> true,
 				"",
-				IMinecraft.instance.getDefaultFontRenderer()));
+				IMinecraft.INSTANCE.getDefaultFontRenderer()));
 	}
 
 	/**

@@ -12,6 +12,7 @@ import io.github.notenoughupdates.moulconfig.gui.editors.GuiOptionEditorBoolean;
 import io.github.notenoughupdates.moulconfig.gui.editors.GuiOptionEditorButton;
 import io.github.notenoughupdates.moulconfig.gui.editors.GuiOptionEditorDropdown;
 import io.github.notenoughupdates.moulconfig.gui.editors.GuiOptionEditorText;
+import io.github.notenoughupdates.moulconfig.platform.MoulConfigPlatform;
 import net.azureaaron.dandelion.moulconfig.editor.DandelionColourEditor;
 import net.azureaaron.dandelion.moulconfig.editor.DandelionItemEditor;
 import net.azureaaron.dandelion.moulconfig.editor.DandelionLabelEditor;
@@ -74,7 +75,7 @@ public class MoulConfigEditableOptionAdapter {
 				@Override
 				protected GuiOptionEditor createEditor() {
 					ButtonOption instance = (ButtonOption) this.option;
-					return new GuiOptionEditorButton(this, -1, instance.prompt().getString(), this.getConfig());
+					return new GuiOptionEditorButton(this, -1, MoulConfigPlatform.wrap(instance.prompt()), this.getConfig());
 				}
 			};
 		};
@@ -85,7 +86,7 @@ public class MoulConfigEditableOptionAdapter {
 			return new DandelionProcessedEditableOption<Text>(label, accordionId, configDefinition) {
 				@Override
 				protected GuiOptionEditor createEditor() {
-					return new DandelionLabelEditor(this, ((LabelOption) this.option).label().getString());
+					return new DandelionLabelEditor(this, MoulConfigPlatform.wrap(((LabelOption) this.option).label()));
 				}
 			};
 		};

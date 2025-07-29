@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import com.ibm.icu.text.NumberFormat;
 
 import io.github.notenoughupdates.moulconfig.common.IMinecraft;
+import io.github.notenoughupdates.moulconfig.common.text.StructuredText;
 import io.github.notenoughupdates.moulconfig.gui.GuiComponent;
 import io.github.notenoughupdates.moulconfig.gui.HorizontalAlign;
 import io.github.notenoughupdates.moulconfig.gui.VerticalAlign;
@@ -30,9 +31,8 @@ public class DandelionNumberSliderEditor extends ComponentEditor {
 		this.component = this.wrapComponent(
 				new RowComponent(
 						new AlignComponent(
-								new TextComponent(
-										IMinecraft.instance.getDefaultFontRenderer(),
-										() -> FORMATTER.format(((Float) option.get()).doubleValue()),
+								new TextComponent(IMinecraft.INSTANCE.getDefaultFontRenderer(),
+										() -> StructuredText.of(FORMATTER.format(((Float) option.get()).doubleValue())),
 										20,
 										TextComponent.TextAlignment.CENTER, false, false),
 								GetSetter.constant(HorizontalAlign.CENTER),

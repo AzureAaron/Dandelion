@@ -9,9 +9,10 @@ import com.mojang.logging.LogUtils;
 
 import io.github.notenoughupdates.moulconfig.Config;
 import io.github.notenoughupdates.moulconfig.annotations.SearchTag;
+import io.github.notenoughupdates.moulconfig.common.text.StructuredText;
+import io.github.notenoughupdates.moulconfig.platform.MoulConfigPlatform;
 import net.azureaaron.dandelion.systems.Option;
 import net.azureaaron.dandelion.systems.OptionListener;
-import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Text;
 
 /**
@@ -29,13 +30,16 @@ public abstract class DandelionProcessedEditableOption<T> extends DandelionProce
 	}
 
 	@Override
-	public String getName() {
-		return this.option.name().getString();
+	public StructuredText getName() {
+		return MoulConfigPlatform.wrap(this.option.name());
 	}
 
 	@Override
-	public String getDescription() {
-		return StringVisitable.concat(this.option.description()).getString();
+	public StructuredText getDescription() {
+		Text concat = Text.empty();
+		concat.getSiblings().addAll(this.option.description());
+
+		return MoulConfigPlatform.wrap(concat);
 	}
 
 	@Override
@@ -80,6 +84,6 @@ public abstract class DandelionProcessedEditableOption<T> extends DandelionProce
 	@Override
 	@Nullable
 	public String getDebugDeclarationLocation() {
-		return this.option.id() != null ? this.option.id().toString() : this.getName();
+		return this.option.id() != null ? this.option.id().toString() : this.getName().getText();
 	}
 }

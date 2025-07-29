@@ -10,7 +10,7 @@ import io.github.notenoughupdates.moulconfig.gui.component.RowComponent;
 import io.github.notenoughupdates.moulconfig.gui.component.TextFieldComponent;
 import io.github.notenoughupdates.moulconfig.gui.editors.ComponentEditor;
 import io.github.notenoughupdates.moulconfig.observer.GetSetter;
-import io.github.notenoughupdates.moulconfig.platform.ModernItemStack;
+import io.github.notenoughupdates.moulconfig.platform.MoulConfigPlatform;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedOption;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
@@ -34,7 +34,7 @@ public class DandelionItemEditor extends ComponentEditor {
 		GetSetter<IItemStack> itemStackGetter = new GetSetter<>() {
 			@Override
 			public IItemStack get() {
-				return ModernItemStack.of(new ItemStack((ItemConvertible) option.get()));
+				return MoulConfigPlatform.wrap(new ItemStack((ItemConvertible) option.get()));
 			}
 
 			@Override
@@ -69,7 +69,7 @@ public class DandelionItemEditor extends ComponentEditor {
 								49,
 								() -> true,
 								"Item ID",
-								IMinecraft.instance.getDefaultFontRenderer()
+								IMinecraft.INSTANCE.getDefaultFontRenderer()
 								)
 						)
 				);

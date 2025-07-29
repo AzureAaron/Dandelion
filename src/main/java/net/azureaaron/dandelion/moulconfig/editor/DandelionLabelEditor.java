@@ -2,6 +2,7 @@ package net.azureaaron.dandelion.moulconfig.editor;
 
 import org.jetbrains.annotations.NotNull;
 
+import io.github.notenoughupdates.moulconfig.common.text.StructuredText;
 import io.github.notenoughupdates.moulconfig.gui.GuiComponent;
 import io.github.notenoughupdates.moulconfig.gui.HorizontalAlign;
 import io.github.notenoughupdates.moulconfig.gui.VerticalAlign;
@@ -14,7 +15,7 @@ import io.github.notenoughupdates.moulconfig.processor.ProcessedOption;
 public class DandelionLabelEditor extends ComponentEditor {
 	private final GuiComponent component;
 
-	public DandelionLabelEditor(ProcessedOption option, String label) {
+	public DandelionLabelEditor(ProcessedOption option, StructuredText label) {
 		super(option);
 		this.component = new AlignComponent(
 				new TextComponent(
