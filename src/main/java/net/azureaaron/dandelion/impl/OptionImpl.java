@@ -1,5 +1,6 @@
 package net.azureaaron.dandelion.impl;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,7 +14,15 @@ import net.azureaaron.dandelion.systems.Option;
 import net.azureaaron.dandelion.systems.OptionBinding;
 import net.azureaaron.dandelion.systems.OptionFlag;
 import net.azureaaron.dandelion.systems.OptionListener;
+import net.azureaaron.dandelion.systems.controllers.BooleanController;
+import net.azureaaron.dandelion.systems.controllers.ColourController;
 import net.azureaaron.dandelion.systems.controllers.Controller;
+import net.azureaaron.dandelion.systems.controllers.EnumController;
+import net.azureaaron.dandelion.systems.controllers.FloatController;
+import net.azureaaron.dandelion.systems.controllers.IntegerController;
+import net.azureaaron.dandelion.systems.controllers.ItemController;
+import net.azureaaron.dandelion.systems.controllers.StringController;
+import net.minecraft.item.Item;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -42,6 +51,9 @@ public class OptionImpl<T> implements Option<T> {
 		this.flags = Objects.requireNonNull(flags, "flags must not be null");
 		this.listeners = Objects.requireNonNull(listeners, "listeners must not be null");
 		this.type = (Class<T>) ReflectionUtils.getActualClass(Objects.requireNonNull(this.binding.defaultValue(), "the default value of an option must not be null"));
+
+		//Require that we receive the correct type, otherwise the library will likely crash later!
+		this.checkType();
 	}
 
 	@Override
@@ -93,6 +105,39 @@ public class OptionImpl<T> implements Option<T> {
 	@Override
 	public Class<T> type() {
 		return this.type;
+	}
+
+	/**
+	 * Checks that the {@code type} of the option matches the type required by the {@code controller}.
+	 */
+	private void checkType() {
+		boolean hasCorrectType = switch (this.controller) {
+			case BooleanController booleanController -> this.type == boolean.class || this.type == Boolean.class;
+			case ColourController colourController -> this.type == Color.class;
+			case EnumController<?> enumController -> this.type.isEnum();
+			case FloatController floatController -> this.type == float.class || this.type == Float.class;
+			case IntegerController integerController -> this.type == int.class || this.type == Integer.class;
+			case ItemController itemController -> Item.class.isAssignableFrom(this.type);
+			case StringController stringController -> this.type == String.class;
+		};
+
+		if (!hasCorrectType) {
+			String name = this.id != null ? this.id.toString() : this.name.getString();
+			//All the controller interface classes implement their respective interface so this *should* always yield one (and the correct one at that!)
+			Class<?> controllerInterfaceType = this.controller.getClass().getInterfaces()[0];
+			String expected = switch (this.controller) {
+				case BooleanController booleanController -> "boolean";
+				case ColourController colourController -> "Color";
+				case EnumController<?> enumController -> "Enum";
+				case FloatController floatController -> "float";
+				case IntegerController integerController -> "int";
+				case ItemController itemController -> "Item";
+				case StringController stringController -> "String";
+			};
+			String message = String.format("[Dandelion] Option %s has mismatched type with controller (%s)! Expected a %s but got %s!", name, controllerInterfaceType, expected, this.type);
+
+			throw new RuntimeException(message);
+		}
 	}
 
 	public static class OptionBuilderImpl<T> implements Option.Builder<T> {
