@@ -3,6 +3,8 @@
 	"package": "net.azureaaron.dandelion.mixins",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
+		"GuiOptionEditorDropdownAccessor",
+		"MoulConfigScreenComponentMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

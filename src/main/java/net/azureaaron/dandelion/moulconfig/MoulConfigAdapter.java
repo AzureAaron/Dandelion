@@ -11,11 +11,13 @@ import java.util.stream.Stream;
 import io.github.notenoughupdates.moulconfig.gui.GuiContext;
 import io.github.notenoughupdates.moulconfig.gui.GuiElementComponent;
 import io.github.notenoughupdates.moulconfig.gui.MoulConfigEditor;
+import io.github.notenoughupdates.moulconfig.platform.MoulConfigScreenComponent;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedCategory;
 import net.azureaaron.dandelion.systems.ConfigCategory;
 import net.azureaaron.dandelion.systems.ConfigManager;
 import net.azureaaron.dandelion.systems.Option;
 import net.azureaaron.dandelion.systems.OptionGroup;
+import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
@@ -41,7 +43,12 @@ public class MoulConfigAdapter {
 
 		List<DandelionProcessedCategory> processedCategories = this.generateProcessedCategories(categories);
 		MoulConfigEditor<MoulConfigDefinition> editor = new MoulConfigEditor<>(ProcessedCategory.collect(processedCategories), this.configDefinition);
-		DandelionConfigScreenComponent moulConfigScreenComponent = new DandelionConfigScreenComponent(this.title, new GuiContext(new GuiElementComponent(editor)), parent, this.manager::save);
+		MoulConfigScreenComponent moulConfigScreenComponent = new MoulConfigScreenComponent(this.title, new GuiContext(new GuiElementComponent(editor)), parent);
+		//Use a custom close handler to save the config and open the parent screen
+		moulConfigScreenComponent.getGuiContext().setCloseRequestHandler(() -> {
+			this.manager.save();
+			Screens.getClient(moulConfigScreenComponent).setScreen(moulConfigScreenComponent.getPreviousScreen());
+		});
 
 		return moulConfigScreenComponent;
 	}

@@ -118,7 +118,7 @@ task mergeResourcesIntoShadowJar(type: Copy) {
 }
 
 tasks.named("remapJar").configure {
-	dependsOn(mergeResourcesIntoShadowJar)
+	dependsOn(tasks.mergeResourcesIntoShadowJar)
 	inputFile.set(tasks.named("shadowJar").flatMap { it.archiveFile } )
 }
 

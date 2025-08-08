@@ -5,7 +5,6 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 import io.github.notenoughupdates.moulconfig.gui.GuiOptionEditor;
 import io.github.notenoughupdates.moulconfig.gui.editors.GuiOptionEditorBoolean;
@@ -13,6 +12,7 @@ import io.github.notenoughupdates.moulconfig.gui.editors.GuiOptionEditorButton;
 import io.github.notenoughupdates.moulconfig.gui.editors.GuiOptionEditorDropdown;
 import io.github.notenoughupdates.moulconfig.gui.editors.GuiOptionEditorText;
 import io.github.notenoughupdates.moulconfig.platform.MoulConfigPlatform;
+import net.azureaaron.dandelion.mixins.GuiOptionEditorDropdownAccessor;
 import net.azureaaron.dandelion.moulconfig.editor.DandelionColourEditor;
 import net.azureaaron.dandelion.moulconfig.editor.DandelionItemEditor;
 import net.azureaaron.dandelion.moulconfig.editor.DandelionLabelEditor;
@@ -119,12 +119,15 @@ public class MoulConfigEditableOptionAdapter {
 			return new DandelionProcessedEditableOption<T>(option, accordionId, configDefinition) {
 				@Override
 				protected GuiOptionEditor createEditor() {
-					@SuppressWarnings("unchecked")
-					String[] displayValues = Arrays.stream(this.option.type().getEnumConstants())
-							.map(((Function<Enum<?>, Text>) ((EnumController<?>) this.option.controller()).formatter())::apply)
+					T[] constants = this.option.type().getEnumConstants();
+					String[] displayValues = Arrays.stream(constants)
+							.map(((EnumController<T>) this.option.controller()).formatter()::apply)
 							.map(Text::getString)
 							.toArray(String[]::new);
-					return new GuiOptionEditorDropdown(this, displayValues, true);
+					GuiOptionEditorDropdown editor = new GuiOptionEditorDropdown(this, displayValues, true);
+					((GuiOptionEditorDropdownAccessor) editor).setConstants(constants);
+
+					return editor;
 				}
 			};
 		};
