@@ -5,8 +5,9 @@ import org.jetbrains.annotations.NotNull;
 import io.github.notenoughupdates.moulconfig.common.IItemStack;
 import io.github.notenoughupdates.moulconfig.common.IMinecraft;
 import io.github.notenoughupdates.moulconfig.gui.GuiComponent;
+import io.github.notenoughupdates.moulconfig.gui.component.CenterComponent;
+import io.github.notenoughupdates.moulconfig.gui.component.ColumnComponent;
 import io.github.notenoughupdates.moulconfig.gui.component.ItemStackComponent;
-import io.github.notenoughupdates.moulconfig.gui.component.RowComponent;
 import io.github.notenoughupdates.moulconfig.gui.component.TextFieldComponent;
 import io.github.notenoughupdates.moulconfig.gui.editors.ComponentEditor;
 import io.github.notenoughupdates.moulconfig.observer.GetSetter;
@@ -62,11 +63,11 @@ public class DandelionItemEditor extends ComponentEditor {
 
 		this.lastText = Registries.ITEM.getId((Item) option.get()).toString();
 		this.component = this.wrapComponent(
-				new RowComponent(
-						new ItemStackComponent(itemStackGetter),
+				new ColumnComponent(
+						new CenterComponent(new ItemStackComponent(itemStackGetter)),
 						new TextFieldComponent(
 								itemStackSetter,
-								49,
+								80,
 								() -> true,
 								"Item ID",
 								IMinecraft.INSTANCE.getDefaultFontRenderer()
