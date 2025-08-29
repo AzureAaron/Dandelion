@@ -8,12 +8,10 @@ import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 public class ListOptionImpl<T> implements ListOption<T> {
     @Nullable
@@ -24,13 +22,13 @@ public class ListOptionImpl<T> implements ListOption<T> {
     private final OptionBinding<List<T>> binding;
     private final Controller<T> controller;
     private final Supplier<T> initialValue;
-    private final List<ListOptionEntry<T>> entries;
     private final boolean collapsed;
     private final boolean modifiable;
     private final List<OptionFlag> flags;
     private final List<OptionListener<List<T>>> listeners;
     private final Class<List<T>> type;
     private final Class<T> entryType;
+    private final List<Option<T>> entries;
 
     @SuppressWarnings("unchecked")
     public ListOptionImpl(@Nullable Identifier id, Text name, List<Text> description, List<Text> tags, OptionBinding<List<T>> binding, Controller<T> controller, Supplier<T> initialValue, boolean collapsed, boolean modifiable, List<OptionFlag> flags, List<OptionListener<List<T>>> listeners) {
@@ -41,15 +39,13 @@ public class ListOptionImpl<T> implements ListOption<T> {
         this.binding = Objects.requireNonNull(binding, "binding must not be null");
         this.controller = Objects.requireNonNull(controller, "controller must not be null");
         this.initialValue = initialValue;
-        this.entries = createEntries(this.binding().get());
         this.collapsed = collapsed;
         this.modifiable = modifiable;
         this.flags = Objects.requireNonNull(flags, "flags must not be null");
         this.listeners = Objects.requireNonNull(listeners, "listeners must not be null");
         this.type = (Class<List<T>>) ReflectionUtils.getActualClass(Objects.requireNonNull(this.binding().defaultValue(), "the default value of an list option must not be null"));
         this.entryType = (Class<T>) ReflectionUtils.getActualClass(Objects.requireNonNull(this.initialValue.get(), "the initial value of an entry in an list option must not be null"));
-
-        this.entries.forEach(OptionImpl::checkType);
+        this.entries = createEntries(this.binding().get());
     }
 
     @Override
@@ -124,16 +120,30 @@ public class ListOptionImpl<T> implements ListOption<T> {
     }
 
     @Override
-    public List<ListOptionEntry<T>> options() {
+    public List<Option<T>> options() {
         return entries;
     }
 
-    private List<ListOptionEntry<T>> createEntries(Collection<T> values) {
-        return values.stream().map(this::createEntry).collect(Collectors.toList());
+    private List<Option<T>> createEntries(List<T> values) {
+        ArrayList<Option<T>> entries = new ArrayList<>();
+        for (int i = 0; i < values.size(); i++) {
+            entries.add(createEntry(values, i));
+        }
+        return entries;
     }
 
-    private ListOptionEntry<T> createEntry(T initialValue) {
-        return new ListOptionEntryImpl<>(this, initialValue, controller);
+    private Option<T> createEntry(List<T> values, int i) {
+        return new OptionImpl<>(
+                id,
+                name(),
+                description(),
+                tags(),
+                new OptionBindingImpl<>(initialValue().get(), () -> values.get(i), newValue -> values.set(i, newValue)),
+                entryController(),
+                modifiable(),
+                flags(),
+                List.of((entryOption, updateType) -> listeners().forEach(l -> l.onUpdate(this, updateType)))
+        );
     }
 
     public static class BuilderImpl<T> implements ListOption.Builder<T> {
