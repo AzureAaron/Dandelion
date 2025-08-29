@@ -25,7 +25,7 @@ public interface OptionGroup {
 
 	boolean collapsed();
 
-	List<Option<?>> options();
+	List<? extends Option<?>> options();
 
 	non-sealed interface Builder extends OptionAdder {
 		Builder id(Identifier id);

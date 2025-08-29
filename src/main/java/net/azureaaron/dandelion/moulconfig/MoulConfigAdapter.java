@@ -94,7 +94,7 @@ public class MoulConfigAdapter {
 				}).toList();
 	}
 
-	private void addProcessedOptionsToGroup(List<DandelionProcessedOption> processedOptions, List<Option<?>> options, int groupAccordionId) {
+	private void addProcessedOptionsToGroup(List<DandelionProcessedOption> processedOptions, List<? extends Option<?>> options, int groupAccordionId) {
 		for (Option<?> option : options) {
 			//Each option should be in the map unless its not supported (at which point an exception would be thrown when
 			//attempting to create the factory)

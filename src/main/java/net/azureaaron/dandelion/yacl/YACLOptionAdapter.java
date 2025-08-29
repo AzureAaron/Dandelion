@@ -9,7 +9,7 @@ import net.azureaaron.dandelion.systems.OptionListener;
 
 public class YACLOptionAdapter {
 
-	protected static List<dev.isxander.yacl3.api.Option<?>> toYaclOptions(List<net.azureaaron.dandelion.systems.Option<?>> options) {
+	protected static List<dev.isxander.yacl3.api.Option<?>> toYaclOptions(List<? extends net.azureaaron.dandelion.systems.Option<?>> options) {
 		List<dev.isxander.yacl3.api.Option<?>> yaclOptions = new ArrayList<>();
 
 		for (var option : options) {
@@ -49,7 +49,7 @@ public class YACLOptionAdapter {
 						option.binding()::get,
 						option.binding()::set)
 				.addListeners(toYaclOptionEventListener(option))
-				.controller(yaclOption -> YACLControllerAdapter.toYaclControllerBuilder(yaclOption, option, option.controller()))
+				.controller(yaclOption -> YACLControllerAdapter.toYaclControllerBuilder(yaclOption, option.type(), option.controller()))
 				.available(option.modifiable())
 				.flags(toYaclOptionFlags(option))
 				.build();
@@ -57,7 +57,7 @@ public class YACLOptionAdapter {
 		};
 	}
 
-	private static <T> List<OptionEventListener<T>> toYaclOptionEventListener(net.azureaaron.dandelion.systems.Option<T> option) {
+	protected static <T> List<OptionEventListener<T>> toYaclOptionEventListener(net.azureaaron.dandelion.systems.Option<T> option) {
 		List<OptionEventListener<T>> yaclOptionEventListeners = new ArrayList<>();
 
 		for (OptionListener<T> listener : option.listeners()) {
@@ -78,7 +78,7 @@ public class YACLOptionAdapter {
 		};
 	}
 
-	private static List<dev.isxander.yacl3.api.OptionFlag> toYaclOptionFlags(net.azureaaron.dandelion.systems.Option<?> option) {
+	protected static List<dev.isxander.yacl3.api.OptionFlag> toYaclOptionFlags(net.azureaaron.dandelion.systems.Option<?> option) {
 		List<dev.isxander.yacl3.api.OptionFlag> yaclOptionFlags = new ArrayList<>();
 
 		for (var flag : option.flags()) {
