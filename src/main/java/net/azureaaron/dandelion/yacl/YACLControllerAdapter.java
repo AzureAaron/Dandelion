@@ -32,7 +32,7 @@ import net.minecraft.text.Text;
 public class YACLControllerAdapter {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static <T> ControllerBuilder toYaclControllerBuilder(dev.isxander.yacl3.api.Option<T> yaclOption, net.azureaaron.dandelion.systems.Option<T> option, Controller<T> controller) {
+	public static <T> ControllerBuilder toYaclControllerBuilder(dev.isxander.yacl3.api.Option<T> yaclOption, Class<T> type, Controller<T> controller) {
 		switch (controller) {
 			case BooleanController booleanController -> {
 				BooleanControllerBuilder yaclController = BooleanControllerBuilder.create((Option<Boolean>) yaclOption)
@@ -55,7 +55,7 @@ public class YACLControllerAdapter {
 				ValueFormatter<T> yaclFormatter = ((Function<T, Text>) enumController.formatter())::apply;
 
 				if (!enumController.dropdown()) {
-					return EnumControllerBuilder.create((Option<Enum>) yaclOption).enumClass(option.type()).formatValue(yaclFormatter);
+					return EnumControllerBuilder.create((Option<Enum>) yaclOption).enumClass(type).formatValue(yaclFormatter);
 				} else {
 					return EnumDropdownControllerBuilder.create((Option<Enum>) yaclOption).formatValue(yaclFormatter);
 				}

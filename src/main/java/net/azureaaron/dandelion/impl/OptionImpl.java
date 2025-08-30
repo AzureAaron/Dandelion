@@ -53,7 +53,7 @@ public class OptionImpl<T> implements Option<T> {
 		this.type = (Class<T>) ReflectionUtils.getActualClass(Objects.requireNonNull(this.binding.defaultValue(), "the default value of an option must not be null"));
 
 		//Require that we receive the correct type, otherwise the library will likely crash later!
-		this.checkType();
+		checkType(this);
 	}
 
 	@Override
@@ -110,22 +110,22 @@ public class OptionImpl<T> implements Option<T> {
 	/**
 	 * Checks that the {@code type} of the option matches the type required by the {@code controller}.
 	 */
-	private void checkType() {
-		boolean hasCorrectType = switch (this.controller) {
-			case BooleanController booleanController -> this.type == boolean.class || this.type == Boolean.class;
-			case ColourController colourController -> this.type == Color.class;
-			case EnumController<?> enumController -> this.type.isEnum();
-			case FloatController floatController -> this.type == float.class || this.type == Float.class;
-			case IntegerController integerController -> this.type == int.class || this.type == Integer.class;
-			case ItemController itemController -> Item.class.isAssignableFrom(this.type);
-			case StringController stringController -> this.type == String.class;
+	protected static <T> void checkType(Option<T> option) {
+		boolean hasCorrectType = switch (option.controller()) {
+			case BooleanController booleanController -> option.type() == boolean.class || option.type() == Boolean.class;
+			case ColourController colourController -> option.type() == Color.class;
+			case EnumController<?> enumController -> option.type().isEnum();
+			case FloatController floatController -> option.type() == float.class || option.type() == Float.class;
+			case IntegerController integerController -> option.type() == int.class || option.type() == Integer.class;
+			case ItemController itemController -> Item.class.isAssignableFrom(option.type());
+			case StringController stringController -> option.type() == String.class;
 		};
 
 		if (!hasCorrectType) {
-			String name = this.id != null ? this.id.toString() : this.name.getString();
+			String name = option.id() != null ? option.id().toString() : option.name().getString();
 			//All the controller interface classes implement their respective interface so this *should* always yield one (and the correct one at that!)
-			Class<?> controllerInterfaceType = this.controller.getClass().getInterfaces()[0];
-			String expected = switch (this.controller) {
+			Class<?> controllerInterfaceType = option.controller().getClass().getInterfaces()[0];
+			String expected = switch (option.controller()) {
 				case BooleanController booleanController -> "boolean";
 				case ColourController colourController -> "Color";
 				case EnumController<?> enumController -> "Enum";
@@ -134,7 +134,7 @@ public class OptionImpl<T> implements Option<T> {
 				case ItemController itemController -> "Item";
 				case StringController stringController -> "String";
 			};
-			String message = String.format("[Dandelion] Option %s has mismatched type with controller (%s)! Expected a %s but got %s!", name, controllerInterfaceType, expected, this.type);
+			String message = String.format("[Dandelion] Option %s has mismatched type with controller (%s)! Expected a %s but got %s!", name, controllerInterfaceType, expected, option.type());
 
 			throw new RuntimeException(message);
 		}
