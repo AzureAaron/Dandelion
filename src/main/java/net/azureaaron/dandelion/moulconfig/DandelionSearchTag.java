@@ -19,6 +19,11 @@ public class DandelionSearchTag implements SearchTag {
 	}
 
 	@Override
+	public String toString() {
+		return this.tag;
+	}
+
+	@Override
 	public String value() {
 		return this.tag;
 	}
