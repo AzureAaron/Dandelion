@@ -25,7 +25,7 @@ public interface ButtonOption extends Option<Consumer<Screen>> {
 
 		Builder description(Text... texts);
 
-        Builder tags(Text... tags);
+		Builder tags(Text... tags);
 
 		Builder prompt(Text prompt);
 
