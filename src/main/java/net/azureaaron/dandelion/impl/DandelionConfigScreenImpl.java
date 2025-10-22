@@ -19,6 +19,7 @@ public class DandelionConfigScreenImpl<T> implements DandelionConfigScreen {
 	private final ConfigManager<T> manager;
 	private final Text title;
 	private final List<ConfigCategory> categories;
+	private final String search;
 
 	public DandelionConfigScreenImpl(ConfigManager<T> manager, TriFunction<T, T, Builder, Builder> screenBuilder) {
 		this.manager = Objects.requireNonNull(manager, "manager must not be null");
@@ -29,6 +30,7 @@ public class DandelionConfigScreenImpl<T> implements DandelionConfigScreen {
 
 		this.title = builder.title;
 		this.categories = builder.categories;
+		this.search = builder.search;
 	}
 
 	@Override
@@ -36,13 +38,14 @@ public class DandelionConfigScreenImpl<T> implements DandelionConfigScreen {
 		Objects.requireNonNull(configType, "configType must not be null");
 		return switch (configType) {
 			case ConfigType.YACL -> YACLScreenAdapter.generateYaclScreen(this.manager, this.title, this.categories, parent);
-			case ConfigType.MOUL_CONFIG -> new MoulConfigAdapter(this.manager, this.title).generateMoulConfigScreen(this.categories, parent);
+			case ConfigType.MOUL_CONFIG -> new MoulConfigAdapter(this.manager, this.title).generateMoulConfigScreen(this.categories, parent, this.search);
 		};
 	}
 
 	protected static class DandelionConfigScreenBuilderImpl implements DandelionConfigScreen.Builder {
 		private Text title = Text.empty();
 		private List<ConfigCategory> categories = new ArrayList<>();
+		private String search = "";
 
 		@Override
 		public Builder title(Text title) {
@@ -53,6 +56,12 @@ public class DandelionConfigScreenImpl<T> implements DandelionConfigScreen {
 		@Override
 		public Builder category(ConfigCategory category) {
 			this.categories.add(category);
+			return this;
+		}
+
+		@Override
+		public Builder search(String search) {
+			this.search = search;
 			return this;
 		}
 	}

@@ -38,7 +38,7 @@ public class MoulConfigAdapter {
 		this.configDefinition = new MoulConfigDefinition(title);
 	}
 
-	public Screen generateMoulConfigScreen(List<ConfigCategory> categories, Screen parent) {
+	public Screen generateMoulConfigScreen(List<ConfigCategory> categories, Screen parent, String search) {
 		this.generateEditableOptions(categories);
 
 		List<DandelionProcessedCategory> processedCategories = this.generateProcessedCategories(categories);
@@ -49,6 +49,10 @@ public class MoulConfigAdapter {
 			this.manager.save();
 			Screens.getClient(moulConfigScreenComponent).setScreen(moulConfigScreenComponent.getPreviousScreen());
 		});
+
+		if (search != null && !search.isEmpty()) {
+			editor.search(search);
+		}
 
 		return moulConfigScreenComponent;
 	}
