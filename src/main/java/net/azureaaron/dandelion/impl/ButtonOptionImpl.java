@@ -23,13 +23,15 @@ public class ButtonOptionImpl implements ButtonOption {
 	private final List<Text> description;
 	private final Text prompt;
 	private final Consumer<Screen> action;
+	private final List<Text> tags;
 
-	protected ButtonOptionImpl(@Nullable Identifier id, Text name, List<Text> description, Text prompt, Consumer<Screen> action) {
+	protected ButtonOptionImpl(@Nullable Identifier id, Text name, List<Text> description, List<Text> tags, Text prompt, Consumer<Screen> action) {
 		this.id = id;
 		this.name = Objects.requireNonNull(name, "name must not be null");
 		this.description = Objects.requireNonNull(description, "description must not be null");
 		this.prompt = Objects.requireNonNull(prompt, "prompt must not be null");
 		this.action = Objects.requireNonNull(action, "action must not be null");
+		this.tags = Objects.requireNonNull(tags, "tags must not be null");
 	}
 
 	@Override
@@ -50,7 +52,7 @@ public class ButtonOptionImpl implements ButtonOption {
 
 	@Override
 	public List<Text> tags() {
-		return List.of();
+		return this.tags;
 	}
 
 	@Override
@@ -99,6 +101,7 @@ public class ButtonOptionImpl implements ButtonOption {
 		private Identifier id = null;
 		private Text name = Text.empty();
 		private List<Text> description = List.of();
+		private List<Text> tags = List.of();
 		private Text prompt = Text.of("Execute");
 		private Consumer<Screen> action = Consumers.nop();
 
@@ -121,6 +124,12 @@ public class ButtonOptionImpl implements ButtonOption {
 		}
 
 		@Override
+		public Builder tags(Text... tags) {
+			this.tags = List.of(tags);
+			return this;
+		}
+
+		@Override
 		public Builder prompt(Text prompt) {
 			this.prompt = prompt;
 			return this;
@@ -134,7 +143,7 @@ public class ButtonOptionImpl implements ButtonOption {
 
 		@Override
 		public ButtonOption build() {
-			return new ButtonOptionImpl(this.id, this.name, this.description, this.prompt, this.action);
+			return new ButtonOptionImpl(this.id, this.name, this.description, this.tags, this.prompt, this.action);
 		}
 	}
 }
