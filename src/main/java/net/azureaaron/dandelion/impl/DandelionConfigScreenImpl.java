@@ -33,10 +33,15 @@ public class DandelionConfigScreenImpl<T> implements DandelionConfigScreen {
 
 	@Override
 	public Screen generateScreen(Screen parent, ConfigType configType) {
+		return generateScreen(parent, configType, "");
+	}
+
+	@Override
+	public Screen generateScreen(Screen parent, ConfigType configType, String search) {
 		Objects.requireNonNull(configType, "configType must not be null");
 		return switch (configType) {
 			case ConfigType.YACL -> YACLScreenAdapter.generateYaclScreen(this.manager, this.title, this.categories, parent);
-			case ConfigType.MOUL_CONFIG -> new MoulConfigAdapter(this.manager, this.title).generateMoulConfigScreen(this.categories, parent);
+			case ConfigType.MOUL_CONFIG -> new MoulConfigAdapter(this.manager, this.title).generateMoulConfigScreen(this.categories, parent, search);
 		};
 	}
 

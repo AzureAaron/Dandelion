@@ -17,6 +17,8 @@ public interface DandelionConfigScreen {
 
 	Screen generateScreen(Screen parent, ConfigType configType);
 
+	Screen generateScreen(Screen parent, ConfigType configType, String search);
+
 	//TODO add support for moulconfig social links
 	interface Builder {
 		Builder title(Text title);
