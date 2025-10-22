@@ -17,13 +17,13 @@ public interface DandelionConfigScreen {
 
 	Screen generateScreen(Screen parent, ConfigType configType);
 
-	Screen generateScreen(Screen parent, ConfigType configType, String search);
-
 	//TODO add support for moulconfig social links
 	interface Builder {
 		Builder title(Text title);
 
 		Builder category(ConfigCategory category);
+
+		Builder search(String search);
 
 		default Builder categoryIf(boolean condition, ConfigCategory category) {
 			return condition ? category(category) : this;
