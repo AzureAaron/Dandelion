@@ -23,6 +23,8 @@ public interface DandelionConfigScreen {
 
 		Builder category(ConfigCategory category);
 
+		Builder search(String search);
+
 		default Builder categoryIf(boolean condition, ConfigCategory category) {
 			return condition ? category(category) : this;
 		}
