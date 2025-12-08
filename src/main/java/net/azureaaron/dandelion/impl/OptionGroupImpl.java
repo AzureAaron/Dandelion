@@ -61,7 +61,7 @@ public class OptionGroupImpl implements OptionGroup {
 	}
 
 	public static class OptionGroupBuilderImpl implements OptionGroup.Builder {
-		private Identifier id = null;
+		private @Nullable Identifier id = null;
 		private Text name = Text.empty();
 		private List<Text> description = List.of();
 		private List<Text> tags = List.of();

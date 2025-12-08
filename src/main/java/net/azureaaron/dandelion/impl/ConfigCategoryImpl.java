@@ -92,6 +92,7 @@ public class ConfigCategoryImpl implements ConfigCategory {
 
 		@Override
 		public ConfigCategory build() {
+			Objects.requireNonNull(this.id, "an id is required.");
 			return new ConfigCategoryImpl(this.id, this.name, this.description, new OptionGroupImpl(null, Text.empty(), List.of(), List.of(), false, List.copyOf(this.rootOptions)), List.copyOf(this.groups));
 		}
 	}
