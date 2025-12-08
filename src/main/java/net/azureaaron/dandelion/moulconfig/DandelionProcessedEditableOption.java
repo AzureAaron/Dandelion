@@ -2,7 +2,7 @@ package net.azureaaron.dandelion.moulconfig;
 
 import java.lang.reflect.Type;
 
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;

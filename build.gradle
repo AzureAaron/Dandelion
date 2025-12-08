@@ -50,6 +50,9 @@ dependencies {
 
 	//MoulConfig
 	shadowMe(modImplementation("org.notenoughupdates.moulconfig:${project.moulconfig_flavour}:${project.moulconfig_version}"))
+
+    // JSpecify Annotations
+    include implementation("org.jspecify:jspecify:1.0.0")
 }
 
 loom {

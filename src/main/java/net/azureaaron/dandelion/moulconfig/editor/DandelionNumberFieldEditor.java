@@ -1,7 +1,5 @@
 package net.azureaaron.dandelion.moulconfig.editor;
 
-import org.jetbrains.annotations.NotNull;
-
 import io.github.notenoughupdates.moulconfig.common.IMinecraft;
 import io.github.notenoughupdates.moulconfig.gui.GuiComponent;
 import io.github.notenoughupdates.moulconfig.gui.component.TextFieldComponent;
@@ -67,7 +65,6 @@ public class DandelionNumberFieldEditor extends ComponentEditor {
 	}
 
 	@Override
-	@NotNull
 	public GuiComponent getDelegate() {
 		return this.component;
 	}

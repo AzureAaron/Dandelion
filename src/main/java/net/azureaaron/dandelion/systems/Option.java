@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import net.azureaaron.dandelion.impl.OptionImpl;
 import net.azureaaron.dandelion.systems.controllers.Controller;

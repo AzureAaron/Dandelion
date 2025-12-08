@@ -2,7 +2,7 @@ package net.azureaaron.dandelion.systems;
 
 import java.util.List;
 
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import net.azureaaron.dandelion.impl.OptionGroupImpl;
 import net.minecraft.text.Text;

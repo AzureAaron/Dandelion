@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 import org.apache.commons.lang3.function.Consumers;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import net.azureaaron.dandelion.systems.ButtonOption;
 import net.azureaaron.dandelion.systems.OptionBinding;
@@ -98,7 +98,7 @@ public class ButtonOptionImpl implements ButtonOption {
 	}
 
 	public static class ButtonOptionBuilderImpl implements ButtonOption.Builder {
-		private Identifier id = null;
+		private @Nullable Identifier id = null;
 		private Text name = Text.empty();
 		private List<Text> description = List.of();
 		private List<Text> tags = List.of();

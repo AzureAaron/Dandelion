@@ -1,5 +1,7 @@
 package net.azureaaron.dandelion.yacl;
 
+import net.azureaaron.dandelion.systems.OptionGroup;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +21,9 @@ public class YACLConfigCategoryAdapter {
 		var yaclConfigCategory = dev.isxander.yacl3.api.ConfigCategory.createBuilder()
 				.name(category.name());
 
-		if (!category.rootGroup().options().isEmpty()) {
-			yaclConfigCategory = yaclConfigCategory.options(YACLOptionAdapter.toYaclOptions(category.rootGroup().options()));
+		OptionGroup group = category.rootGroup();
+		if (group != null && !group.options().isEmpty()) {
+			yaclConfigCategory = yaclConfigCategory.options(YACLOptionAdapter.toYaclOptions(group.options()));
 		}
 
 		if (!category.groups().isEmpty()) {

@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import net.azureaaron.dandelion.impl.utils.ReflectionUtils;
 import net.azureaaron.dandelion.systems.Option;

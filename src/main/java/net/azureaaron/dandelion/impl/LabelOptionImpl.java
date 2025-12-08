@@ -3,7 +3,7 @@ package net.azureaaron.dandelion.impl;
 import java.util.List;
 import java.util.Objects;
 
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import net.azureaaron.dandelion.systems.LabelOption;
 import net.azureaaron.dandelion.systems.OptionBinding;

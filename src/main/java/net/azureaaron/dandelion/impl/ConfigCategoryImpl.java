@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import net.azureaaron.dandelion.systems.ConfigCategory;
 import net.azureaaron.dandelion.systems.Option;
@@ -54,7 +54,7 @@ public class ConfigCategoryImpl implements ConfigCategory {
 	}
 
 	public static class ConfigCategoryBuilderImpl implements ConfigCategory.Builder {
-		private Identifier id = null;
+		private @Nullable Identifier id = null;
 		private Text name = Text.empty();
 		private Text description = Text.empty();
 		private List<Option<?>> rootOptions = new ArrayList<>();
