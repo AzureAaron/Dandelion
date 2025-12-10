@@ -24,10 +24,10 @@ public class MoulConfigOptionEditorAdapter {
 			case @SuppressWarnings("rawtypes") EnumController enumController -> {
 				T[] constants = option.type().getEnumConstants();
 				@SuppressWarnings("unchecked")
-				String[] displayValues = Arrays.stream(constants)
-					.map((Object t) -> enumController.formatter().apply(t))
-					.map((Object t) -> ((Text) t).getString())
-					.toArray(String[]::new);
+				String[] displayValues = (String[]) Arrays.stream(constants)
+					.map(enumController.formatter())
+					.map(t -> ((Text) t).getString())
+					.toArray(Object[]::new);
 				GuiOptionEditorDropdown editor = new GuiOptionEditorDropdown(moulConfigOption, displayValues, true);
 				((GuiOptionEditorDropdownAccessor) editor).setConstants((Enum<?>[]) constants);
 				yield editor;
