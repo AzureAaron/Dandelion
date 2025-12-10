@@ -50,7 +50,7 @@ public class MoulConfigAdapter {
 			Screens.getClient(moulConfigScreenComponent).setScreen(moulConfigScreenComponent.getPreviousScreen());
 		});
 
-		if (search != null && !search.isEmpty()) {
+		if (!search.isEmpty()) {
 			editor.search(search);
 		}
 

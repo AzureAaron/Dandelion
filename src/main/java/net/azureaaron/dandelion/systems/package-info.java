@@ -1,7 +1,7 @@
 /**
  * Package containing the core Dandelion API.
  */
-@NotNullByDefault
+@NullMarked
 package net.azureaaron.dandelion.systems;
 
-import org.jetbrains.annotations.NotNullByDefault;
+import org.jspecify.annotations.NullMarked;

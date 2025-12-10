@@ -2,7 +2,7 @@ package net.azureaaron.dandelion.moulconfig;
 
 import java.lang.reflect.Type;
 
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import io.github.notenoughupdates.moulconfig.Config;
 import io.github.notenoughupdates.moulconfig.annotations.SearchTag;

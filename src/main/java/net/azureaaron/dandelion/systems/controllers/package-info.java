@@ -1,7 +1,7 @@
 /**
  * Package containing the default provided {@code Option} type controllers.
  */
-@NotNullByDefault
+@NullMarked
 package net.azureaaron.dandelion.systems.controllers;
 
-import org.jetbrains.annotations.NotNullByDefault;
+import org.jspecify.annotations.NullMarked;

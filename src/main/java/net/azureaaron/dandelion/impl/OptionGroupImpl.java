@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import net.azureaaron.dandelion.systems.Option;
 import net.azureaaron.dandelion.systems.OptionGroup;
@@ -61,7 +61,7 @@ public class OptionGroupImpl implements OptionGroup {
 	}
 
 	public static class OptionGroupBuilderImpl implements OptionGroup.Builder {
-		private Identifier id = null;
+		private @Nullable Identifier id = null;
 		private Text name = Text.empty();
 		private List<Text> description = List.of();
 		private List<Text> tags = List.of();

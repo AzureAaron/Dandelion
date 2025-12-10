@@ -2,8 +2,6 @@ package net.azureaaron.dandelion.moulconfig.editor;
 
 import java.util.Locale;
 
-import org.jetbrains.annotations.NotNull;
-
 import com.ibm.icu.text.NumberFormat;
 
 import io.github.notenoughupdates.moulconfig.common.IMinecraft;
@@ -44,7 +42,6 @@ public class DandelionNumberSliderEditor extends ComponentEditor {
 	}
 
 	@Override
-	@NotNull
 	public GuiComponent getDelegate() {
 		return this.component;
 	}

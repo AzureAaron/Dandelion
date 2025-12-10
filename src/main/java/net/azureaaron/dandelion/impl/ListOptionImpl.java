@@ -5,7 +5,7 @@ import net.azureaaron.dandelion.systems.*;
 import net.azureaaron.dandelion.systems.controllers.Controller;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,7 @@ public class ListOptionImpl<T> implements ListOption<T> {
         this.tags = Objects.requireNonNull(tags, "tags must not be null");
         this.binding = Objects.requireNonNull(binding, "binding must not be null");
         this.controller = Objects.requireNonNull(controller, "controller must not be null");
-        this.initialValue = initialValue;
+        this.initialValue = Objects.requireNonNull(initialValue, "initialValue must not be null");
         this.collapsed = collapsed;
         this.modifiable = modifiable;
         this.flags = Objects.requireNonNull(flags, "flags must not be null");
@@ -147,13 +147,13 @@ public class ListOptionImpl<T> implements ListOption<T> {
     }
 
     public static class BuilderImpl<T> implements ListOption.Builder<T> {
-        private Identifier id = null;
+        private @Nullable Identifier id = null;
         private Text name = Text.empty();
         private List<Text> description = java.util.List.of();
         private List<Text> tags = List.of();
-        private OptionBinding<List<T>> binding = null;
-        private Controller<T> controller = null;
-        private Supplier<T> initialValue = null;
+        private @Nullable OptionBinding<List<T>> binding = null;
+        private @Nullable Controller<T> controller = null;
+        private @Nullable Supplier<T> initialValue = null;
         private boolean collapsed = false;
         private boolean modifiable = true;
         private List<OptionFlag> flags = List.of();
@@ -233,6 +233,9 @@ public class ListOptionImpl<T> implements ListOption<T> {
 
         @Override
         public ListOption<T> build() {
+			Objects.requireNonNull(this.binding, "a binding is required.");
+			Objects.requireNonNull(this.controller, "a controller is required.");
+			Objects.requireNonNull(this.initialValue, "an initial value is required.");
             return new ListOptionImpl<>(this.id, this.name, this.description, this.tags, this.binding, this.controller, this.initialValue, this.collapsed, this.modifiable, this.flags, List.copyOf(this.listeners));
         }
     }

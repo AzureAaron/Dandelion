@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import net.azureaaron.dandelion.impl.utils.ReflectionUtils;
 import net.azureaaron.dandelion.systems.Option;
@@ -141,12 +141,12 @@ public class OptionImpl<T> implements Option<T> {
 	}
 
 	public static class OptionBuilderImpl<T> implements Option.Builder<T> {
-		private Identifier id = null;
+		private @Nullable Identifier id = null;
 		private Text name = Text.empty();
 		private List<Text> description = List.of();
 		private List<Text> tags = List.of();
-		private OptionBinding<T> binding = null;
-		private Controller<T> controller = null;
+		private @Nullable OptionBinding<T> binding = null;
+		private @Nullable Controller<T> controller = null;
 		private boolean modifiable = true;
 		private List<OptionFlag> flags = List.of();
 		private List<OptionListener<T>> listeners = new ArrayList<>();
@@ -207,6 +207,8 @@ public class OptionImpl<T> implements Option<T> {
 
 		@Override
 		public Option<T> build() {
+			Objects.requireNonNull(this.binding, "a binding is required.");
+			Objects.requireNonNull(this.controller, "a controller is required.");
 			return new OptionImpl<>(this.id, this.name, this.description, this.tags, this.binding, this.controller, this.modifiable, this.flags, List.copyOf(this.listeners));
 		}
 	}

@@ -10,13 +10,14 @@ import com.google.gson.GsonBuilder;
 import net.azureaaron.dandelion.impl.utils.ReflectionUtils;
 import net.azureaaron.dandelion.systems.ConfigManager;
 import net.azureaaron.dandelion.systems.ConfigSerializer;
+import org.jspecify.annotations.Nullable;
 
-public class ConfigManagerImpl<T> implements ConfigManager<T> {
+public class ConfigManagerImpl< T> implements ConfigManager<T> {
 	private final Class<T> configClass;
 	private final Path path;
 	private final Gson gson;
 	private final ConfigSerializer<T> serializer;
-	private T instance;
+	private @Nullable T instance;
 
 	//TODO maybe dont force GSON and abstract it
 	public ConfigManagerImpl(Class<T> configClass, Path path, UnaryOperator<GsonBuilder> gsonBuilder) {
@@ -31,7 +32,7 @@ public class ConfigManagerImpl<T> implements ConfigManager<T> {
 		return ReflectionUtils.createNewDefaultInstance(this.configClass);
 	}
 
-	protected void setInstance(T newInstance) {
+	protected void setInstance(@Nullable T newInstance) {
 		this.instance = newInstance;
 	}
 
@@ -41,7 +42,7 @@ public class ConfigManagerImpl<T> implements ConfigManager<T> {
 	}
 
 	@Override
-	public T instance() {
+	public @Nullable T instance() {
 		return this.instance;
 	}
 
