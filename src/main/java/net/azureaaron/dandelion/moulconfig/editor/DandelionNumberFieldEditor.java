@@ -1,5 +1,6 @@
 package net.azureaaron.dandelion.moulconfig.editor;
 
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import io.github.notenoughupdates.moulconfig.common.IMinecraft;
@@ -44,7 +45,8 @@ public class DandelionNumberFieldEditor extends ComponentEditor {
 	 * Converts a {@link Float} to a string while dropping the decimal if possible.
 	 * This is done since this is also used for integer fields.
 	 */
-	private static String toString(Float floatValue) {
+	@ApiStatus.Experimental
+	protected String toString(Float floatValue) {
 		int intValue = floatValue.intValue();
 		float convertedBackToFloat = (float) intValue;
 
@@ -58,7 +60,8 @@ public class DandelionNumberFieldEditor extends ComponentEditor {
 	/**
 	 * Attempts to parse then {@code input} as a float, if it fails then the {@code defaultValue} is returned.
 	 */
-	private static float parseNumber(String input, float minValue, float maxValue, float defaultValue) {
+	@ApiStatus.Experimental
+	protected float parseNumber(String input, float minValue, float maxValue, float defaultValue) {
 		try {
 			return Math.clamp(Float.parseFloat(input), minValue, maxValue);
 		} catch (NumberFormatException e) {

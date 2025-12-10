@@ -49,7 +49,7 @@ public class YACLOptionAdapter {
 						option.binding()::get,
 						option.binding()::set)
 				.addListeners(toYaclOptionEventListener(option))
-				.controller(yaclOption -> YACLControllerAdapter.toYaclControllerBuilder(yaclOption, option.type(), option.controller()))
+				.controller(yaclOption -> option.controller().controllerYACL(yaclOption, option.type()))
 				.available(option.modifiable())
 				.flags(toYaclOptionFlags(option))
 				.build();
