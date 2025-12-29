@@ -28,7 +28,7 @@ public class OptionBindingImpl<T> implements OptionBinding<T> {
 	}
 
 	@Override
-	public void set(T value) {		
+	public void set(T value) {
 		this.setter.accept(value);
 	}
 }

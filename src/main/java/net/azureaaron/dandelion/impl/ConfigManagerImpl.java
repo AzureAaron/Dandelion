@@ -12,7 +12,7 @@ import net.azureaaron.dandelion.systems.ConfigManager;
 import net.azureaaron.dandelion.systems.ConfigSerializer;
 import org.jspecify.annotations.Nullable;
 
-public class ConfigManagerImpl< T> implements ConfigManager<T> {
+public class ConfigManagerImpl<T> implements ConfigManager<T> {
 	private final Class<T> configClass;
 	private final Path path;
 	private final Gson gson;

@@ -13,7 +13,7 @@ public class ReflectionUtils {
 	/**
 	 * Retrieves the actual class representing an {@code object}. Sometimes, enums constants may be declared with a constant-specific
 	 * class body which results in {@code Object#getClass} returning the wrong class since when want the original enum type.
-	 * 
+	 *
 	 * For enums, this returns the class enclosing them; for all other types this returns the regular result of {@code Object#getClass}.
 	 */
 	@SuppressWarnings("unchecked")

@@ -26,9 +26,9 @@ public class MoulConfigDefinition extends Config {
 	}
 
 	@Override
-    public TitleRenderingBehaviour getTitleRenderingBehaviour(ProcessedOption option) {
-        return TitleRenderingBehaviour.WIDE_CENTERED_UNDERLINED;
-    }
+	public TitleRenderingBehaviour getTitleRenderingBehaviour(ProcessedOption option) {
+		return TitleRenderingBehaviour.WIDE_CENTERED_UNDERLINED;
+	}
 
 	@Override
 	public DescriptionRendereringBehaviour getDescriptionBehaviour(ProcessedOption option) {

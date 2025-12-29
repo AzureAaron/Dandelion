@@ -2,8 +2,6 @@ package net.azureaaron.dandelion.moulconfig.editor;
 
 import java.awt.Color;
 
-import org.jetbrains.annotations.NotNull;
-
 import io.github.notenoughupdates.moulconfig.ChromaColour;
 import io.github.notenoughupdates.moulconfig.GuiTextures;
 import io.github.notenoughupdates.moulconfig.common.MyResourceLocation;
@@ -30,7 +28,6 @@ public class DandelionColourEditor extends ComponentEditor {
 	}
 
 	@Override
-	@NotNull
 	public GuiComponent getDelegate() {
 		return this.component;
 	}
@@ -57,7 +54,7 @@ public class DandelionColourEditor extends ComponentEditor {
 		}
 
 		@Override
-		public void render(@NotNull GuiImmediateContext context) {
+		public void render(GuiImmediateContext context) {
 			int colour = this.getSetter.get().getRGB();
 			RenderContext renderContext = context.getRenderContext();
 
@@ -80,7 +77,7 @@ public class DandelionColourEditor extends ComponentEditor {
 
 		@SuppressWarnings("deprecation")
 		@Override
-		public boolean mouseEvent(@NotNull MouseEvent mouseEvent, @NotNull GuiImmediateContext context) {
+		public boolean mouseEvent(MouseEvent mouseEvent, GuiImmediateContext context) {
 			if (mouseEvent instanceof MouseEvent.Click click && click.getMouseState() && click.getMouseButton() == 0 && context.isHovered()) {
 				ColorSelectComponent component = new ColorSelectComponent(0, 0, this.toChromaColour().toLegacyString(), this::fromChromaColourString, this.editor::closeOverlay, this.hasAlpha, true);
 				//Clamp the Y so that the colour picker can't go off screen

@@ -20,7 +20,7 @@ public class YACLOptionGroupAdapter {
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
-    private static dev.isxander.yacl3.api.OptionGroup toYaclOptionGroup(net.azureaaron.dandelion.systems.OptionGroup group) {
+	private static dev.isxander.yacl3.api.OptionGroup toYaclOptionGroup(net.azureaaron.dandelion.systems.OptionGroup group) {
 		return switch (group) {
 			case ListOption listOption -> dev.isxander.yacl3.api.ListOption.createBuilder()
 					.name(listOption.name())
@@ -28,8 +28,8 @@ public class YACLOptionGroupAdapter {
 							.text(listOption.description())
 							.build())
 					.binding((List<Object>) listOption.binding().defaultValue(),
-                            () -> (List<Object>) listOption.binding().get(),
-                            listOption.binding()::set)
+							() -> (List<Object>) listOption.binding().get(),
+							listOption.binding()::set)
 					.controller(yaclOption -> YACLControllerAdapter.toYaclControllerBuilder(yaclOption, listOption.entryType(), listOption.entryController()))
 					.initial(listOption.initialValue())
 					.collapsed(listOption.collapsed())

@@ -22,7 +22,7 @@ import net.azureaaron.dandelion.systems.ConfigCategory;
 public class DandelionProcessedCategory implements ProcessedCategory {
 	/** The {@code ConfigCategory} that this category is bound to. */
 	private final ConfigCategory category;
-	/** 
+	/**
 	 * The complete list of options this category holds including editable ones under the root, group/accordion ones, and options
 	 * under groups/accordions.
 	 */
