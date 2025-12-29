@@ -3,7 +3,7 @@ package net.azureaaron.dandelion.systems.controllers;
 import java.util.function.Function;
 
 import net.azureaaron.dandelion.impl.controllers.EnumControllerImpl;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 
 public non-sealed interface EnumController<T extends Enum<T>> extends Controller<T> {
 
@@ -12,11 +12,11 @@ public non-sealed interface EnumController<T extends Enum<T>> extends Controller
 	}
 
 	boolean dropdown();
-	Function<T, Text> formatter();
+	Function<T, Component> formatter();
 
 	interface Builder<T extends Enum<T>> extends Controller.Builder<T, EnumController<T>> {
 		Builder<T> dropdown(boolean dropdown);
 
-		Builder<T> formatter(Function<T, Text> formatter);
+		Builder<T> formatter(Function<T, Component> formatter);
 	}
 }

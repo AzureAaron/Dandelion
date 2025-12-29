@@ -1,9 +1,9 @@
 package net.azureaaron.dandelion.yacl;
 
-import net.azureaaron.dandelion.systems.OptionGroup;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import net.azureaaron.dandelion.systems.OptionGroup;
 
 public class YACLConfigCategoryAdapter {
 

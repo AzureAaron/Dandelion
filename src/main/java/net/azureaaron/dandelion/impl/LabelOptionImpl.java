@@ -10,15 +10,15 @@ import net.azureaaron.dandelion.systems.OptionBinding;
 import net.azureaaron.dandelion.systems.OptionFlag;
 import net.azureaaron.dandelion.systems.OptionListener;
 import net.azureaaron.dandelion.systems.controllers.Controller;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.PlainTextContent;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.PlainTextContents;
+import net.minecraft.resources.Identifier;
 
 public class LabelOptionImpl implements LabelOption {
-	private final Text label;
+	private final Component label;
 
-	protected LabelOptionImpl(Text label) {
+	protected LabelOptionImpl(Component label) {
 		this.label = Objects.requireNonNull(label, "label must not be null");;
 	}
 
@@ -28,27 +28,27 @@ public class LabelOptionImpl implements LabelOption {
 	}
 
 	@Override
-	public Text name() {
-		return Text.empty();
+	public Component name() {
+		return Component.empty();
 	}
 
 	@Override
-	public List<Text> description() {
+	public List<Component> description() {
 		return List.of();
 	}
 
 	@Override
-	public List<Text> tags() {
+	public List<Component> tags() {
 		return List.of();
 	}
 
 	@Override
-	public OptionBinding<Text> binding() {
+	public OptionBinding<Component> binding() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public Controller<Text> controller() {
+	public Controller<Component> controller() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -63,34 +63,34 @@ public class LabelOptionImpl implements LabelOption {
 	}
 
 	@Override
-	public List<OptionListener<Text>> listeners() {
+	public List<OptionListener<Component>> listeners() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public Class<Text> type() {
-		return Text.class;
+	public Class<Component> type() {
+		return Component.class;
 	}
 
 	@Override
-	public Text label() {
+	public Component label() {
 		return this.label;
 	}
 
 	public static class LabelOptionBuilderImpl implements LabelOption.Builder {
-		private List<Text> label = List.of();
+		private List<Component> label = List.of();
 
 		@Override
-		public Builder label(Text... texts) {
+		public net.azureaaron.dandelion.systems.LabelOption.Builder label(Component... texts) {
 			this.label = List.of(texts);
 			return this;
 		}
 
 		@Override
 		public LabelOption build() {
-			Text concatted = MutableText.of(PlainTextContent.EMPTY);
+			Component concatted = MutableComponent.create(PlainTextContents.EMPTY);
 
-			for (Text text : this.label) {
+			for (Component text : this.label) {
 				concatted.getSiblings().add(text);
 			}
 

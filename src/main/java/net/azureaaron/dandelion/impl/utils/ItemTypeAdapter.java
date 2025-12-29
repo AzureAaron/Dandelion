@@ -11,19 +11,19 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
 
 public class ItemTypeAdapter implements JsonSerializer<Item>, JsonDeserializer<Item> {
 
 	@Override
 	public Item deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-		return Registries.ITEM.get(Identifier.of(json.getAsString().toLowerCase(Locale.CANADA)));
+		return BuiltInRegistries.ITEM.getValue(Identifier.parse(json.getAsString().toLowerCase(Locale.CANADA)));
 	}
 
 	@Override
 	public JsonElement serialize(Item src, Type typeOfSrc, JsonSerializationContext context) {
-		return new JsonPrimitive(Registries.ITEM.getId(src).toString());
+		return new JsonPrimitive(BuiltInRegistries.ITEM.getKey(src).toString());
 	}
 }

@@ -6,12 +6,12 @@ import io.github.notenoughupdates.moulconfig.TitleRenderingBehaviour;
 import io.github.notenoughupdates.moulconfig.common.text.StructuredText;
 import io.github.notenoughupdates.moulconfig.platform.MoulConfigPlatform;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedOption;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 
 public class MoulConfigDefinition extends Config {
-	private final Text title;
+	private final Component title;
 
-	protected MoulConfigDefinition(Text title) {
+	protected MoulConfigDefinition(Component title) {
 		this.title = title;
 	}
 

@@ -9,17 +9,17 @@ import org.jspecify.annotations.Nullable;
 import net.azureaaron.dandelion.systems.ConfigCategory;
 import net.azureaaron.dandelion.systems.Option;
 import net.azureaaron.dandelion.systems.OptionGroup;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 public class ConfigCategoryImpl implements ConfigCategory {
 	private final Identifier id;
-	private final Text name;
-	private final Text description;
+	private final Component name;
+	private final Component description;
 	private final OptionGroup rootGroup;
 	private final List<OptionGroup> groups;
 
-	protected ConfigCategoryImpl(Identifier id, Text name, Text description, OptionGroup rootGroup, List<OptionGroup> groups) {
+	protected ConfigCategoryImpl(Identifier id, Component name, Component description, OptionGroup rootGroup, List<OptionGroup> groups) {
 		this.id = Objects.requireNonNull(id, "id must not be null");
 		this.name = Objects.requireNonNull(name, "name must not be null");
 		this.description = Objects.requireNonNull(description, "description must not be null");
@@ -33,12 +33,12 @@ public class ConfigCategoryImpl implements ConfigCategory {
 	}
 
 	@Override
-	public Text name() {
+	public Component name() {
 		return this.name;
 	}
 
 	@Override
-	public Text description() {
+	public Component description() {
 		return this.description;
 	}
 
@@ -54,8 +54,8 @@ public class ConfigCategoryImpl implements ConfigCategory {
 
 	public static class ConfigCategoryBuilderImpl implements ConfigCategory.Builder {
 		private @Nullable Identifier id = null;
-		private Text name = Text.empty();
-		private Text description = Text.empty();
+		private Component name = Component.empty();
+		private Component description = Component.empty();
 		private List<Option<?>> rootOptions = new ArrayList<>();
 		private List<OptionGroup> groups = new ArrayList<>();
 
@@ -66,13 +66,13 @@ public class ConfigCategoryImpl implements ConfigCategory {
 		}
 
 		@Override
-		public Builder name(Text name) {
+		public Builder name(Component name) {
 			this.name = name;
 			return this;
 		}
 
 		@Override
-		public Builder description(Text description) {
+		public Builder description(Component description) {
 			this.description = description;
 			return this;
 		}
@@ -92,7 +92,7 @@ public class ConfigCategoryImpl implements ConfigCategory {
 		@Override
 		public ConfigCategory build() {
 			Objects.requireNonNull(this.id, "an id is required.");
-			return new ConfigCategoryImpl(this.id, this.name, this.description, new OptionGroupImpl(null, Text.empty(), List.of(), List.of(), false, List.copyOf(this.rootOptions)), List.copyOf(this.groups));
+			return new ConfigCategoryImpl(this.id, this.name, this.description, new OptionGroupImpl(null, Component.empty(), List.of(), List.of(), false, List.copyOf(this.rootOptions)), List.copyOf(this.groups));
 		}
 	}
 }

@@ -4,14 +4,14 @@ import java.util.Objects;
 import java.util.function.Function;
 
 import net.azureaaron.dandelion.systems.controllers.EnumController;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 
 public class EnumControllerImpl<T extends Enum<T>> implements EnumController<T> {
-	private static final Function<? extends Enum<?>, Text> TO_STRING_FORMATTER = v -> Text.of(v.toString());
+	private static final Function<? extends Enum<?>, Component> TO_STRING_FORMATTER = v -> Component.nullToEmpty(v.toString());
 	private final boolean dropdown;
-	private final Function<T, Text> formatter;
+	private final Function<T, Component> formatter;
 
-	protected EnumControllerImpl(boolean dropdown, Function<T, Text> formatter) {
+	protected EnumControllerImpl(boolean dropdown, Function<T, Component> formatter) {
 		this.dropdown = dropdown;
 		this.formatter = Objects.requireNonNull(formatter, "formatter must not be null");;
 	}
@@ -22,23 +22,23 @@ public class EnumControllerImpl<T extends Enum<T>> implements EnumController<T> 
 	}
 
 	@Override
-	public Function<T, Text> formatter() {
+	public Function<T, Component> formatter() {
 		return this.formatter;
 	}
 
 	public static class EnumControllerBuilderImpl<T extends Enum<T>> implements EnumController.Builder<T> {
 		private boolean dropdown = false;
 		@SuppressWarnings("unchecked")
-		private Function<T, Text> formatter = (Function<T, Text>) TO_STRING_FORMATTER;
+		private Function<T, Component> formatter = (Function<T, Component>) TO_STRING_FORMATTER;
 
 		@Override
-		public Builder<T> dropdown(boolean dropdown) {
+		public EnumController.Builder<T> dropdown(boolean dropdown) {
 			this.dropdown = dropdown;
 			return this;
 		}
 
 		@Override
-		public Builder<T> formatter(Function<T, Text> formatter) {
+		public EnumController.Builder<T> formatter(Function<T, Component> formatter) {
 			this.formatter = formatter;
 			return this;
 		}

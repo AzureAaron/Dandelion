@@ -11,7 +11,7 @@ import io.github.notenoughupdates.moulconfig.gui.GuiOptionEditor;
 import io.github.notenoughupdates.moulconfig.gui.editors.GuiOptionEditorAccordion;
 import io.github.notenoughupdates.moulconfig.platform.MoulConfigPlatform;
 import net.azureaaron.dandelion.systems.OptionGroup;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 
 /**
  * This class represents a {@code ProcessedOption} that maps to an {@code OptionGroup} or accordion (in MoulConfig terms) which
@@ -34,7 +34,7 @@ public class DandelionProcessedGroupOption extends DandelionProcessedOption {
 
 	@Override
 	public StructuredText getDescription() {
-		Text concat = Text.empty();
+		Component concat = Component.empty();
 		concat.getSiblings().addAll(this.group.description());
 
 		return MoulConfigPlatform.wrap(concat);
@@ -43,7 +43,7 @@ public class DandelionProcessedGroupOption extends DandelionProcessedOption {
 	@Override
 	public SearchTag[] getSearchTags() {
 		SearchTag[] tags = this.group.tags().stream()
-				.map(Text::getString)
+				.map(Component::getString)
 				.map(DandelionSearchTag::new)
 				.toArray(DandelionSearchTag[]::new);
 		return tags;

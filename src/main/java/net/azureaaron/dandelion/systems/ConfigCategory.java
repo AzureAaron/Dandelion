@@ -5,8 +5,8 @@ import java.util.List;
 import org.jspecify.annotations.Nullable;
 
 import net.azureaaron.dandelion.impl.ConfigCategoryImpl;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 public interface ConfigCategory {
 
@@ -16,9 +16,9 @@ public interface ConfigCategory {
 
 	Identifier id();
 
-	Text name();
+	Component name();
 
-	Text description();
+	Component description();
 
 	@Nullable OptionGroup rootGroup();
 
@@ -27,9 +27,9 @@ public interface ConfigCategory {
 	non-sealed interface Builder extends OptionAdder {
 		Builder id(Identifier id);
 
-		Builder name(Text name);
+		Builder name(Component name);
 
-		Builder description(Text description);
+		Builder description(Component description);
 
 		@Override
 		Builder option(Option<?> option);

@@ -18,8 +18,8 @@ import net.azureaaron.dandelion.systems.ConfigManager;
 import net.azureaaron.dandelion.systems.Option;
 import net.azureaaron.dandelion.systems.OptionGroup;
 import net.fabricmc.fabric.api.client.screen.v1.Screens;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 
 public class MoulConfigAdapter {
 	/**
@@ -27,12 +27,12 @@ public class MoulConfigAdapter {
 	 */
 	private static final int ROOT_ACCORDION = -1;
 	private final ConfigManager<?> manager;
-	private final Text title;
+	private final Component title;
 	private final MoulConfigDefinition configDefinition;
 	//LinkedHashMap to preserve insertion order
 	private final Map<Option<?>, BiFunction<Integer, MoulConfigDefinition, DandelionProcessedEditableOption<?>>> editableOptionFactories = new LinkedHashMap<>();
 
-	public MoulConfigAdapter(ConfigManager<?> manager, Text title) {
+	public MoulConfigAdapter(ConfigManager<?> manager, Component title) {
 		this.manager = manager;
 		this.title = title;
 		this.configDefinition = new MoulConfigDefinition(title);

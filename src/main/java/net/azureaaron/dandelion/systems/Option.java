@@ -8,8 +8,8 @@ import org.jspecify.annotations.Nullable;
 
 import net.azureaaron.dandelion.impl.OptionImpl;
 import net.azureaaron.dandelion.systems.controllers.Controller;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 public interface Option<T> {
 
@@ -19,11 +19,11 @@ public interface Option<T> {
 
 	@Nullable Identifier id();
 
-	Text name();
+	Component name();
 
-	List<Text> description();
+	List<Component> description();
 
-	List<Text> tags();
+	List<Component> tags();
 
 	OptionBinding<T> binding();
 
@@ -40,11 +40,11 @@ public interface Option<T> {
 	interface Builder<T> {
 		Builder<T> id(Identifier id);
 
-		Builder<T> name(Text name);
+		Builder<T> name(Component name);
 
-		Builder<T> description(Text... texts);
+		Builder<T> description(Component... texts);
 
-		Builder<T> tags(Text... tags);
+		Builder<T> tags(Component... tags);
 
 		Builder<T> binding(T defaultValue, Supplier<T> getter, Consumer<T> setter);
 

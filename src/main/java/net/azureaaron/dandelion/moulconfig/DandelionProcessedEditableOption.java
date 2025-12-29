@@ -13,7 +13,7 @@ import io.github.notenoughupdates.moulconfig.common.text.StructuredText;
 import io.github.notenoughupdates.moulconfig.platform.MoulConfigPlatform;
 import net.azureaaron.dandelion.systems.Option;
 import net.azureaaron.dandelion.systems.OptionListener;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 
 /**
  * Represents an actual option which can be edited in the config, this option will either lie within a group or under the
@@ -36,7 +36,7 @@ public abstract class DandelionProcessedEditableOption<T> extends DandelionProce
 
 	@Override
 	public StructuredText getDescription() {
-		Text concat = Text.empty();
+		Component concat = Component.empty();
 		concat.getSiblings().addAll(this.option.description());
 
 		return MoulConfigPlatform.wrap(concat);
@@ -45,7 +45,7 @@ public abstract class DandelionProcessedEditableOption<T> extends DandelionProce
 	@Override
 	public SearchTag[] getSearchTags() {
 		SearchTag[] tags = this.option.tags().stream()
-				.map(Text::getString)
+				.map(Component::getString)
 				.map(DandelionSearchTag::new)
 				.toArray(DandelionSearchTag[]::new);
 		return tags;

@@ -1,7 +1,7 @@
 package net.azureaaron.dandelion.systems.controllers;
 
 import net.azureaaron.dandelion.impl.controllers.ItemControllerImpl;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 
 public non-sealed interface ItemController extends Controller<Item> {
 

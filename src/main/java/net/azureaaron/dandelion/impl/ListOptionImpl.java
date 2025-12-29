@@ -1,5 +1,13 @@
 package net.azureaaron.dandelion.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
+import org.jspecify.annotations.Nullable;
+
 import net.azureaaron.dandelion.impl.utils.ReflectionUtils;
 import net.azureaaron.dandelion.systems.ListOption;
 import net.azureaaron.dandelion.systems.Option;
@@ -7,21 +15,14 @@ import net.azureaaron.dandelion.systems.OptionBinding;
 import net.azureaaron.dandelion.systems.OptionFlag;
 import net.azureaaron.dandelion.systems.OptionListener;
 import net.azureaaron.dandelion.systems.controllers.Controller;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import org.jspecify.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 public class ListOptionImpl<T> implements ListOption<T> {
 	private final @Nullable Identifier id;
-	private final Text name;
-	private final List<Text> description;
-	private final List<Text> tags;
+	private final Component name;
+	private final List<Component> description;
+	private final List<Component> tags;
 	private final OptionBinding<List<T>> binding;
 	private final Controller<T> controller;
 	private final Supplier<T> initialValue;
@@ -34,7 +35,7 @@ public class ListOptionImpl<T> implements ListOption<T> {
 	private final List<Option<T>> entries;
 
 	@SuppressWarnings("unchecked")
-	public ListOptionImpl(@Nullable Identifier id, Text name, List<Text> description, List<Text> tags, OptionBinding<List<T>> binding, Controller<T> controller, Supplier<T> initialValue, boolean collapsed, boolean modifiable, List<OptionFlag> flags, List<OptionListener<List<T>>> listeners) {
+	public ListOptionImpl(@Nullable Identifier id, Component name, List<Component> description, List<Component> tags, OptionBinding<List<T>> binding, Controller<T> controller, Supplier<T> initialValue, boolean collapsed, boolean modifiable, List<OptionFlag> flags, List<OptionListener<List<T>>> listeners) {
 		this.id = id;
 		this.name = Objects.requireNonNull(name, "name must not be null");
 		this.description = Objects.requireNonNull(description, "description must not be null");
@@ -57,17 +58,17 @@ public class ListOptionImpl<T> implements ListOption<T> {
 	}
 
 	@Override
-	public Text name() {
+	public Component name() {
 		return this.name;
 	}
 
 	@Override
-	public List<Text> description() {
+	public List<Component> description() {
 		return this.description;
 	}
 
 	@Override
-	public List<Text> tags() {
+	public List<Component> tags() {
 		return this.tags;
 	}
 
@@ -150,9 +151,9 @@ public class ListOptionImpl<T> implements ListOption<T> {
 
 	public static class BuilderImpl<T> implements ListOption.Builder<T> {
 		private @Nullable Identifier id = null;
-		private Text name = Text.empty();
-		private List<Text> description = java.util.List.of();
-		private List<Text> tags = List.of();
+		private Component name = Component.empty();
+		private List<Component> description = java.util.List.of();
+		private List<Component> tags = List.of();
 		private @Nullable OptionBinding<List<T>> binding = null;
 		private @Nullable Controller<T> controller = null;
 		private @Nullable Supplier<T> initialValue = null;
@@ -168,19 +169,19 @@ public class ListOptionImpl<T> implements ListOption<T> {
 		}
 
 		@Override
-		public ListOption.Builder<T> name(Text name) {
+		public ListOption.Builder<T> name(Component name) {
 			this.name = name;
 			return this;
 		}
 
 		@Override
-		public ListOption.Builder<T> description(Text... texts) {
+		public ListOption.Builder<T> description(Component... texts) {
 			this.description = List.of(texts);
 			return this;
 		}
 
 		@Override
-		public ListOption.Builder<T> tags(Text... tags) {
+		public ListOption.Builder<T> tags(Component... tags) {
 			this.tags = List.of(tags);
 			return this;
 		}

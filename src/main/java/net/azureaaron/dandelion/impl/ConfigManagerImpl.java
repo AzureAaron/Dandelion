@@ -4,13 +4,14 @@ import java.nio.file.Path;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
 
+import org.jspecify.annotations.Nullable;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import net.azureaaron.dandelion.impl.utils.ReflectionUtils;
 import net.azureaaron.dandelion.systems.ConfigManager;
 import net.azureaaron.dandelion.systems.ConfigSerializer;
-import org.jspecify.annotations.Nullable;
 
 public class ConfigManagerImpl<T> implements ConfigManager<T> {
 	private final Class<T> configClass;

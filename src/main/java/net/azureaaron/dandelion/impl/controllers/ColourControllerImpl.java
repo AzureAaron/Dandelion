@@ -18,7 +18,7 @@ public class ColourControllerImpl implements ColourController {
 		private boolean hasAlpha = false;
 
 		@Override
-		public Builder hasAlpha(boolean hasAlpha) {
+		public ColourController.Builder hasAlpha(boolean hasAlpha) {
 			this.hasAlpha = hasAlpha;
 			return this;
 		}

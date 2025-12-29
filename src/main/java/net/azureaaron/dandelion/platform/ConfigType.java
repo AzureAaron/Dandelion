@@ -1,6 +1,6 @@
 package net.azureaaron.dandelion.platform;
 
-import net.minecraft.client.resource.language.I18n;
+import net.minecraft.client.resources.language.I18n;
 
 public enum ConfigType {
 	YACL,
@@ -8,6 +8,6 @@ public enum ConfigType {
 
 	@Override
 	public String toString() {
-		return I18n.translate("text.dandelion.configType." + this.name());
+		return I18n.get("text.dandelion.configType." + this.name());
 	}
 }

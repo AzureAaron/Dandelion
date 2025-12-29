@@ -3,9 +3,9 @@ package net.azureaaron.dandelion.systems;
 import java.util.function.Consumer;
 
 import net.azureaaron.dandelion.impl.ButtonOptionImpl;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 public interface ButtonOption extends Option<Consumer<Screen>> {
 
@@ -13,7 +13,7 @@ public interface ButtonOption extends Option<Consumer<Screen>> {
 		return new ButtonOptionImpl.ButtonOptionBuilderImpl();
 	}
 
-	Text prompt();
+	Component prompt();
 
 	Consumer<Screen> action();
 
@@ -21,13 +21,13 @@ public interface ButtonOption extends Option<Consumer<Screen>> {
 	interface Builder {
 		Builder id(Identifier id);
 
-		Builder name(Text name);
+		Builder name(Component name);
 
-		Builder description(Text... texts);
+		Builder description(Component... texts);
 
-		Builder tags(Text... tags);
+		Builder tags(Component... tags);
 
-		Builder prompt(Text prompt);
+		Builder prompt(Component prompt);
 
 		Builder action(Consumer<Screen> action);
 

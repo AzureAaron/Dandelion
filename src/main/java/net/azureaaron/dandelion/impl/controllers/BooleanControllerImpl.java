@@ -28,13 +28,13 @@ public class BooleanControllerImpl implements BooleanController {
 		private boolean coloured = false;
 
 		@Override
-		public Builder booleanStyle(BooleanStyle style) {
+		public BooleanController.Builder booleanStyle(BooleanStyle style) {
 			this.style = style;
 			return this;
 		}
 
 		@Override
-		public Builder coloured(boolean coloured) {
+		public BooleanController.Builder coloured(boolean coloured) {
 			this.coloured = coloured;
 			return this;
 		}

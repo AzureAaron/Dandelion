@@ -1,18 +1,18 @@
 package net.azureaaron.dandelion.systems;
 
 import net.azureaaron.dandelion.impl.LabelOptionImpl;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 
-public interface LabelOption extends Option<Text> {
+public interface LabelOption extends Option<Component> {
 
 	static Builder createBuilder() {
 		return new LabelOptionImpl.LabelOptionBuilderImpl();
 	}
 
-	Text label();
+	Component label();
 
 	interface Builder {
-		Builder label(Text... texts);
+		Builder label(Component... texts);
 
 		LabelOption build();
 	}

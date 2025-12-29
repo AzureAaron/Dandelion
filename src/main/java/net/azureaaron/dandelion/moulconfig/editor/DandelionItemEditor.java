@@ -11,11 +11,11 @@ import io.github.notenoughupdates.moulconfig.gui.editors.ComponentEditor;
 import io.github.notenoughupdates.moulconfig.observer.GetSetter;
 import io.github.notenoughupdates.moulconfig.platform.MoulConfigPlatform;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedOption;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 
 public class DandelionItemEditor extends ComponentEditor {
 	private final GuiComponent component;
@@ -33,7 +33,7 @@ public class DandelionItemEditor extends ComponentEditor {
 		GetSetter<IItemStack> itemStackGetter = new GetSetter<>() {
 			@Override
 			public IItemStack get() {
-				return MoulConfigPlatform.wrap(new ItemStack((ItemConvertible) option.get()));
+				return MoulConfigPlatform.wrap(new ItemStack((ItemLike) option.get()));
 			}
 
 			@Override
@@ -54,12 +54,12 @@ public class DandelionItemEditor extends ComponentEditor {
 
 				//Only update the value when a valid item is has been typed in
 				if (id != null) {
-					option.set(Registries.ITEM.get(id));
+					option.set(BuiltInRegistries.ITEM.getValue(id));
 				}
 			}
 		};
 
-		this.lastText = Registries.ITEM.getId((Item) option.get()).toString();
+		this.lastText = BuiltInRegistries.ITEM.getKey((Item) option.get()).toString();
 		this.component = this.wrapComponent(
 				new ColumnComponent(
 						new CenterComponent(new ItemStackComponent(itemStackGetter)),

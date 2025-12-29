@@ -6,8 +6,8 @@ import org.apache.commons.lang3.function.TriFunction;
 
 import net.azureaaron.dandelion.impl.DandelionConfigScreenImpl;
 import net.azureaaron.dandelion.platform.ConfigType;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 
 public interface DandelionConfigScreen {
 
@@ -19,7 +19,7 @@ public interface DandelionConfigScreen {
 
 	//TODO add support for moulconfig social links
 	interface Builder {
-		Builder title(Text title);
+		Builder title(Component title);
 
 		Builder category(ConfigCategory category);
 

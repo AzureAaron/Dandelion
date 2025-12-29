@@ -5,8 +5,8 @@ import java.util.List;
 import org.jspecify.annotations.Nullable;
 
 import net.azureaaron.dandelion.impl.OptionGroupImpl;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 public interface OptionGroup {
 
@@ -16,11 +16,11 @@ public interface OptionGroup {
 
 	@Nullable Identifier id();
 
-	Text name();
+	Component name();
 
-	List<Text> description();
+	List<Component> description();
 
-	List<Text> tags();
+	List<Component> tags();
 
 	boolean collapsed();
 
@@ -29,11 +29,11 @@ public interface OptionGroup {
 	non-sealed interface Builder extends OptionAdder {
 		Builder id(Identifier id);
 
-		Builder name(Text name);
+		Builder name(Component name);
 
-		Builder description(Text... texts);
+		Builder description(Component... texts);
 
-		Builder tags(Text... tags);
+		Builder tags(Component... tags);
 
 		Builder collapsed(boolean collapsed);
 

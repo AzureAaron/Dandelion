@@ -5,12 +5,12 @@ import java.util.List;
 import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import net.azureaaron.dandelion.systems.ConfigCategory;
 import net.azureaaron.dandelion.systems.ConfigManager;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 
 public class YACLScreenAdapter {
 
-	public static Screen generateYaclScreen(ConfigManager<?> manager, Text title, List<ConfigCategory> categories, Screen parent) {
+	public static Screen generateYaclScreen(ConfigManager<?> manager, Component title, List<ConfigCategory> categories, Screen parent) {
 		var yaclScreenBuilder = YetAnotherConfigLib.createBuilder()
 				.title(title)
 				.save(manager::save);

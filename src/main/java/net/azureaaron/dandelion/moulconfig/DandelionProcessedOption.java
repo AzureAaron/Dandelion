@@ -1,10 +1,11 @@
 package net.azureaaron.dandelion.moulconfig;
 
+import org.jspecify.annotations.Nullable;
+
 import io.github.notenoughupdates.moulconfig.Config;
 import io.github.notenoughupdates.moulconfig.gui.GuiOptionEditor;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedCategory;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedOption;
-import org.jspecify.annotations.Nullable;
 
 /**
  * An abstract processed option which will either represent an editable option or a group/accordion option.

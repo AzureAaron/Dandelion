@@ -28,10 +28,10 @@ import net.azureaaron.dandelion.systems.controllers.FloatController;
 import net.azureaaron.dandelion.systems.controllers.IntegerController;
 import net.azureaaron.dandelion.systems.controllers.ItemController;
 import net.azureaaron.dandelion.systems.controllers.StringController;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.item.Item;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 
 public class MoulConfigEditableOptionAdapter {
 
@@ -66,7 +66,7 @@ public class MoulConfigEditableOptionAdapter {
 				@Override
 				public Object get() {
 					Runnable action = () -> {
-						((ButtonOption) this.option).action().accept(MinecraftClient.getInstance().currentScreen);
+						((ButtonOption) this.option).action().accept(Minecraft.getInstance().screen);
 					};
 
 					return action;
@@ -83,7 +83,7 @@ public class MoulConfigEditableOptionAdapter {
 
 	private static BiFunction<Integer, MoulConfigDefinition, DandelionProcessedEditableOption<?>> createLabelOption(LabelOption label) {
 		return (accordionId, configDefinition) -> {
-			return new DandelionProcessedEditableOption<Text>(label, accordionId, configDefinition) {
+			return new DandelionProcessedEditableOption<Component>(label, accordionId, configDefinition) {
 				@Override
 				protected GuiOptionEditor createEditor() {
 					return new DandelionLabelEditor(this, MoulConfigPlatform.wrap(((LabelOption) this.option).label()));
@@ -122,7 +122,7 @@ public class MoulConfigEditableOptionAdapter {
 					T[] constants = this.option.type().getEnumConstants();
 					String[] displayValues = Arrays.stream(constants)
 							.map(((EnumController<T>) this.option.controller()).formatter()::apply)
-							.map(Text::getString)
+							.map(Component::getString)
 							.toArray(String[]::new);
 					GuiOptionEditorDropdown editor = new GuiOptionEditorDropdown(this, displayValues, true);
 					((GuiOptionEditorDropdownAccessor) editor).setConstants(constants);

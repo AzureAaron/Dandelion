@@ -12,12 +12,12 @@ import net.azureaaron.dandelion.systems.ConfigCategory;
 import net.azureaaron.dandelion.systems.ConfigManager;
 import net.azureaaron.dandelion.systems.DandelionConfigScreen;
 import net.azureaaron.dandelion.yacl.YACLScreenAdapter;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 
 public class DandelionConfigScreenImpl<T> implements DandelionConfigScreen {
 	private final ConfigManager<T> manager;
-	private final Text title;
+	private final Component title;
 	private final List<ConfigCategory> categories;
 	private final String search;
 
@@ -43,12 +43,12 @@ public class DandelionConfigScreenImpl<T> implements DandelionConfigScreen {
 	}
 
 	protected static class DandelionConfigScreenBuilderImpl implements DandelionConfigScreen.Builder {
-		private Text title = Text.empty();
+		private Component title = Component.empty();
 		private List<ConfigCategory> categories = new ArrayList<>();
 		private String search = "";
 
 		@Override
-		public Builder title(Text title) {
+		public Builder title(Component title) {
 			this.title = title;
 			return this;
 		}

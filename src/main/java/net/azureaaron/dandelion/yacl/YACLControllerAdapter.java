@@ -26,8 +26,8 @@ import net.azureaaron.dandelion.systems.controllers.IntegerController;
 import net.azureaaron.dandelion.systems.controllers.ItemController;
 import net.azureaaron.dandelion.systems.controllers.NumberController;
 import net.azureaaron.dandelion.systems.controllers.StringController;
-import net.minecraft.item.Item;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 
 public class YACLControllerAdapter {
 
@@ -52,7 +52,7 @@ public class YACLControllerAdapter {
 			}
 
 			case EnumController<?> enumController -> {
-				ValueFormatter<T> yaclFormatter = ((Function<T, Text>) enumController.formatter())::apply;
+				ValueFormatter<T> yaclFormatter = ((Function<T, Component>) enumController.formatter())::apply;
 
 				if (!enumController.dropdown()) {
 					return EnumControllerBuilder.create((Option<Enum>) yaclOption).enumClass(type).formatValue(yaclFormatter);

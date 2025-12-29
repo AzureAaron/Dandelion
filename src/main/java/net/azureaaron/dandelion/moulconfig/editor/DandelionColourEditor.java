@@ -13,8 +13,8 @@ import io.github.notenoughupdates.moulconfig.gui.component.ColorSelectComponent;
 import io.github.notenoughupdates.moulconfig.gui.editors.ComponentEditor;
 import io.github.notenoughupdates.moulconfig.observer.GetSetter;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedOption;
-import net.minecraft.util.Colors;
-import net.minecraft.util.math.ColorHelper;
+import net.minecraft.util.ARGB;
+import net.minecraft.util.CommonColors;
 
 public class DandelionColourEditor extends ComponentEditor {
 	private static final MyResourceLocation ALPHA_BUTTON = new MyResourceLocation("dandelion", "textures/gui/button_alpha.png");
@@ -61,7 +61,7 @@ public class DandelionColourEditor extends ComponentEditor {
 			if (this.hasAlpha) {
 				//Draw alpha button
 				renderContext.drawComplexTexture(ALPHA_BUTTON, 0, 0, context.getWidth(), context.getHeight(), block -> {
-					block.color(Colors.WHITE);
+					block.color(CommonColors.WHITE);
 				});
 
 				//Draw tinted overlay
@@ -70,7 +70,7 @@ public class DandelionColourEditor extends ComponentEditor {
 				});
 			} else {
 				renderContext.drawComplexTexture(GuiTextures.BUTTON_WHITE, 0, 0, context.getWidth(), context.getHeight(), block -> {
-					block.color(ColorHelper.fullAlpha(colour));
+					block.color(ARGB.opaque(colour));
 				});
 			}
 		}
