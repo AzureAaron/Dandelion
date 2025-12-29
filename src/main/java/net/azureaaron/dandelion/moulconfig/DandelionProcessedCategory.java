@@ -44,8 +44,7 @@ public class DandelionProcessedCategory implements ProcessedCategory {
 	}
 
 	@Override
-	@Nullable
-	public String getDebugDeclarationLocation() {
+	public @Nullable String getDebugDeclarationLocation() {
 		return this.category.id().toString();
 	}
 
@@ -65,8 +64,7 @@ public class DandelionProcessedCategory implements ProcessedCategory {
 	}
 
 	@Override
-	@Nullable
-	public String getParentCategoryId() {
+	public @Nullable String getParentCategoryId() {
 		return null;
 	}
 

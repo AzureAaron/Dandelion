@@ -17,8 +17,7 @@ public interface Option<T> {
 		return new OptionImpl.OptionBuilderImpl<>();
 	}
 
-	@Nullable
-	Identifier id();
+	@Nullable Identifier id();
 
 	Text name();
 

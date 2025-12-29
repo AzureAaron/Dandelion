@@ -17,8 +17,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class ButtonOptionImpl implements ButtonOption {
-	@Nullable
-	private final Identifier id;
+	private final @Nullable Identifier id;
 	private final Text name;
 	private final List<Text> description;
 	private final Text prompt;
@@ -35,8 +34,7 @@ public class ButtonOptionImpl implements ButtonOption {
 	}
 
 	@Override
-	@Nullable
-	public Identifier id() {
+	public @Nullable Identifier id() {
 		return this.id;
 	}
 

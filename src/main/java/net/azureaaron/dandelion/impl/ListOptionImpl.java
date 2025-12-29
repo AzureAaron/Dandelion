@@ -18,8 +18,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class ListOptionImpl<T> implements ListOption<T> {
-	@Nullable
-	private final Identifier id;
+	private final @Nullable Identifier id;
 	private final Text name;
 	private final List<Text> description;
 	private final List<Text> tags;
@@ -53,8 +52,7 @@ public class ListOptionImpl<T> implements ListOption<T> {
 	}
 
 	@Override
-	@Nullable
-	public Identifier id() {
+	public @Nullable Identifier id() {
 		return this.id;
 	}
 

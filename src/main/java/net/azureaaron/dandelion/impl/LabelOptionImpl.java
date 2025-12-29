@@ -23,8 +23,7 @@ public class LabelOptionImpl implements LabelOption {
 	}
 
 	@Override
-	@Nullable
-	public Identifier id() {
+	public @Nullable Identifier id() {
 		throw new UnsupportedOperationException();
 	}
 

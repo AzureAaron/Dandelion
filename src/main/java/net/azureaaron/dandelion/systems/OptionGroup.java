@@ -14,8 +14,7 @@ public interface OptionGroup {
 		return new OptionGroupImpl.OptionGroupBuilderImpl();
 	}
 
-	@Nullable
-	Identifier id();
+	@Nullable Identifier id();
 
 	Text name();
 

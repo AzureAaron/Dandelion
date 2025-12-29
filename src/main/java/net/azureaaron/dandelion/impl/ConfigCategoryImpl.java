@@ -43,8 +43,7 @@ public class ConfigCategoryImpl implements ConfigCategory {
 	}
 
 	@Override
-	@Nullable
-	public OptionGroup rootGroup() {
+	public @Nullable OptionGroup rootGroup() {
 		return this.rootGroup;
 	}
 

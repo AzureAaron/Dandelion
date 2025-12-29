@@ -12,8 +12,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class OptionGroupImpl implements OptionGroup {
-	@Nullable
-	private final Identifier id;
+	private final @Nullable Identifier id;
 	private final Text name;
 	private final List<Text> description;
 	private final List<Text> tags;
@@ -30,8 +29,7 @@ public class OptionGroupImpl implements OptionGroup {
 	}
 
 	@Override
-	@Nullable
-	public Identifier id() {
+	public @Nullable Identifier id() {
 		return this.id;
 	}
 

@@ -82,8 +82,7 @@ public abstract class DandelionProcessedEditableOption<T> extends DandelionProce
 	}
 
 	@Override
-	@Nullable
-	public String getDebugDeclarationLocation() {
+	public @Nullable String getDebugDeclarationLocation() {
 		return this.option.id() != null ? this.option.id().toString() : this.getName().getText();
 	}
 }

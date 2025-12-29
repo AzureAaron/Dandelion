@@ -65,8 +65,7 @@ public class DandelionProcessedGroupOption extends DandelionProcessedOption {
 	}
 
 	@Override
-	@Nullable
-	public String getDebugDeclarationLocation() {
+	public @Nullable String getDebugDeclarationLocation() {
 		return this.group.id() != null ? this.group.id().toString() : this.getName().getText();
 	}
 

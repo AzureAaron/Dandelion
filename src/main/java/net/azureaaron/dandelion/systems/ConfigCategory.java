@@ -20,8 +20,7 @@ public interface ConfigCategory {
 
 	Text description();
 
-	@Nullable
-	OptionGroup rootGroup();
+	@Nullable OptionGroup rootGroup();
 
 	List<OptionGroup> groups();
 
