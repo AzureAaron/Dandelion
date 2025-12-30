@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version "${loom_version}"
+	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
 	id 'maven-publish'
 	id 'com.gradleup.shadow' version "${shadow_version}"
 	id "com.diffplug.spotless" version "${spotless_version}"
@@ -51,7 +51,7 @@ dependencies {
 	modImplementation("dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric")
 
 	//MoulConfig
-	shadowMe(modImplementation("org.notenoughupdates.moulconfig:${project.moulconfig_flavour}:${project.moulconfig_version}"))
+	shadowMe(modCompileOnly("org.notenoughupdates.moulconfig:${project.moulconfig_flavour}:${project.moulconfig_version}"))
 }
 
 loom {
