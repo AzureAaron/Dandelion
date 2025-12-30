@@ -3,7 +3,7 @@ package net.azureaaron.dandelion.impl.controllers;
 import java.util.Objects;
 import java.util.function.Function;
 
-import net.azureaaron.dandelion.systems.controllers.EnumController;
+import net.azureaaron.dandelion.api.controllers.EnumController;
 import net.minecraft.network.chat.Component;
 
 public class EnumControllerImpl<T extends Enum<T>> implements EnumController<T> {

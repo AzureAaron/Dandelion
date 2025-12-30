@@ -5,11 +5,11 @@ import java.util.Objects;
 
 import org.jspecify.annotations.Nullable;
 
-import net.azureaaron.dandelion.systems.LabelOption;
-import net.azureaaron.dandelion.systems.OptionBinding;
-import net.azureaaron.dandelion.systems.OptionFlag;
-import net.azureaaron.dandelion.systems.OptionListener;
-import net.azureaaron.dandelion.systems.controllers.Controller;
+import net.azureaaron.dandelion.api.LabelOption;
+import net.azureaaron.dandelion.api.OptionBinding;
+import net.azureaaron.dandelion.api.OptionFlag;
+import net.azureaaron.dandelion.api.OptionListener;
+import net.azureaaron.dandelion.api.controllers.Controller;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.PlainTextContents;
@@ -81,7 +81,7 @@ public class LabelOptionImpl implements LabelOption {
 		private List<Component> label = List.of();
 
 		@Override
-		public net.azureaaron.dandelion.systems.LabelOption.Builder label(Component... texts) {
+		public net.azureaaron.dandelion.api.LabelOption.Builder label(Component... texts) {
 			this.label = List.of(texts);
 			return this;
 		}

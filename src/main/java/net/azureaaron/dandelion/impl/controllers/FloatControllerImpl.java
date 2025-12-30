@@ -2,7 +2,7 @@ package net.azureaaron.dandelion.impl.controllers;
 
 import java.util.Objects;
 
-import net.azureaaron.dandelion.systems.controllers.FloatController;
+import net.azureaaron.dandelion.api.controllers.FloatController;
 
 public class FloatControllerImpl implements FloatController {
 	private final float min;

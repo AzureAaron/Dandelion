@@ -8,13 +8,13 @@ import java.util.function.Supplier;
 
 import org.jspecify.annotations.Nullable;
 
+import net.azureaaron.dandelion.api.ListOption;
+import net.azureaaron.dandelion.api.Option;
+import net.azureaaron.dandelion.api.OptionBinding;
+import net.azureaaron.dandelion.api.OptionFlag;
+import net.azureaaron.dandelion.api.OptionListener;
+import net.azureaaron.dandelion.api.controllers.Controller;
 import net.azureaaron.dandelion.impl.utils.ReflectionUtils;
-import net.azureaaron.dandelion.systems.ListOption;
-import net.azureaaron.dandelion.systems.Option;
-import net.azureaaron.dandelion.systems.OptionBinding;
-import net.azureaaron.dandelion.systems.OptionFlag;
-import net.azureaaron.dandelion.systems.OptionListener;
-import net.azureaaron.dandelion.systems.controllers.Controller;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 

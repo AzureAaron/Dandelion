@@ -1,6 +1,6 @@
 package net.azureaaron.dandelion.impl.controllers;
 
-import net.azureaaron.dandelion.systems.controllers.ItemController;
+import net.azureaaron.dandelion.api.controllers.ItemController;
 
 public class ItemControllerImpl implements ItemController {
 	protected ItemControllerImpl() {}

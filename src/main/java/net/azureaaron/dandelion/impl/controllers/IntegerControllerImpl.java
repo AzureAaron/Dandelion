@@ -2,7 +2,7 @@ package net.azureaaron.dandelion.impl.controllers;
 
 import java.util.Objects;
 
-import net.azureaaron.dandelion.systems.controllers.IntegerController;
+import net.azureaaron.dandelion.api.controllers.IntegerController;
 
 public class IntegerControllerImpl implements IntegerController {
 	private final int min;

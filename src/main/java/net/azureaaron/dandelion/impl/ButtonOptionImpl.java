@@ -7,11 +7,11 @@ import java.util.function.Consumer;
 import org.apache.commons.lang3.function.Consumers;
 import org.jspecify.annotations.Nullable;
 
-import net.azureaaron.dandelion.systems.ButtonOption;
-import net.azureaaron.dandelion.systems.OptionBinding;
-import net.azureaaron.dandelion.systems.OptionFlag;
-import net.azureaaron.dandelion.systems.OptionListener;
-import net.azureaaron.dandelion.systems.controllers.Controller;
+import net.azureaaron.dandelion.api.ButtonOption;
+import net.azureaaron.dandelion.api.OptionBinding;
+import net.azureaaron.dandelion.api.OptionFlag;
+import net.azureaaron.dandelion.api.OptionListener;
+import net.azureaaron.dandelion.api.controllers.Controller;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -104,37 +104,37 @@ public class ButtonOptionImpl implements ButtonOption {
 		private Consumer<Screen> action = Consumers.nop();
 
 		@Override
-		public net.azureaaron.dandelion.systems.ButtonOption.Builder id(Identifier id) {
+		public net.azureaaron.dandelion.api.ButtonOption.Builder id(Identifier id) {
 			this.id = id;
 			return this;
 		}
 
 		@Override
-		public net.azureaaron.dandelion.systems.ButtonOption.Builder name(Component name) {
+		public net.azureaaron.dandelion.api.ButtonOption.Builder name(Component name) {
 			this.name = name;
 			return this;
 		}
 
 		@Override
-		public net.azureaaron.dandelion.systems.ButtonOption.Builder description(Component... texts) {
+		public net.azureaaron.dandelion.api.ButtonOption.Builder description(Component... texts) {
 			this.description = List.of(texts);
 			return this;
 		}
 
 		@Override
-		public net.azureaaron.dandelion.systems.ButtonOption.Builder tags(Component... tags) {
+		public net.azureaaron.dandelion.api.ButtonOption.Builder tags(Component... tags) {
 			this.tags = List.of(tags);
 			return this;
 		}
 
 		@Override
-		public net.azureaaron.dandelion.systems.ButtonOption.Builder prompt(Component prompt) {
+		public net.azureaaron.dandelion.api.ButtonOption.Builder prompt(Component prompt) {
 			this.prompt = prompt;
 			return this;
 		}
 
 		@Override
-		public net.azureaaron.dandelion.systems.ButtonOption.Builder action(Consumer<Screen> action) {
+		public net.azureaaron.dandelion.api.ButtonOption.Builder action(Consumer<Screen> action) {
 			this.action = action;
 			return this;
 		}

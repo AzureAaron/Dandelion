@@ -9,9 +9,9 @@ import org.jspecify.annotations.Nullable;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import net.azureaaron.dandelion.api.ConfigManager;
+import net.azureaaron.dandelion.api.ConfigSerializer;
 import net.azureaaron.dandelion.impl.utils.ReflectionUtils;
-import net.azureaaron.dandelion.systems.ConfigManager;
-import net.azureaaron.dandelion.systems.ConfigSerializer;
 
 public class ConfigManagerImpl<T> implements ConfigManager<T> {
 	private final Class<T> configClass;

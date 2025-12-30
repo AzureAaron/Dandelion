@@ -6,12 +6,12 @@ import java.util.Objects;
 
 import org.apache.commons.lang3.function.TriFunction;
 
-import net.azureaaron.dandelion.moulconfig.MoulConfigAdapter;
-import net.azureaaron.dandelion.platform.ConfigType;
-import net.azureaaron.dandelion.systems.ConfigCategory;
-import net.azureaaron.dandelion.systems.ConfigManager;
-import net.azureaaron.dandelion.systems.DandelionConfigScreen;
-import net.azureaaron.dandelion.yacl.YACLScreenAdapter;
+import net.azureaaron.dandelion.api.ConfigCategory;
+import net.azureaaron.dandelion.api.ConfigManager;
+import net.azureaaron.dandelion.api.ConfigType;
+import net.azureaaron.dandelion.api.DandelionConfigScreen;
+import net.azureaaron.dandelion.impl.moulconfig.MoulConfigAdapter;
+import net.azureaaron.dandelion.impl.yacl.YACLScreenAdapter;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 

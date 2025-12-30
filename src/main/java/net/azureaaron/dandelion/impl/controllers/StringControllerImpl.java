@@ -1,6 +1,6 @@
 package net.azureaaron.dandelion.impl.controllers;
 
-import net.azureaaron.dandelion.systems.controllers.StringController;
+import net.azureaaron.dandelion.api.controllers.StringController;
 
 public class StringControllerImpl implements StringController {
 	protected StringControllerImpl() {}

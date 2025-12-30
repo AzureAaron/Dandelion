@@ -14,11 +14,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 import com.mojang.logging.LogUtils;
 
+import net.azureaaron.dandelion.api.ConfigSerializer;
 import net.azureaaron.dandelion.impl.utils.CodecTypeAdapter;
 import net.azureaaron.dandelion.impl.utils.CodecUtils;
 import net.azureaaron.dandelion.impl.utils.ItemTypeAdapter;
 import net.azureaaron.dandelion.impl.utils.StyleTypeAdapter;
-import net.azureaaron.dandelion.systems.ConfigSerializer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.chat.Style;
