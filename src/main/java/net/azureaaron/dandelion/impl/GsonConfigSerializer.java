@@ -14,16 +14,16 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 import com.mojang.logging.LogUtils;
 
+import net.azureaaron.dandelion.api.ConfigSerializer;
 import net.azureaaron.dandelion.impl.utils.CodecTypeAdapter;
 import net.azureaaron.dandelion.impl.utils.CodecUtils;
 import net.azureaaron.dandelion.impl.utils.ItemTypeAdapter;
 import net.azureaaron.dandelion.impl.utils.StyleTypeAdapter;
-import net.azureaaron.dandelion.systems.ConfigSerializer;
-import net.minecraft.item.Item;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-import net.minecraft.text.TextCodecs;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentSerialization;
+import net.minecraft.network.chat.Style;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
 
 public class GsonConfigSerializer<T> extends ConfigSerializer<T> {
 	private static final Logger LOGGER = LogUtils.getLogger();
@@ -89,7 +89,7 @@ public class GsonConfigSerializer<T> extends ConfigSerializer<T> {
 				.setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
 				.serializeNulls()
 				.registerTypeHierarchyAdapter(Color.class, new CodecTypeAdapter<>(CodecUtils.COLOUR_CODEC))
-				.registerTypeHierarchyAdapter(Text.class, new CodecTypeAdapter<>(TextCodecs.CODEC))
+				.registerTypeHierarchyAdapter(Component.class, new CodecTypeAdapter<>(ComponentSerialization.CODEC))
 				.registerTypeHierarchyAdapter(Style.class, new StyleTypeAdapter())
 				.registerTypeHierarchyAdapter(Identifier.class, new CodecTypeAdapter<>(Identifier.CODEC))
 				.registerTypeHierarchyAdapter(Item.class, new ItemTypeAdapter())

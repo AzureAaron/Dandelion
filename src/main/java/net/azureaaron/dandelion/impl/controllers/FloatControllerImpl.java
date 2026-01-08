@@ -2,7 +2,7 @@ package net.azureaaron.dandelion.impl.controllers;
 
 import java.util.Objects;
 
-import net.azureaaron.dandelion.systems.controllers.FloatController;
+import net.azureaaron.dandelion.api.controllers.FloatController;
 
 public class FloatControllerImpl implements FloatController {
 	private final float min;
@@ -44,26 +44,26 @@ public class FloatControllerImpl implements FloatController {
 		private boolean slider = false;
 
 		@Override
-		public Builder min(Float min) {
+		public FloatController.Builder min(Float min) {
 			this.min = Objects.requireNonNull(min, "min must not be null");
 			return this;
 		}
 
 		@Override
-		public Builder max(Float max) {
+		public FloatController.Builder max(Float max) {
 			this.max = Objects.requireNonNull(max, "max must not be null");
 			return this;
 		}
 
 		@Override
-		public Builder range(Float min, Float max) {
+		public FloatController.Builder range(Float min, Float max) {
 			this.min = Objects.requireNonNull(min, "min must not be null");
 			this.max = Objects.requireNonNull(max, "max must not be null");
 			return this;
 		}
 
 		@Override
-		public Builder slider(Float step) {
+		public FloatController.Builder slider(Float step) {
 			this.step = Objects.requireNonNull(step, "step must not be null");
 			this.slider = true;
 			return this;

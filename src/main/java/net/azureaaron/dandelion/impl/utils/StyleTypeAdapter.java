@@ -11,7 +11,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.mojang.serialization.JsonOps;
 
-import net.minecraft.text.Style;
+import net.minecraft.network.chat.Style;
 
 /**
  * This separate serializer with fallback values is required to avoid errors/crashes in unit tests.
@@ -20,11 +20,11 @@ public class StyleTypeAdapter implements JsonSerializer<Style>, JsonDeserializer
 
 	@Override
 	public Style deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-		return Style.Codecs.CODEC.parse(JsonOps.INSTANCE, json).result().orElse(Style.EMPTY);
+		return Style.Serializer.CODEC.parse(JsonOps.INSTANCE, json).result().orElse(Style.EMPTY);
 	}
 
 	@Override
 	public JsonElement serialize(Style src, Type typeOfSrc, JsonSerializationContext context) {
-		return Style.Codecs.CODEC.encodeStart(JsonOps.INSTANCE, src).result().orElse(JsonNull.INSTANCE);
+		return Style.Serializer.CODEC.encodeStart(JsonOps.INSTANCE, src).result().orElse(JsonNull.INSTANCE);
 	}
 }

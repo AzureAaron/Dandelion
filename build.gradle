@@ -1,7 +1,9 @@
 plugins {
-	id 'fabric-loom' version "${loom_version}"
+	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
 	id 'maven-publish'
-	id 'com.gradleup.shadow' version "9.0.0-rc1"
+	id 'com.gradleup.shadow' version "${shadow_version}"
+	id "com.diffplug.spotless" version "${spotless_version}"
+	id "checkstyle"
 }
 
 version = "${project.mod_version}+${project.minecraft_version}"
@@ -39,7 +41,7 @@ repositories {
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	mappings loom.officialMojangMappings()
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
@@ -49,7 +51,7 @@ dependencies {
 	modImplementation("dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric")
 
 	//MoulConfig
-	shadowMe(modImplementation("org.notenoughupdates.moulconfig:${project.moulconfig_flavour}:${project.moulconfig_version}"))
+	shadowMe(modCompileOnly("org.notenoughupdates.moulconfig:${project.moulconfig_flavour}:${project.moulconfig_version}"))
 }
 
 loom {
@@ -89,7 +91,7 @@ task mergeResourcesIntoShadowJar(type: Copy) {
 	def shadowJarFile = tasks.shadowJar.archiveFile.get().asFile
 	def tempDir = new File(buildDir, "tmp/shadowResources")
 
-	duplicatesStrategy = DuplicatesStrategy.EXCLUDE 
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
 	doFirst {
 		tempDir.deleteDir()
@@ -137,6 +139,34 @@ jar {
 	}
 }
 
+spotless {
+	lineEndings = com.diffplug.spotless.LineEnding.UNIX
+
+	java {
+		removeUnusedImports()
+		leadingSpacesToTabs()
+		trimTrailingWhitespace()
+		endWithNewline()
+	}
+
+	groovyGradle {
+		target 'src/**/*.gradle', '*.gradle', 'gradle/*.gradle'
+		greclipse().configProperties \
+				'groovy.formatter.multiline.indentation=2', // Default
+				'groovy.formatter.line.maxlength=999',
+				'groovy.formatter.longListLength=999',
+				'groovy.formatter.remove.unnecessary.semicolons=true'
+	}
+}
+
+checkstyle {
+	toolVersion = "${checkstyle_version}"
+	configFile = rootProject.file("checkstyle.xml")
+	configProperties = [
+		"suppressionsFile": rootProject.file("checkstyle-suppressions.xml")
+	]
+}
+
 // configure the maven publication
 publishing {
 	publications {
@@ -152,8 +182,8 @@ publishing {
 			url = "https://maven.azureaaron.net/releases"
 
 			credentials(PasswordCredentials) {
-				username = System.getenv("AARON_MAVEN_USER");
-				password = System.getenv("AARON_MAVEN_PASS");
+				username = System.getenv("AARON_MAVEN_USER")
+				password = System.getenv("AARON_MAVEN_PASS")
 			}
 		}
 	}

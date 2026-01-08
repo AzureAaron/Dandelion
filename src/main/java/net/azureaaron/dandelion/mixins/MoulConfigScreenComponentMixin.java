@@ -8,8 +8,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import io.github.notenoughupdates.moulconfig.gui.CloseEventListener;
 import io.github.notenoughupdates.moulconfig.gui.GuiContext;
 import io.github.notenoughupdates.moulconfig.platform.MoulConfigScreenComponent;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 
 @Mixin(MoulConfigScreenComponent.class)
 public abstract class MoulConfigScreenComponentMixin extends Screen {
@@ -17,13 +17,13 @@ public abstract class MoulConfigScreenComponentMixin extends Screen {
 	@Final
 	GuiContext guiContext;
 
-	protected MoulConfigScreenComponentMixin(Text title) {
+	protected MoulConfigScreenComponentMixin(Component title) {
 		super(title);
 	}
 
 	@Overwrite
 	@Override
-	public void close() {
+	public void onClose() {
 		if (this.guiContext.onBeforeClose() == CloseEventListener.CloseAction.NO_OBJECTIONS_TO_CLOSE) {
 			this.guiContext.requestClose();
 		}

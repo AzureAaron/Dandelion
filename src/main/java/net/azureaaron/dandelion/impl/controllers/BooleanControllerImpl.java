@@ -2,7 +2,7 @@ package net.azureaaron.dandelion.impl.controllers;
 
 import java.util.Objects;
 
-import net.azureaaron.dandelion.systems.controllers.BooleanController;
+import net.azureaaron.dandelion.api.controllers.BooleanController;
 
 public class BooleanControllerImpl implements BooleanController {
 	private final BooleanStyle style;
@@ -28,13 +28,13 @@ public class BooleanControllerImpl implements BooleanController {
 		private boolean coloured = false;
 
 		@Override
-		public Builder booleanStyle(BooleanStyle style) {
+		public BooleanController.Builder booleanStyle(BooleanStyle style) {
 			this.style = style;
 			return this;
 		}
 
 		@Override
-		public Builder coloured(boolean coloured) {
+		public BooleanController.Builder coloured(boolean coloured) {
 			this.coloured = coloured;
 			return this;
 		}

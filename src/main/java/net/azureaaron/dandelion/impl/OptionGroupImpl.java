@@ -4,23 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
-import net.azureaaron.dandelion.systems.Option;
-import net.azureaaron.dandelion.systems.OptionGroup;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.azureaaron.dandelion.api.Option;
+import net.azureaaron.dandelion.api.OptionGroup;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 public class OptionGroupImpl implements OptionGroup {
-	@Nullable
-	private final Identifier id;
-	private final Text name;
-	private final List<Text> description;
-	private final List<Text> tags;
+	private final @Nullable Identifier id;
+	private final Component name;
+	private final List<Component> description;
+	private final List<Component> tags;
 	private final boolean collapsed;
 	private final List<Option<?>> options;
 
-	protected OptionGroupImpl(@Nullable Identifier id, Text name, List<Text> description, List<Text> tags, boolean collapsed, List<Option<?>> options) {
+	protected OptionGroupImpl(@Nullable Identifier id, Component name, List<Component> description, List<Component> tags, boolean collapsed, List<Option<?>> options) {
 		this.id = id;
 		this.name = Objects.requireNonNull(name, "name must not be null");
 		this.description = Objects.requireNonNull(description, "description must not be null");
@@ -30,23 +29,22 @@ public class OptionGroupImpl implements OptionGroup {
 	}
 
 	@Override
-	@Nullable
-	public Identifier id() {
+	public @Nullable Identifier id() {
 		return this.id;
 	}
 
 	@Override
-	public Text name() {
+	public Component name() {
 		return this.name;
 	}
 
 	@Override
-	public List<Text> description() {
+	public List<Component> description() {
 		return this.description;
 	}
 
 	@Override
-	public List<Text> tags() {
+	public List<Component> tags() {
 		return this.tags;
 	}
 
@@ -61,10 +59,10 @@ public class OptionGroupImpl implements OptionGroup {
 	}
 
 	public static class OptionGroupBuilderImpl implements OptionGroup.Builder {
-		private Identifier id = null;
-		private Text name = Text.empty();
-		private List<Text> description = List.of();
-		private List<Text> tags = List.of();
+		private @Nullable Identifier id = null;
+		private Component name = Component.empty();
+		private List<Component> description = List.of();
+		private List<Component> tags = List.of();
 		private boolean collapsed = false;
 		private List<Option<?>> options = new ArrayList<>();
 
@@ -75,19 +73,19 @@ public class OptionGroupImpl implements OptionGroup {
 		}
 
 		@Override
-		public Builder name(Text name) {
+		public Builder name(Component name) {
 			this.name = name;
 			return this;
 		}
 
 		@Override
-		public Builder description(Text... texts) {
+		public Builder description(Component... texts) {
 			this.description = List.of(texts);
 			return this;
 		}
 
 		@Override
-		public Builder tags(Text... tags) {
+		public Builder tags(Component... tags) {
 			this.tags = List.of(tags);
 			return this;
 		}

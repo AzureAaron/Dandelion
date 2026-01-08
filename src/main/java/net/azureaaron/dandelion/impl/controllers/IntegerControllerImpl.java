@@ -2,7 +2,7 @@ package net.azureaaron.dandelion.impl.controllers;
 
 import java.util.Objects;
 
-import net.azureaaron.dandelion.systems.controllers.IntegerController;
+import net.azureaaron.dandelion.api.controllers.IntegerController;
 
 public class IntegerControllerImpl implements IntegerController {
 	private final int min;
@@ -44,25 +44,25 @@ public class IntegerControllerImpl implements IntegerController {
 		private boolean slider = false;
 
 		@Override
-		public Builder min(Integer min) {
+		public IntegerController.Builder min(Integer min) {
 			return this;
 		}
 
 		@Override
-		public Builder max(Integer max) {
+		public IntegerController.Builder max(Integer max) {
 			this.max = Objects.requireNonNull(max, "max must not be null");
 			return this;
 		}
 
 		@Override
-		public Builder range(Integer min, Integer max) {
+		public IntegerController.Builder range(Integer min, Integer max) {
 			this.min = Objects.requireNonNull(min, "min must not be null");
 			this.max = Objects.requireNonNull(max, "max must not be null");
 			return this;
 		}
 
 		@Override
-		public Builder slider(Integer step) {
+		public IntegerController.Builder slider(Integer step) {
 			this.step = Objects.requireNonNull(step, "step must not be null");
 			this.slider = true;
 			return this;

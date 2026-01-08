@@ -8,7 +8,10 @@
 		"AzureAaron"
 	],
 	"contributors": [
-		"nea89"
+		"nea89",
+		"kevinthegreat1",
+		"Alex33856",
+		"viciscat"
 	],
 	"contact": {
 		"homepage": "https://azureaaron.net/",
@@ -16,7 +19,7 @@
 	},
 	"license": "LGPL-3.0-or-later",
 	"icon": "assets/dandelion/icon.png",
-	"environment": "*",
+	"environment": "client",
 	"entrypoints": {
 		"client": [
 			"net.azureaaron.dandelion.Dandelion"
@@ -27,10 +30,11 @@
 	],
 	"accessWidener": "dandelion.accesswidener",
 	"depends": {
-		"fabricloader": ">=0.17.3",
-		"minecraft": "~1.21.9",
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~1.21.11",
 		"java": ">=21",
-		"fabric-api": "*"
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*"
 	},
 	"custom": {
 		"modmenu": {

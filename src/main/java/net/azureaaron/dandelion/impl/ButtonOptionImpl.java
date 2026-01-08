@@ -5,27 +5,26 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 import org.apache.commons.lang3.function.Consumers;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
-import net.azureaaron.dandelion.systems.ButtonOption;
-import net.azureaaron.dandelion.systems.OptionBinding;
-import net.azureaaron.dandelion.systems.OptionFlag;
-import net.azureaaron.dandelion.systems.OptionListener;
-import net.azureaaron.dandelion.systems.controllers.Controller;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.azureaaron.dandelion.api.ButtonOption;
+import net.azureaaron.dandelion.api.OptionBinding;
+import net.azureaaron.dandelion.api.OptionFlag;
+import net.azureaaron.dandelion.api.OptionListener;
+import net.azureaaron.dandelion.api.controllers.Controller;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 public class ButtonOptionImpl implements ButtonOption {
-	@Nullable
-	private final Identifier id;
-	private final Text name;
-	private final List<Text> description;
-	private final Text prompt;
+	private final @Nullable Identifier id;
+	private final Component name;
+	private final List<Component> description;
+	private final Component prompt;
 	private final Consumer<Screen> action;
-	private final List<Text> tags;
+	private final List<Component> tags;
 
-	protected ButtonOptionImpl(@Nullable Identifier id, Text name, List<Text> description, List<Text> tags, Text prompt, Consumer<Screen> action) {
+	protected ButtonOptionImpl(@Nullable Identifier id, Component name, List<Component> description, List<Component> tags, Component prompt, Consumer<Screen> action) {
 		this.id = id;
 		this.name = Objects.requireNonNull(name, "name must not be null");
 		this.description = Objects.requireNonNull(description, "description must not be null");
@@ -35,23 +34,22 @@ public class ButtonOptionImpl implements ButtonOption {
 	}
 
 	@Override
-	@Nullable
-	public Identifier id() {
+	public @Nullable Identifier id() {
 		return this.id;
 	}
 
 	@Override
-	public Text name() {
+	public Component name() {
 		return this.name;
 	}
 
 	@Override
-	public List<Text> description() {
+	public List<Component> description() {
 		return this.description;
 	}
 
 	@Override
-	public List<Text> tags() {
+	public List<Component> tags() {
 		return this.tags;
 	}
 
@@ -88,7 +86,7 @@ public class ButtonOptionImpl implements ButtonOption {
 	}
 
 	@Override
-	public Text prompt() {
+	public Component prompt() {
 		return this.prompt;
 	}
 
@@ -98,45 +96,45 @@ public class ButtonOptionImpl implements ButtonOption {
 	}
 
 	public static class ButtonOptionBuilderImpl implements ButtonOption.Builder {
-		private Identifier id = null;
-		private Text name = Text.empty();
-		private List<Text> description = List.of();
-		private List<Text> tags = List.of();
-		private Text prompt = Text.of("Execute");
+		private @Nullable Identifier id = null;
+		private Component name = Component.empty();
+		private List<Component> description = List.of();
+		private List<Component> tags = List.of();
+		private Component prompt = Component.nullToEmpty("Execute");
 		private Consumer<Screen> action = Consumers.nop();
 
 		@Override
-		public Builder id(Identifier id) {
+		public net.azureaaron.dandelion.api.ButtonOption.Builder id(Identifier id) {
 			this.id = id;
 			return this;
 		}
 
 		@Override
-		public Builder name(Text name) {
+		public net.azureaaron.dandelion.api.ButtonOption.Builder name(Component name) {
 			this.name = name;
 			return this;
 		}
 
 		@Override
-		public Builder description(Text... texts) {
+		public net.azureaaron.dandelion.api.ButtonOption.Builder description(Component... texts) {
 			this.description = List.of(texts);
 			return this;
 		}
 
 		@Override
-		public Builder tags(Text... tags) {
+		public net.azureaaron.dandelion.api.ButtonOption.Builder tags(Component... tags) {
 			this.tags = List.of(tags);
 			return this;
 		}
 
 		@Override
-		public Builder prompt(Text prompt) {
+		public net.azureaaron.dandelion.api.ButtonOption.Builder prompt(Component prompt) {
 			this.prompt = prompt;
 			return this;
 		}
 
 		@Override
-		public Builder action(Consumer<Screen> action) {
+		public net.azureaaron.dandelion.api.ButtonOption.Builder action(Consumer<Screen> action) {
 			this.action = action;
 			return this;
 		}

@@ -7,31 +7,30 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
+import net.azureaaron.dandelion.api.Option;
+import net.azureaaron.dandelion.api.OptionBinding;
+import net.azureaaron.dandelion.api.OptionFlag;
+import net.azureaaron.dandelion.api.OptionListener;
+import net.azureaaron.dandelion.api.controllers.BooleanController;
+import net.azureaaron.dandelion.api.controllers.ColourController;
+import net.azureaaron.dandelion.api.controllers.Controller;
+import net.azureaaron.dandelion.api.controllers.EnumController;
+import net.azureaaron.dandelion.api.controllers.FloatController;
+import net.azureaaron.dandelion.api.controllers.IntegerController;
+import net.azureaaron.dandelion.api.controllers.ItemController;
+import net.azureaaron.dandelion.api.controllers.StringController;
 import net.azureaaron.dandelion.impl.utils.ReflectionUtils;
-import net.azureaaron.dandelion.systems.Option;
-import net.azureaaron.dandelion.systems.OptionBinding;
-import net.azureaaron.dandelion.systems.OptionFlag;
-import net.azureaaron.dandelion.systems.OptionListener;
-import net.azureaaron.dandelion.systems.controllers.BooleanController;
-import net.azureaaron.dandelion.systems.controllers.ColourController;
-import net.azureaaron.dandelion.systems.controllers.Controller;
-import net.azureaaron.dandelion.systems.controllers.EnumController;
-import net.azureaaron.dandelion.systems.controllers.FloatController;
-import net.azureaaron.dandelion.systems.controllers.IntegerController;
-import net.azureaaron.dandelion.systems.controllers.ItemController;
-import net.azureaaron.dandelion.systems.controllers.StringController;
-import net.minecraft.item.Item;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
 
 public class OptionImpl<T> implements Option<T> {
-	@Nullable
-	private final Identifier id;
-	private final Text name;
-	private final List<Text> description;
-	private final List<Text> tags;
+	private final @Nullable Identifier id;
+	private final Component name;
+	private final List<Component> description;
+	private final List<Component> tags;
 	private final OptionBinding<T> binding;
 	private final Controller<T> controller;
 	private final boolean modifiable;
@@ -40,7 +39,7 @@ public class OptionImpl<T> implements Option<T> {
 	private final Class<T> type;
 
 	@SuppressWarnings("unchecked")
-	protected OptionImpl(@Nullable Identifier id, Text name, List<Text> description, List<Text> tags, OptionBinding<T> binding, Controller<T> controller, boolean modifiable, List<OptionFlag> flags, List<OptionListener<T>> listeners) {
+	protected OptionImpl(@Nullable Identifier id, Component name, List<Component> description, List<Component> tags, OptionBinding<T> binding, Controller<T> controller, boolean modifiable, List<OptionFlag> flags, List<OptionListener<T>> listeners) {
 		this.id = id;
 		this.name = Objects.requireNonNull(name, "name must not be null");
 		this.description = Objects.requireNonNull(description, "description must not be null");
@@ -57,23 +56,22 @@ public class OptionImpl<T> implements Option<T> {
 	}
 
 	@Override
-	@Nullable
-	public Identifier id() {
+	public @Nullable Identifier id() {
 		return this.id;
 	}
 
 	@Override
-	public Text name() {
+	public Component name() {
 		return this.name;
 	}
 
 	@Override
-	public List<Text> description() {
+	public List<Component> description() {
 		return this.description;
 	}
 
 	@Override
-	public List<Text> tags() {
+	public List<Component> tags() {
 		return this.tags;
 	}
 
@@ -141,12 +139,12 @@ public class OptionImpl<T> implements Option<T> {
 	}
 
 	public static class OptionBuilderImpl<T> implements Option.Builder<T> {
-		private Identifier id = null;
-		private Text name = Text.empty();
-		private List<Text> description = List.of();
-		private List<Text> tags = List.of();
-		private OptionBinding<T> binding = null;
-		private Controller<T> controller = null;
+		private @Nullable Identifier id = null;
+		private Component name = Component.empty();
+		private List<Component> description = List.of();
+		private List<Component> tags = List.of();
+		private @Nullable OptionBinding<T> binding = null;
+		private @Nullable Controller<T> controller = null;
 		private boolean modifiable = true;
 		private List<OptionFlag> flags = List.of();
 		private List<OptionListener<T>> listeners = new ArrayList<>();
@@ -158,19 +156,19 @@ public class OptionImpl<T> implements Option<T> {
 		}
 
 		@Override
-		public Builder<T> name(Text name) {
+		public Builder<T> name(Component name) {
 			this.name = name;
 			return this;
 		}
 
 		@Override
-		public Builder<T> description(Text... texts) {
+		public Builder<T> description(Component... texts) {
 			this.description = List.of(texts);
 			return this;
 		}
 
 		@Override
-		public Builder<T> tags(Text... tags) {
+		public Builder<T> tags(Component... tags) {
 			this.tags = List.of(tags);
 			return this;
 		}
@@ -207,6 +205,8 @@ public class OptionImpl<T> implements Option<T> {
 
 		@Override
 		public Option<T> build() {
+			Objects.requireNonNull(this.binding, "a binding is required.");
+			Objects.requireNonNull(this.controller, "a controller is required.");
 			return new OptionImpl<>(this.id, this.name, this.description, this.tags, this.binding, this.controller, this.modifiable, this.flags, List.copyOf(this.listeners));
 		}
 	}
