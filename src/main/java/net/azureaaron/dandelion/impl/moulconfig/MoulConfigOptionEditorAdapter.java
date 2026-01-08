@@ -1,18 +1,18 @@
-package net.azureaaron.dandelion.moulconfig;
+package net.azureaaron.dandelion.impl.moulconfig;
 
 import io.github.notenoughupdates.moulconfig.gui.GuiOptionEditor;
 import io.github.notenoughupdates.moulconfig.gui.editors.GuiOptionEditorBoolean;
 import io.github.notenoughupdates.moulconfig.gui.editors.GuiOptionEditorDropdown;
 import io.github.notenoughupdates.moulconfig.gui.editors.GuiOptionEditorText;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedOption;
+import net.azureaaron.dandelion.api.Option;
+import net.azureaaron.dandelion.api.controllers.*;
+import net.azureaaron.dandelion.impl.moulconfig.editor.DandelionColourEditor;
+import net.azureaaron.dandelion.impl.moulconfig.editor.DandelionItemEditor;
+import net.azureaaron.dandelion.impl.moulconfig.editor.DandelionNumberFieldEditor;
+import net.azureaaron.dandelion.impl.moulconfig.editor.DandelionNumberSliderEditor;
 import net.azureaaron.dandelion.mixins.GuiOptionEditorDropdownAccessor;
-import net.azureaaron.dandelion.moulconfig.editor.DandelionColourEditor;
-import net.azureaaron.dandelion.moulconfig.editor.DandelionItemEditor;
-import net.azureaaron.dandelion.moulconfig.editor.DandelionNumberFieldEditor;
-import net.azureaaron.dandelion.moulconfig.editor.DandelionNumberSliderEditor;
-import net.azureaaron.dandelion.systems.Option;
-import net.azureaaron.dandelion.systems.controllers.*;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 
 import java.util.Arrays;
 
@@ -26,7 +26,7 @@ public class MoulConfigOptionEditorAdapter {
 				@SuppressWarnings("unchecked")
 				String[] displayValues = (String[]) Arrays.stream(constants)
 					.map(enumController.formatter())
-					.map(t -> ((Text) t).getString())
+					.map(t -> ((Component) t).getString())
 					.toArray(Object[]::new);
 				GuiOptionEditorDropdown editor = new GuiOptionEditorDropdown(moulConfigOption, displayValues, true);
 				((GuiOptionEditorDropdownAccessor) editor).setConstants((Enum<?>[]) constants);

@@ -6,12 +6,12 @@ import java.util.function.BiFunction;
 import io.github.notenoughupdates.moulconfig.gui.GuiOptionEditor;
 import io.github.notenoughupdates.moulconfig.gui.editors.GuiOptionEditorButton;
 import io.github.notenoughupdates.moulconfig.platform.MoulConfigPlatform;
-import net.azureaaron.dandelion.moulconfig.editor.DandelionLabelEditor;
-import net.azureaaron.dandelion.systems.ButtonOption;
-import net.azureaaron.dandelion.systems.LabelOption;
-import net.azureaaron.dandelion.systems.Option;
-import net.azureaaron.dandelion.systems.controllers.IntegerController;
-import net.minecraft.client.MinecraftClient;
+import net.azureaaron.dandelion.api.ButtonOption;
+import net.azureaaron.dandelion.api.LabelOption;
+import net.azureaaron.dandelion.api.Option;
+import net.azureaaron.dandelion.api.controllers.IntegerController;
+import net.azureaaron.dandelion.impl.moulconfig.editor.DandelionLabelEditor;
+import net.minecraft.client.Minecraft;
 
 public class MoulConfigEditableOptionAdapter {
 
@@ -53,7 +53,7 @@ public class MoulConfigEditableOptionAdapter {
 
 			@Override
 			public Object get() {
-				return (Runnable) () -> ((ButtonOption) this.option).action().accept(MinecraftClient.getInstance().currentScreen);
+				return (Runnable) () -> ((ButtonOption) this.option).action().accept(Minecraft.getInstance().screen);
 			}
 
 			@Override

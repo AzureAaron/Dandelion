@@ -3,10 +3,10 @@ package net.azureaaron.dandelion.api.controllers;
 import dev.isxander.yacl3.api.controller.ControllerBuilder;
 import io.github.notenoughupdates.moulconfig.gui.GuiOptionEditor;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedOption;
-import net.azureaaron.dandelion.moulconfig.MoulConfigDefinition;
-import net.azureaaron.dandelion.moulconfig.MoulConfigOptionEditorAdapter;
-import net.azureaaron.dandelion.systems.Option;
-import net.azureaaron.dandelion.yacl.YACLControllerAdapter;
+import net.azureaaron.dandelion.api.Option;
+import net.azureaaron.dandelion.impl.moulconfig.MoulConfigDefinition;
+import net.azureaaron.dandelion.impl.moulconfig.MoulConfigOptionEditorAdapter;
+import net.azureaaron.dandelion.impl.yacl.YACLControllerAdapter;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 

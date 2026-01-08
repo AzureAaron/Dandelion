@@ -6,6 +6,7 @@ import io.github.notenoughupdates.moulconfig.gui.component.TextFieldComponent;
 import io.github.notenoughupdates.moulconfig.gui.editors.ComponentEditor;
 import io.github.notenoughupdates.moulconfig.observer.GetSetter;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedOption;
+import org.jetbrains.annotations.ApiStatus;
 
 public class DandelionNumberFieldEditor extends ComponentEditor {
 	private final GuiComponent component;
