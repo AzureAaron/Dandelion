@@ -8,7 +8,7 @@ import net.azureaaron.dandelion.impl.moulconfig.MoulConfigDefinition;
 import net.azureaaron.dandelion.impl.moulconfig.MoulConfigOptionEditorAdapter;
 import net.azureaaron.dandelion.impl.yacl.YACLControllerAdapter;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public sealed interface Controller<T> permits BooleanController, ColourController, EnumController, NumberController, ItemController, StringController {
 

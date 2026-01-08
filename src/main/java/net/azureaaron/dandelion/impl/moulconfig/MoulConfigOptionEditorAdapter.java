@@ -6,7 +6,13 @@ import io.github.notenoughupdates.moulconfig.gui.editors.GuiOptionEditorDropdown
 import io.github.notenoughupdates.moulconfig.gui.editors.GuiOptionEditorText;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedOption;
 import net.azureaaron.dandelion.api.Option;
-import net.azureaaron.dandelion.api.controllers.*;
+import net.azureaaron.dandelion.api.controllers.BooleanController;
+import net.azureaaron.dandelion.api.controllers.ColourController;
+import net.azureaaron.dandelion.api.controllers.EnumController;
+import net.azureaaron.dandelion.api.controllers.FloatController;
+import net.azureaaron.dandelion.api.controllers.IntegerController;
+import net.azureaaron.dandelion.api.controllers.ItemController;
+import net.azureaaron.dandelion.api.controllers.StringController;
 import net.azureaaron.dandelion.impl.moulconfig.editor.DandelionColourEditor;
 import net.azureaaron.dandelion.impl.moulconfig.editor.DandelionItemEditor;
 import net.azureaaron.dandelion.impl.moulconfig.editor.DandelionNumberFieldEditor;
