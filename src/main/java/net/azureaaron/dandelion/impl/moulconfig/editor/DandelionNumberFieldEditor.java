@@ -6,6 +6,7 @@ import io.github.notenoughupdates.moulconfig.gui.component.TextFieldComponent;
 import io.github.notenoughupdates.moulconfig.gui.editors.ComponentEditor;
 import io.github.notenoughupdates.moulconfig.observer.GetSetter;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedOption;
+import org.jetbrains.annotations.ApiStatus;
 
 public class DandelionNumberFieldEditor extends ComponentEditor {
 	private final GuiComponent component;
@@ -42,7 +43,8 @@ public class DandelionNumberFieldEditor extends ComponentEditor {
 	 * Converts a {@link Float} to a string while dropping the decimal if possible.
 	 * This is done since this is also used for integer fields.
 	 */
-	private static String toString(Float floatValue) {
+	@ApiStatus.Experimental
+	protected String toString(Float floatValue) {
 		int intValue = floatValue.intValue();
 		float convertedBackToFloat = (float) intValue;
 
@@ -56,7 +58,8 @@ public class DandelionNumberFieldEditor extends ComponentEditor {
 	/**
 	 * Attempts to parse then {@code input} as a float, if it fails then the {@code defaultValue} is returned.
 	 */
-	private static float parseNumber(String input, float minValue, float maxValue, float defaultValue) {
+	@ApiStatus.Experimental
+	protected float parseNumber(String input, float minValue, float maxValue, float defaultValue) {
 		try {
 			return Math.clamp(Float.parseFloat(input), minValue, maxValue);
 		} catch (NumberFormatException e) {

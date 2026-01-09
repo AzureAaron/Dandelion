@@ -30,7 +30,7 @@ public class YACLOptionGroupAdapter {
 					.binding((List<Object>) listOption.binding().defaultValue(),
 							() -> (List<Object>) listOption.binding().get(),
 							listOption.binding()::set)
-					.controller(yaclOption -> YACLControllerAdapter.toYaclControllerBuilder(yaclOption, listOption.entryType(), listOption.entryController()))
+					.controller(yaclOption -> listOption.entryController().controllerYACL(yaclOption, listOption.entryType()))
 					.initial(listOption.initialValue())
 					.collapsed(listOption.collapsed())
 					.available(listOption.modifiable())
