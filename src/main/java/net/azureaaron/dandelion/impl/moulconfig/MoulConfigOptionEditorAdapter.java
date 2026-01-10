@@ -33,7 +33,7 @@ public class MoulConfigOptionEditorAdapter {
 				String[] displayValues = (String[]) Arrays.stream(constants)
 					.map(enumController.formatter())
 					.map(t -> ((Component) t).getString())
-					.toArray(Object[]::new);
+					.toArray(String[]::new);
 				GuiOptionEditorDropdown editor = new GuiOptionEditorDropdown(moulConfigOption, displayValues, true);
 				((GuiOptionEditorDropdownAccessor) editor).setConstants((Enum<?>[]) constants);
 				yield editor;
