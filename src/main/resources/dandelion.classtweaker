@@ -1,4 +1,4 @@
-accessWidener v2 named
+classTweaker v1 named
 
 # MoulConfig Access Wideners
 accessible field net/minecraft/client/gui/GuiGraphics scissorStack Lnet/minecraft/client/gui/GuiGraphics$ScissorStack;

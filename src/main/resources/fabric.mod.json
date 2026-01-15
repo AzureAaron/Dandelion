@@ -28,7 +28,7 @@
 	"mixins": [
 		"dandelion.mixins.json"
 	],
-	"accessWidener": "dandelion.accesswidener",
+	"accessWidener": "dandelion.classtweaker",
 	"depends": {
 		"fabricloader": ">=0.18.4",
 		"minecraft": "~1.21.11",

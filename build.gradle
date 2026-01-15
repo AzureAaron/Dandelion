@@ -47,15 +47,15 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	//YACL
+	// YACL
 	modImplementation("dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric")
 
-	//MoulConfig
+	// MoulConfig
 	shadowMe(modCompileOnly("org.notenoughupdates.moulconfig:${project.moulconfig_flavour}:${project.moulconfig_version}"))
 }
 
 loom {
-	accessWidenerPath = file("src/main/resources/dandelion.accesswidener")
+	accessWidenerPath = file("src/main/resources/dandelion.classtweaker")
 
 	mixin {
 		useLegacyMixinAp = false
@@ -80,11 +80,12 @@ tasks.named("shadowJar").configure {
 	relocate("io.github.notenoughupdates.moulconfig", "net.azureaaron.dandelion.deps.moulconfig")
 	exclude("fabric.mod.json")
 	exclude("*.accesswidener")
+	exclude("*.classtweaker")
 	exclude("LICENSE")
 	mergeServiceFiles()
 }
 
-//Adds our original FMJ, AW, and license into the shadow jar (to overwrite the MoulConfig ones)
+// Adds our original FMJ, CT, and license into the shadow jar (to overwrite the MoulConfig ones)
 task mergeResourcesIntoShadowJar(type: Copy) {
 	dependsOn(tasks.shadowJar, processResources, jar)
 
@@ -101,7 +102,7 @@ task mergeResourcesIntoShadowJar(type: Copy) {
 	from(zipTree(shadowJarFile))
 
 	from(tasks.processResources.destinationDir) {
-		include("fabric.mod.json", "*.accesswidener")
+		include("fabric.mod.json", "*.classtweaker")
 	}
 
 	from('.') {
