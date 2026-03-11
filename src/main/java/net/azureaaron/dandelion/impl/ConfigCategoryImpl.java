@@ -95,4 +95,9 @@ public class ConfigCategoryImpl implements ConfigCategory {
 			return new ConfigCategoryImpl(this.id, this.name, this.description, new OptionGroupImpl(null, Component.empty(), List.of(), List.of(), false, List.copyOf(this.rootOptions)), List.copyOf(this.groups));
 		}
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, description, rootGroup, groups);
+	}
 }

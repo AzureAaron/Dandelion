@@ -149,6 +149,11 @@ public class ListOptionImpl<T> implements ListOption<T> {
 		);
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, description, tags, collapsed, modifiable, entries);
+	}
+
 	public static class BuilderImpl<T> implements ListOption.Builder<T> {
 		private @Nullable Identifier id = null;
 		private Component name = Component.empty();

@@ -58,6 +58,11 @@ public class OptionGroupImpl implements OptionGroup {
 		return this.options;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, description, tags, collapsed, options);
+	}
+
 	public static class OptionGroupBuilderImpl implements OptionGroup.Builder {
 		private @Nullable Identifier id = null;
 		private Component name = Component.empty();

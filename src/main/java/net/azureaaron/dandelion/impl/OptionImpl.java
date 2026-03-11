@@ -105,6 +105,11 @@ public class OptionImpl<T> implements Option<T> {
 		return this.type;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, description, tags, modifiable, flags, type);
+	}
+
 	/**
 	 * Checks that the {@code type} of the option matches the type required by the {@code controller}.
 	 */

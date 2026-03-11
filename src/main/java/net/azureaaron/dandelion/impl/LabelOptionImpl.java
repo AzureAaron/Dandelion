@@ -77,6 +77,11 @@ public class LabelOptionImpl implements LabelOption {
 		return this.label;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(label);
+	}
+
 	public static class LabelOptionBuilderImpl implements LabelOption.Builder {
 		private List<Component> label = List.of();
 

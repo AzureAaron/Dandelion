@@ -34,6 +34,11 @@ public class ButtonOptionImpl implements ButtonOption {
 	}
 
 	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, description, prompt, tags);
+	}
+
+	@Override
 	public @Nullable Identifier id() {
 		return this.id;
 	}
