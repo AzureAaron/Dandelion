@@ -52,9 +52,7 @@ public class MoulConfigAdapter {
 		MoulConfigEditor<MoulConfigDefinition> editor;
 		MoulConfigScreenComponent moulConfigScreenComponent;
 
-		ConfigScreenStateImpl configScreenState = supplier != null ? (ConfigScreenStateImpl) supplier.get() : new ConfigScreenStateImpl();
-		if (configScreenState == null) configScreenState = new ConfigScreenStateImpl();
-
+		ConfigScreenStateImpl configScreenState = ConfigScreenStateImpl.getFromSupplier(supplier);
 		if (categories.hashCode() == configScreenState.categoriesHash) {
 			editor = configScreenState.moulConfig.editor;
 			moulConfigScreenComponent = configScreenState.moulConfig.moulConfigScreenComponent;
