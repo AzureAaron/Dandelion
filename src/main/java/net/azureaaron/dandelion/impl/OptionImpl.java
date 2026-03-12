@@ -106,6 +106,13 @@ public class OptionImpl<T> implements Option<T> {
 	}
 
 	@Override
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass()) return false;
+		OptionImpl<?> option = (OptionImpl<?>) o;
+		return modifiable == option.modifiable && Objects.equals(id, option.id) && Objects.equals(name, option.name) && Objects.equals(description, option.description) && Objects.equals(tags, option.tags) && Objects.equals(flags, option.flags) && Objects.equals(type, option.type);
+	}
+
+	@Override
 	public int hashCode() {
 		return Objects.hash(id, name, description, tags, modifiable, flags, type);
 	}

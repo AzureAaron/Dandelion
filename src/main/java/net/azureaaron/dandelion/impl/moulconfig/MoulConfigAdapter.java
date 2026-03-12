@@ -44,8 +44,7 @@ public class MoulConfigAdapter {
 		this.configDefinition = new MoulConfigDefinition(title);
 	}
 
-	public Screen generateMoulConfigScreen(List<ConfigCategory> categories, @Nullable Screen parent, String search,
-										   @Nullable Supplier<@Nullable ConfigScreenState> supplier, @Nullable Consumer<ConfigScreenState> consumer) {
+	public Screen generateMoulConfigScreen(List<ConfigCategory> categories, @Nullable Screen parent, String search, @Nullable Supplier<@Nullable ConfigScreenState> supplier, @Nullable Consumer<ConfigScreenState> consumer) {
 		this.generateEditableOptions(categories);
 
 		List<DandelionProcessedCategory> processedCategories;

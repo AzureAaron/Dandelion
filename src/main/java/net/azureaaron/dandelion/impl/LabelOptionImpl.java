@@ -78,6 +78,13 @@ public class LabelOptionImpl implements LabelOption {
 	}
 
 	@Override
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass()) return false;
+		LabelOptionImpl that = (LabelOptionImpl) o;
+		return Objects.equals(label, that.label);
+	}
+
+	@Override
 	public int hashCode() {
 		return Objects.hash(label);
 	}
