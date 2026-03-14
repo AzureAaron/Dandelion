@@ -33,6 +33,10 @@ public interface DandelionConfigScreen {
 			return condition ? category(category) : this;
 		}
 
+		default Builder withStateIf(boolean condition, Supplier<@Nullable ConfigScreenState> supplier, Consumer<@Nullable ConfigScreenState> consumer) {
+			return condition ? withState(supplier, consumer) : this;
+		}
+
 		default Builder categories(List<ConfigCategory> categories) {
 			for (ConfigCategory category : categories) {
 				category(category);
