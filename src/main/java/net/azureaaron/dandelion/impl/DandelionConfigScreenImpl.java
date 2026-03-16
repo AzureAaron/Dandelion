@@ -39,7 +39,7 @@ public class DandelionConfigScreenImpl<T> implements DandelionConfigScreen {
 	public Screen generateScreen(@Nullable Screen parent, ConfigType configType) {
 		Objects.requireNonNull(configType, "configType must not be null");
 		return switch (configType) {
-			case ConfigType.YACL -> YACLScreenAdapter.generateYaclScreen(this.manager, this.title, this.categories, parent);
+			case ConfigType.YACL, ConfigType.MOUL_CONFIG -> YACLScreenAdapter.generateYaclScreen(this.manager, this.title, this.categories, parent);
 			//case ConfigType.MOUL_CONFIG -> new MoulConfigAdapter(this.manager, this.title).generateMoulConfigScreen(this.categories, parent, this.search);
 			default -> throw new UnsupportedOperationException("The requested backend is unavailable.");
 		};
