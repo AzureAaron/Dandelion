@@ -149,6 +149,18 @@ public class ListOptionImpl<T> implements ListOption<T> {
 		);
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass()) return false;
+		ListOptionImpl<?> that = (ListOptionImpl<?>) o;
+		return collapsed == that.collapsed && modifiable == that.modifiable && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(tags, that.tags) && Objects.equals(entries, that.entries);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, description, tags, collapsed, modifiable, entries);
+	}
+
 	public static class BuilderImpl<T> implements ListOption.Builder<T> {
 		private @Nullable Identifier id = null;
 		private Component name = Component.empty();

@@ -58,6 +58,18 @@ public class OptionGroupImpl implements OptionGroup {
 		return this.options;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass()) return false;
+		OptionGroupImpl that = (OptionGroupImpl) o;
+		return collapsed == that.collapsed && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(tags, that.tags) && Objects.equals(options, that.options);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, description, tags, collapsed, options);
+	}
+
 	public static class OptionGroupBuilderImpl implements OptionGroup.Builder {
 		private @Nullable Identifier id = null;
 		private Component name = Component.empty();

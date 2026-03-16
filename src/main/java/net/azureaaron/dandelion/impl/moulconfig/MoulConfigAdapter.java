@@ -6,8 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import net.azureaaron.dandelion.api.ConfigScreenState;
+import net.azureaaron.dandelion.impl.ConfigScreenStateImpl;
 import org.jspecify.annotations.Nullable;
 
 import io.github.notenoughupdates.moulconfig.gui.GuiContext;
@@ -40,21 +44,35 @@ public class MoulConfigAdapter {
 		this.configDefinition = new MoulConfigDefinition(title);
 	}
 
-	public Screen generateMoulConfigScreen(List<ConfigCategory> categories, @Nullable Screen parent, String search) {
+	public Screen generateMoulConfigScreen(List<ConfigCategory> categories, @Nullable Screen parent, String search, @Nullable Supplier<@Nullable ConfigScreenState> supplier, @Nullable Consumer<ConfigScreenState> consumer) {
 		this.generateEditableOptions(categories);
 
-		List<DandelionProcessedCategory> processedCategories = this.generateProcessedCategories(categories);
-		MoulConfigEditor<MoulConfigDefinition> editor = new MoulConfigEditor<>(ProcessedCategory.collect(processedCategories), this.configDefinition);
-		MoulConfigScreenComponent moulConfigScreenComponent = new MoulConfigScreenComponent(this.title, new GuiContext(new GuiElementComponent(editor)), parent);
-		//Use a custom close handler to save the config and open the parent screen
-		moulConfigScreenComponent.getGuiContext().setCloseRequestHandler(() -> {
-			this.manager.save();
-			Screens.getClient(moulConfigScreenComponent).setScreen(moulConfigScreenComponent.getPreviousScreen());
-		});
+		List<DandelionProcessedCategory> processedCategories;
+		MoulConfigEditor<MoulConfigDefinition> editor;
+		MoulConfigScreenComponent moulConfigScreenComponent;
 
-		if (!search.isEmpty()) {
-			editor.search(search);
+		ConfigScreenStateImpl configScreenState = ConfigScreenStateImpl.getFromSupplier(supplier);
+		if (categories.hashCode() == configScreenState.categoriesHash) {
+			editor = configScreenState.moulConfig.editor;
+			moulConfigScreenComponent = configScreenState.moulConfig.moulConfigScreenComponent;
+		} else {
+			processedCategories = this.generateProcessedCategories(categories);
+			editor = new MoulConfigEditor<>(ProcessedCategory.collect(processedCategories), this.configDefinition);
+			moulConfigScreenComponent = new MoulConfigScreenComponent(this.title, new GuiContext(new GuiElementComponent(editor)), parent);
+
+			//Use a custom close handler to save the config and open the parent screen
+			moulConfigScreenComponent.getGuiContext().setCloseRequestHandler(() -> {
+				this.manager.save();
+				Screens.getClient(moulConfigScreenComponent).setScreen(moulConfigScreenComponent.getPreviousScreen());
+			});
+
+			configScreenState.categoriesHash = categories.hashCode();
+			configScreenState.moulConfig.editor = editor;
+			configScreenState.moulConfig.moulConfigScreenComponent = moulConfigScreenComponent;
 		}
+
+		if (!search.isEmpty()) editor.search(search);
+		if (consumer != null) consumer.accept(configScreenState);
 
 		return moulConfigScreenComponent;
 	}
