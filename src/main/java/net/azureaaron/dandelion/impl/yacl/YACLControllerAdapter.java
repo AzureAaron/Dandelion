@@ -80,11 +80,11 @@ public class YACLControllerAdapter {
 				}
 			}
 
-			case ItemController itemController -> {
+			case ItemController _ -> {
 				return ItemControllerBuilder.create((Option<Item>) yaclOption);
 			}
 
-			case StringController stringController -> {
+			case StringController _ -> {
 				return StringControllerBuilder.create((Option<String>) yaclOption);
 			}
 		}

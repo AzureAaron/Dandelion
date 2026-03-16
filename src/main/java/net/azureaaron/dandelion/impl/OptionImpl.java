@@ -110,13 +110,13 @@ public class OptionImpl<T> implements Option<T> {
 	 */
 	protected static <T> void checkType(Option<T> option) {
 		boolean hasCorrectType = switch (option.controller()) {
-			case BooleanController booleanController -> option.type() == boolean.class || option.type() == Boolean.class;
-			case ColourController colourController -> option.type() == Color.class;
-			case EnumController<?> enumController -> option.type().isEnum();
-			case FloatController floatController -> option.type() == float.class || option.type() == Float.class;
-			case IntegerController integerController -> option.type() == int.class || option.type() == Integer.class;
-			case ItemController itemController -> Item.class.isAssignableFrom(option.type());
-			case StringController stringController -> option.type() == String.class;
+			case BooleanController _ -> option.type() == boolean.class || option.type() == Boolean.class;
+			case ColourController _ -> option.type() == Color.class;
+			case EnumController<?> _ -> option.type().isEnum();
+			case FloatController _ -> option.type() == float.class || option.type() == Float.class;
+			case IntegerController _ -> option.type() == int.class || option.type() == Integer.class;
+			case ItemController _ -> Item.class.isAssignableFrom(option.type());
+			case StringController _ -> option.type() == String.class;
 		};
 
 		if (!hasCorrectType) {
@@ -124,13 +124,13 @@ public class OptionImpl<T> implements Option<T> {
 			//All the controller interface classes implement their respective interface so this *should* always yield one (and the correct one at that!)
 			Class<?> controllerInterfaceType = option.controller().getClass().getInterfaces()[0];
 			String expected = switch (option.controller()) {
-				case BooleanController booleanController -> "boolean";
-				case ColourController colourController -> "Color";
-				case EnumController<?> enumController -> "Enum";
-				case FloatController floatController -> "float";
-				case IntegerController integerController -> "int";
-				case ItemController itemController -> "Item";
-				case StringController stringController -> "String";
+				case BooleanController _ -> "boolean";
+				case ColourController _ -> "Color";
+				case EnumController<?> _ -> "Enum";
+				case FloatController _ -> "float";
+				case IntegerController _ -> "int";
+				case ItemController _ -> "Item";
+				case StringController _ -> "String";
 			};
 			String message = String.format("[Dandelion] Option %s has mismatched type with controller (%s)! Expected a %s but got %s!", name, controllerInterfaceType, expected, option.type());
 

@@ -11,7 +11,7 @@ import net.azureaaron.dandelion.api.ConfigCategory;
 import net.azureaaron.dandelion.api.ConfigManager;
 import net.azureaaron.dandelion.api.ConfigType;
 import net.azureaaron.dandelion.api.DandelionConfigScreen;
-import net.azureaaron.dandelion.impl.moulconfig.MoulConfigAdapter;
+//import net.azureaaron.dandelion.impl.moulconfig.MoulConfigAdapter;
 import net.azureaaron.dandelion.impl.yacl.YACLScreenAdapter;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -20,6 +20,7 @@ public class DandelionConfigScreenImpl<T> implements DandelionConfigScreen {
 	private final ConfigManager<T> manager;
 	private final Component title;
 	private final List<ConfigCategory> categories;
+	@SuppressWarnings("unused")
 	private final String search;
 
 	public DandelionConfigScreenImpl(ConfigManager<T> manager, TriFunction<T, T, Builder, Builder> screenBuilder) {
@@ -39,7 +40,8 @@ public class DandelionConfigScreenImpl<T> implements DandelionConfigScreen {
 		Objects.requireNonNull(configType, "configType must not be null");
 		return switch (configType) {
 			case ConfigType.YACL -> YACLScreenAdapter.generateYaclScreen(this.manager, this.title, this.categories, parent);
-			case ConfigType.MOUL_CONFIG -> new MoulConfigAdapter(this.manager, this.title).generateMoulConfigScreen(this.categories, parent, this.search);
+			//case ConfigType.MOUL_CONFIG -> new MoulConfigAdapter(this.manager, this.title).generateMoulConfigScreen(this.categories, parent, this.search);
+			default -> throw new UnsupportedOperationException("The requested backend is unavailable.");
 		};
 	}
 
