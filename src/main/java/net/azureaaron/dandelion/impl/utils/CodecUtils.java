@@ -13,7 +13,7 @@ public class CodecUtils {
 	public static final Codec<SemanticVersion> SEMANTIC_VERSION_CODEC = Codec.STRING.comapFlatMap(version -> {
 		try {
 			return DataResult.success(SemanticVersion.parse(version));
-		} catch (VersionParsingException e) {
+		} catch (VersionParsingException _) {
 			return DataResult.error(() -> "Failed to parse semantic version from string: " + version);
 		}
 	}, SemanticVersion::toString);

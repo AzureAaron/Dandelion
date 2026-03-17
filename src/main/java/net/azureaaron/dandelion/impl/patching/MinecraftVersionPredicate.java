@@ -33,7 +33,7 @@ public record MinecraftVersionPredicate(String version, ComparisonOperator opera
 			SemanticVersion targetVersion = SemanticVersion.parse(normalizedTarget);
 
 			return this.operator().compare(currentVersion, targetVersion);
-		} catch (VersionParsingException e) {}
+		} catch (VersionParsingException _) {}
 
 		return false;
 	}
