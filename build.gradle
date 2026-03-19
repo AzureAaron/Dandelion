@@ -35,7 +35,7 @@ repositories {
 		}
 	}
 
-	//mavenLocal()
+	mavenLocal()
 }
 
 dependencies {
@@ -55,12 +55,21 @@ dependencies {
 
 loom {
 	accessWidenerPath = file("src/main/resources/dandelion.classtweaker")
+
+	decompilers {
+		vineflower {
+			options.put(
+					// Makes lambda names easy to find for Mixins
+					"mark-corresponding-synthetics", "1"
+					)
+		}
+	}
 }
 
 sourceSets {
 	main {
 		java {
-			exclude("**/impl/moulconfig/**")
+			//exclude("**/impl/moulconfig/**")
 		}
 	}
 }
@@ -79,51 +88,27 @@ tasks.withType(JavaCompile).configureEach {
 
 tasks.named("shadowJar").configure {
 	configurations = [project.configurations.shadowMe]
+	duplicatesStrategy = DuplicatesStrategy.INCLUDE
 
 	relocate("io.github.notenoughupdates.moulconfig", "net.azureaaron.dandelion.deps.moulconfig")
-	exclude("fabric.mod.json")
-	exclude("*.accesswidener")
-	exclude("*.classtweaker")
-	exclude("LICENSE")
-	mergeServiceFiles()
-	archiveClassifier = ""
 
-	finalizedBy("mergeResourcesIntoShadowJar")
-}
-
-// Adds our original FMJ, CT, and license into the shadow jar (to overwrite the MoulConfig ones)
-task mergeResourcesIntoShadowJar(type: Copy) {
-	dependsOn(tasks.shadowJar, processResources, jar)
-
-	def shadowJarFile = tasks.shadowJar.archiveFile.get().asFile
-	def tempDir = new File(buildDir, "tmp/shadowResources")
-
-	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
-	doFirst {
-		tempDir.deleteDir()
-		tempDir.mkdirs()
+	// Adds our original FMJ, CT, and license into the shadow jar (to overwrite the MoulConfig ones)
+	from(sourceSets.main.output.resourcesDir) {
+		include("fabric.mod.json")
+		include("*.classtweaker")
 	}
 
-	from(zipTree(shadowJarFile))
-
-	from(tasks.processResources.destinationDir) {
-		include("fabric.mod.json", "*.classtweaker")
-	}
-
-	from('.') {
+	from(projectDir) {
 		include("LICENSE")
 	}
 
-	into(tempDir)
+	// Exclude MoulConfig stuff
+	exclude("META-INF/MANIFEST.MF")
+	exclude("moulconfig.accesswidener")
+	exclude("moulconfig.classtweaker")
 
-	doLast {
-		ant.jar(destfile: shadowJarFile) {
-			fileset(dir: tempDir)
-		}
-
-		tempDir.deleteDir()
-	}
+	mergeServiceFiles()
+	archiveClassifier = ""
 }
 
 java {

@@ -62,7 +62,7 @@ public class DandelionNumberFieldEditor extends ComponentEditor {
 	protected float parseNumber(String input, float minValue, float maxValue, float defaultValue) {
 		try {
 			return Math.clamp(Float.parseFloat(input), minValue, maxValue);
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException _) {
 			return defaultValue;
 		}
 	}
