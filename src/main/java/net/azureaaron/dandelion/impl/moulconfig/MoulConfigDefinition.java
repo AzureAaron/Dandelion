@@ -1,23 +1,39 @@
 package net.azureaaron.dandelion.impl.moulconfig;
 
+import java.util.List;
+
 import io.github.notenoughupdates.moulconfig.Config;
 import io.github.notenoughupdates.moulconfig.DescriptionRendereringBehaviour;
+import io.github.notenoughupdates.moulconfig.Social;
 import io.github.notenoughupdates.moulconfig.TitleRenderingBehaviour;
 import io.github.notenoughupdates.moulconfig.common.text.StructuredText;
 import io.github.notenoughupdates.moulconfig.platform.MoulConfigPlatform;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedOption;
+import net.azureaaron.dandelion.api.PlatformLinks;
 import net.minecraft.network.chat.Component;
 
 public class MoulConfigDefinition extends Config {
 	private final Component title;
+	private final PlatformLinks platformLinks;
 
-	protected MoulConfigDefinition(Component title) {
+	protected MoulConfigDefinition(Component title, PlatformLinks platformLinks) {
 		this.title = title;
+		this.platformLinks = platformLinks;
 	}
 
 	@Override
 	public StructuredText getTitle() {
 		return MoulConfigPlatform.wrap(this.title);
+	}
+
+	@Override
+	public List<Social> getSocials() {
+		List<Social> socials = this.platformLinks.links().stream()
+				.map(DandelionSocialLink::new)
+				.map(Social.class::cast)
+				.toList();
+
+		return socials;
 	}
 
 	@Override

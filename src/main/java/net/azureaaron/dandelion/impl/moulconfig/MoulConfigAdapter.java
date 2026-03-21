@@ -19,6 +19,7 @@ import net.azureaaron.dandelion.api.ConfigCategory;
 import net.azureaaron.dandelion.api.ConfigManager;
 import net.azureaaron.dandelion.api.Option;
 import net.azureaaron.dandelion.api.OptionGroup;
+import net.azureaaron.dandelion.api.PlatformLinks;
 import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -34,10 +35,10 @@ public class MoulConfigAdapter {
 	//LinkedHashMap to preserve insertion order
 	private final Map<Option<?>, BiFunction<Integer, MoulConfigDefinition, DandelionProcessedEditableOption<?>>> editableOptionFactories = new LinkedHashMap<>();
 
-	public MoulConfigAdapter(ConfigManager<?> manager, Component title) {
+	public MoulConfigAdapter(ConfigManager<?> manager, Component title, PlatformLinks platformLinks) {
 		this.manager = manager;
 		this.title = title;
-		this.configDefinition = new MoulConfigDefinition(title);
+		this.configDefinition = new MoulConfigDefinition(title, platformLinks);
 	}
 
 	public Screen generateMoulConfigScreen(List<ConfigCategory> categories, @Nullable Screen parent, String search) {
