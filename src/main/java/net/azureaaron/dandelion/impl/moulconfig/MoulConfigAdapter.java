@@ -35,7 +35,7 @@ public class MoulConfigAdapter {
 	//LinkedHashMap to preserve insertion order
 	private final Map<Option<?>, BiFunction<Integer, MoulConfigDefinition, DandelionProcessedEditableOption<?>>> editableOptionFactories = new LinkedHashMap<>();
 
-	public MoulConfigAdapter(ConfigManager<?> manager, Component title, PlatformLinks platformLinks) {
+	public MoulConfigAdapter(ConfigManager<?> manager, Component title, @Nullable PlatformLinks platformLinks) {
 		this.manager = manager;
 		this.title = title;
 		this.configDefinition = new MoulConfigDefinition(title, platformLinks);

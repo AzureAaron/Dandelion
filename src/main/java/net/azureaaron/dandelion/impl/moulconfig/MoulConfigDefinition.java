@@ -2,6 +2,8 @@ package net.azureaaron.dandelion.impl.moulconfig;
 
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 import io.github.notenoughupdates.moulconfig.Config;
 import io.github.notenoughupdates.moulconfig.DescriptionRendereringBehaviour;
 import io.github.notenoughupdates.moulconfig.Social;
@@ -14,9 +16,9 @@ import net.minecraft.network.chat.Component;
 
 public class MoulConfigDefinition extends Config {
 	private final Component title;
-	private final PlatformLinks platformLinks;
+	private final @Nullable PlatformLinks platformLinks;
 
-	protected MoulConfigDefinition(Component title, PlatformLinks platformLinks) {
+	protected MoulConfigDefinition(Component title, @Nullable PlatformLinks platformLinks) {
 		this.title = title;
 		this.platformLinks = platformLinks;
 	}
@@ -28,12 +30,14 @@ public class MoulConfigDefinition extends Config {
 
 	@Override
 	public List<Social> getSocials() {
-		List<Social> socials = this.platformLinks.links().stream()
-				.map(DandelionSocialLink::new)
-				.map(Social.class::cast)
-				.toList();
+		if (this.platformLinks != null) {
+			return this.platformLinks.links().stream()
+					.map(DandelionSocialLink::new)
+					.map(Social.class::cast)
+					.toList();
+		}
 
-		return socials;
+		return List.of();
 	}
 
 	@Override
