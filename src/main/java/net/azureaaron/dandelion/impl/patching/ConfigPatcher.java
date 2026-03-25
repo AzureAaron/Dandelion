@@ -56,7 +56,7 @@ public class ConfigPatcher {
 			try {
 				Field field = currentNode.getClass().getDeclaredField(objectName);
 				currentNode = field.get(currentNode);
-			} catch (Exception e) {
+			} catch (Exception _) {
 				// The field likely does not exist so we will return early
 				return;
 			}
@@ -73,7 +73,7 @@ public class ConfigPatcher {
 				}
 				default -> {}
 			}
-		} catch (Exception e) {
+		} catch (Exception _) {
 			// The field did not exist, or its type did not match
 			return;
 		}

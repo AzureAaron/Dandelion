@@ -1,5 +1,7 @@
 package net.azureaaron.dandelion.impl.moulconfig.editor;
 
+import java.util.Set;
+
 import io.github.notenoughupdates.moulconfig.common.IItemStack;
 import io.github.notenoughupdates.moulconfig.common.IMinecraft;
 import io.github.notenoughupdates.moulconfig.gui.GuiComponent;
@@ -68,7 +70,8 @@ public class DandelionItemEditor extends ComponentEditor {
 								80,
 								() -> true,
 								"Item ID",
-								IMinecraft.INSTANCE.getDefaultFontRenderer()
+								IMinecraft.INSTANCE.getDefaultFontRenderer(),
+								Set.of('§')
 								)
 						)
 				);

@@ -1,5 +1,5 @@
 plugins {
-	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
 	id 'maven-publish'
 	id 'com.gradleup.shadow' version "${shadow_version}"
 	id "com.diffplug.spotless" version "${spotless_version}"
@@ -41,24 +41,36 @@ repositories {
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings loom.officialMojangMappings()
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	// YACL
-	modImplementation("dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric")
+	implementation("dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric")
 
 	// MoulConfig
-	shadowMe(modCompileOnly("org.notenoughupdates.moulconfig:${project.moulconfig_flavour}:${project.moulconfig_version}"))
+	shadowMe(compileOnly("org.notenoughupdates.moulconfig:${project.moulconfig_flavour}:${project.moulconfig_version}"))
 }
 
 loom {
 	accessWidenerPath = file("src/main/resources/dandelion.classtweaker")
 
-	mixin {
-		useLegacyMixinAp = false
+	decompilers {
+		vineflower {
+			options.put(
+					// Makes lambda names easy to find for Mixins
+					"mark-corresponding-synthetics", "1"
+					)
+		}
+	}
+}
+
+sourceSets {
+	main {
+		java {
+			//exclude("**/impl/moulconfig/**")
+		}
 	}
 }
 
@@ -71,65 +83,39 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 21
+	it.options.release = 25
 }
 
 tasks.named("shadowJar").configure {
 	configurations = [project.configurations.shadowMe]
+	duplicatesStrategy = DuplicatesStrategy.INCLUDE
 
 	relocate("io.github.notenoughupdates.moulconfig", "net.azureaaron.dandelion.deps.moulconfig")
-	exclude("fabric.mod.json")
-	exclude("*.accesswidener")
-	exclude("*.classtweaker")
-	exclude("LICENSE")
-	mergeServiceFiles()
-}
 
-// Adds our original FMJ, CT, and license into the shadow jar (to overwrite the MoulConfig ones)
-task mergeResourcesIntoShadowJar(type: Copy) {
-	dependsOn(tasks.shadowJar, processResources, jar)
-
-	def shadowJarFile = tasks.shadowJar.archiveFile.get().asFile
-	def tempDir = new File(buildDir, "tmp/shadowResources")
-
-	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
-	doFirst {
-		tempDir.deleteDir()
-		tempDir.mkdirs()
+	// Adds our original FMJ, CT, and license into the shadow jar (to overwrite the MoulConfig ones)
+	from(sourceSets.main.output.resourcesDir) {
+		include("fabric.mod.json")
+		include("*.classtweaker")
 	}
 
-	from(zipTree(shadowJarFile))
-
-	from(tasks.processResources.destinationDir) {
-		include("fabric.mod.json", "*.classtweaker")
-	}
-
-	from('.') {
+	from(projectDir) {
 		include("LICENSE")
 	}
 
-	into(tempDir)
+	// Exclude MoulConfig stuff
+	exclude("META-INF/MANIFEST.MF")
+	exclude("moulconfig.accesswidener")
+	exclude("moulconfig.classtweaker")
 
-	doLast {
-		ant.jar(destfile: shadowJarFile) {
-			fileset(dir: tempDir)
-		}
-
-		tempDir.deleteDir()
-	}
-}
-
-tasks.named("remapJar").configure {
-	dependsOn(tasks.mergeResourcesIntoShadowJar)
-	inputFile.set(tasks.named("shadowJar").flatMap { it.archiveFile } )
+	mergeServiceFiles()
+	archiveClassifier = ""
 }
 
 java {
 	withSourcesJar()
 
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
 }
 
 jar {
@@ -164,7 +150,8 @@ checkstyle {
 	toolVersion = "${checkstyle_version}"
 	configFile = rootProject.file("checkstyle.xml")
 	configProperties = [
-		"suppressionsFile": rootProject.file("checkstyle-suppressions.xml")
+		"suppressionsFile": rootProject.file("checkstyle-suppressions.xml"),
+		"cacheFile": layout.buildDirectory.file("checkstyle/checkstyle-cache.txt").get().asFile
 	]
 }
 

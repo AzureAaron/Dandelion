@@ -23,6 +23,7 @@ import net.azureaaron.dandelion.api.ConfigCategory;
 import net.azureaaron.dandelion.api.ConfigManager;
 import net.azureaaron.dandelion.api.Option;
 import net.azureaaron.dandelion.api.OptionGroup;
+import net.azureaaron.dandelion.api.PlatformLinks;
 import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -38,10 +39,10 @@ public class MoulConfigAdapter {
 	//LinkedHashMap to preserve insertion order
 	private final Map<Option<?>, BiFunction<Integer, MoulConfigDefinition, DandelionProcessedEditableOption<?>>> editableOptionFactories = new LinkedHashMap<>();
 
-	public MoulConfigAdapter(ConfigManager<?> manager, Component title) {
+	public MoulConfigAdapter(ConfigManager<?> manager, Component title, @Nullable PlatformLinks platformLinks) {
 		this.manager = manager;
 		this.title = title;
-		this.configDefinition = new MoulConfigDefinition(title);
+		this.configDefinition = new MoulConfigDefinition(title, platformLinks);
 	}
 
 	public Screen generateMoulConfigScreen(List<ConfigCategory> categories, @Nullable Screen parent, String search, @Nullable Supplier<@Nullable ConfigScreenState> supplier, @Nullable Consumer<ConfigScreenState> consumer) {
@@ -63,7 +64,7 @@ public class MoulConfigAdapter {
 			//Use a custom close handler to save the config and open the parent screen
 			moulConfigScreenComponent.getGuiContext().setCloseRequestHandler(() -> {
 				this.manager.save();
-				Screens.getClient(moulConfigScreenComponent).setScreen(moulConfigScreenComponent.getPreviousScreen());
+				Screens.getMinecraft(moulConfigScreenComponent).setScreen(moulConfigScreenComponent.getPreviousScreen());
 			});
 
 			configScreenState.categoriesHash = categories.hashCode();

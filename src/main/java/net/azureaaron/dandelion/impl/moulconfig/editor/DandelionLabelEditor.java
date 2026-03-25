@@ -1,5 +1,6 @@
 package net.azureaaron.dandelion.impl.moulconfig.editor;
 
+import io.github.notenoughupdates.moulconfig.common.IMinecraft;
 import io.github.notenoughupdates.moulconfig.common.text.StructuredText;
 import io.github.notenoughupdates.moulconfig.gui.GuiComponent;
 import io.github.notenoughupdates.moulconfig.gui.HorizontalAlign;
@@ -16,20 +17,22 @@ public class DandelionLabelEditor extends ComponentEditor {
 	public DandelionLabelEditor(ProcessedOption option, StructuredText label) {
 		super(option);
 		this.component = new AlignComponent(
-				new TextComponent(
-						label,
-						100,
-						TextComponent.TextAlignment.CENTER
-						),
-				GetSetter.constant(HorizontalAlign.CENTER),
-				GetSetter.constant(VerticalAlign.CENTER)
-				);
+			new TextComponent(
+				IMinecraft.INSTANCE.getDefaultFontRenderer(),
+				() -> label,
+				250,
+				TextComponent.TextAlignment.CENTER,
+				true,
+				true
+			),
+			GetSetter.constant(HorizontalAlign.CENTER),
+			GetSetter.constant(VerticalAlign.CENTER)
+		);
 	}
 
 	@Override
 	public int getHeight() {
-		//Same height as an accordion editor
-		return 20;
+		return Math.max(20, component.getHeight());
 	}
 
 	@Override

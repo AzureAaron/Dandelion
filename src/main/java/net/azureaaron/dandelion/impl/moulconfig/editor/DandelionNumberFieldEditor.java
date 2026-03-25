@@ -6,6 +6,9 @@ import io.github.notenoughupdates.moulconfig.gui.component.TextFieldComponent;
 import io.github.notenoughupdates.moulconfig.gui.editors.ComponentEditor;
 import io.github.notenoughupdates.moulconfig.observer.GetSetter;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedOption;
+
+import java.util.Set;
+
 import org.jetbrains.annotations.ApiStatus;
 
 public class DandelionNumberFieldEditor extends ComponentEditor {
@@ -36,7 +39,8 @@ public class DandelionNumberFieldEditor extends ComponentEditor {
 				80,
 				() -> true,
 				"",
-				IMinecraft.INSTANCE.getDefaultFontRenderer()));
+				IMinecraft.INSTANCE.getDefaultFontRenderer(),
+				Set.of('§')));
 	}
 
 	/**
@@ -62,7 +66,7 @@ public class DandelionNumberFieldEditor extends ComponentEditor {
 	protected float parseNumber(String input, float minValue, float maxValue, float defaultValue) {
 		try {
 			return Math.clamp(Float.parseFloat(input), minValue, maxValue);
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException _) {
 			return defaultValue;
 		}
 	}

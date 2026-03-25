@@ -19,7 +19,7 @@ public class MoulConfigEditableOptionAdapter {
 		return switch (option) {
 			case ButtonOption button -> createButtonOption(button);
 			case LabelOption label -> createLabelOption(label);
-			case Option<T> _option when option.controller() instanceof IntegerController -> (accordionId, configDefinition) -> new DandelionProcessedEditableOption<>(option, accordionId, configDefinition) {
+			case Option<T> _ when option.controller() instanceof IntegerController -> (accordionId, configDefinition) -> new DandelionProcessedEditableOption<>(option, accordionId, configDefinition) {
 				@Override
 				public Object get() {
 					return ((Integer) super.get()).floatValue();
@@ -35,7 +35,7 @@ public class MoulConfigEditableOptionAdapter {
 					return option.controller().controllerMoulConfig(option, this, configDefinition);
 				}
 			};
-			case Option<T> _option -> (accordionId, configDefinition) -> new DandelionProcessedEditableOption<>(option, accordionId, configDefinition) {
+			case Option<T> _ -> (accordionId, configDefinition) -> new DandelionProcessedEditableOption<>(option, accordionId, configDefinition) {
 				@Override
 				protected GuiOptionEditor createEditor() {
 					return option.controller().controllerMoulConfig(option, this, configDefinition);

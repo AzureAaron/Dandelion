@@ -25,7 +25,7 @@ import java.util.Arrays;
 public class MoulConfigOptionEditorAdapter {
 	public static <T> GuiOptionEditor createMoulConfigEditor(Option<T> option, ProcessedOption moulConfigOption, MoulConfigDefinition configDefinition) {
 		return switch (option.controller()) {
-			case BooleanController booleanController -> new GuiOptionEditorBoolean(moulConfigOption, -1, configDefinition);
+			case BooleanController _ -> new GuiOptionEditorBoolean(moulConfigOption, -1, configDefinition);
 			case ColourController colourController -> new DandelionColourEditor(moulConfigOption, colourController.hasAlpha());
 			case @SuppressWarnings("rawtypes") EnumController enumController -> {
 				T[] constants = option.type().getEnumConstants();
@@ -42,8 +42,8 @@ public class MoulConfigOptionEditorAdapter {
 			case FloatController floatController when floatController.slider() -> new DandelionNumberSliderEditor(moulConfigOption, floatController.min(), floatController.max(), floatController.step());
 			case IntegerController integerController when !integerController.slider() -> new DandelionNumberFieldEditor(moulConfigOption, integerController.min(), integerController.max(), (Integer) option.binding().defaultValue());
 			case IntegerController integerController when integerController.slider() -> new DandelionNumberSliderEditor(moulConfigOption, integerController.min(), integerController.max(), integerController.step());
-			case ItemController itemController -> new DandelionItemEditor(moulConfigOption);
-			case StringController stringController -> new GuiOptionEditorText(moulConfigOption);
+			case ItemController _ -> new DandelionItemEditor(moulConfigOption);
+			case StringController _ -> new GuiOptionEditorText(moulConfigOption, "§");
 			default -> throw new UnsupportedOperationException(String.format("The controller %s is not supported by the MoulConfig backend.", option.controller().getClass().getName()));
 		};
 	}

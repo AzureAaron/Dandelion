@@ -11,7 +11,8 @@
 		"nea89",
 		"kevinthegreat1",
 		"Alex33856",
-		"viciscat"
+		"viciscat",
+		"Bedrock Armor"
 	],
 	"contact": {
 		"homepage": "https://azureaaron.net/",
@@ -31,8 +32,8 @@
 	"accessWidener": "dandelion.classtweaker",
 	"depends": {
 		"fabricloader": ">=0.18.4",
-		"minecraft": "~1.21.11",
-		"java": ">=21",
+		"minecraft": "~26.1",
+		"java": ">=25",
 		"fabric-api": "*",
 		"fabric-language-kotlin": "*"
 	},

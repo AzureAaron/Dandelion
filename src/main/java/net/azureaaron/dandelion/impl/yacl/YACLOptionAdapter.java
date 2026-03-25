@@ -29,7 +29,7 @@ public class YACLOptionAdapter {
 						.text(button.description())
 						.build())
 				.text(button.prompt())
-				.action((screen, opt) -> button.action().accept(screen))
+				.action((screen, _) -> button.action().accept(screen))
 				.build();
 			}
 
@@ -39,7 +39,7 @@ public class YACLOptionAdapter {
 				.build();
 			}
 
-			case net.azureaaron.dandelion.api.Option<T> _option -> {
+			case net.azureaaron.dandelion.api.Option<T> _ -> {
 				yield dev.isxander.yacl3.api.Option.<T>createBuilder()
 				.name(option.name())
 				.description(OptionDescription.createBuilder()
@@ -61,7 +61,7 @@ public class YACLOptionAdapter {
 		List<OptionEventListener<T>> yaclOptionEventListeners = new ArrayList<>();
 
 		for (OptionListener<T> listener : option.listeners()) {
-			OptionEventListener<T> yaclListener = (yaclOption, event) -> {
+			OptionEventListener<T> yaclListener = (_, event) -> {
 				listener.onUpdate(option, convertUpdateType(event));
 			};
 

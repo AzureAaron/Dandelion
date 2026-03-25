@@ -145,7 +145,7 @@ public class ListOptionImpl<T> implements ListOption<T> {
 				entryController(),
 				modifiable(),
 				flags(),
-				List.of((entryOption, updateType) -> listeners().forEach(l -> l.onUpdate(this, updateType)))
+				List.of((_, updateType) -> listeners().forEach(l -> l.onUpdate(this, updateType)))
 		);
 	}
 
