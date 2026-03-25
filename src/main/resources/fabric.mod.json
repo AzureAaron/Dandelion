@@ -32,7 +32,7 @@
 	"accessWidener": "dandelion.classtweaker",
 	"depends": {
 		"fabricloader": ">=0.18.4",
-		"minecraft": "~26.1-",
+		"minecraft": "~26.1",
 		"java": ">=25",
 		"fabric-api": "*",
 		"fabric-language-kotlin": "*"

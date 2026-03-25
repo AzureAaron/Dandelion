@@ -43,7 +43,7 @@ public class MoulConfigOptionEditorAdapter {
 			case IntegerController integerController when !integerController.slider() -> new DandelionNumberFieldEditor(moulConfigOption, integerController.min(), integerController.max(), (Integer) option.binding().defaultValue());
 			case IntegerController integerController when integerController.slider() -> new DandelionNumberSliderEditor(moulConfigOption, integerController.min(), integerController.max(), integerController.step());
 			case ItemController _ -> new DandelionItemEditor(moulConfigOption);
-			case StringController _ -> new GuiOptionEditorText(moulConfigOption);
+			case StringController _ -> new GuiOptionEditorText(moulConfigOption, "§");
 			default -> throw new UnsupportedOperationException(String.format("The controller %s is not supported by the MoulConfig backend.", option.controller().getClass().getName()));
 		};
 	}
