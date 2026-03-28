@@ -1,6 +1,8 @@
 package net.azureaaron.dandelion.api;
 
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import org.apache.commons.lang3.function.TriFunction;
 import org.jspecify.annotations.Nullable;
@@ -26,8 +28,14 @@ public interface DandelionConfigScreen {
 
 		Builder platformLinks(PlatformLinks links);
 
+		Builder withState(Supplier<@Nullable ConfigScreenState> supplier, Consumer<@Nullable ConfigScreenState> consumer);
+
 		default Builder categoryIf(boolean condition, ConfigCategory category) {
 			return condition ? category(category) : this;
+		}
+
+		default Builder withStateIf(boolean condition, Supplier<@Nullable ConfigScreenState> supplier, Consumer<@Nullable ConfigScreenState> consumer) {
+			return condition ? withState(supplier, consumer) : this;
 		}
 
 		default Builder categories(List<ConfigCategory> categories) {
