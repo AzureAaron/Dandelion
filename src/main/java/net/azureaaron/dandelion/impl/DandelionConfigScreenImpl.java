@@ -3,7 +3,10 @@ package net.azureaaron.dandelion.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
+import net.azureaaron.dandelion.api.ConfigScreenState;
 import org.apache.commons.lang3.function.TriFunction;
 import org.jspecify.annotations.Nullable;
 
@@ -24,6 +27,9 @@ public class DandelionConfigScreenImpl<T> implements DandelionConfigScreen {
 	private final String search;
 	private final @Nullable PlatformLinks platformLinks;
 
+	private @Nullable Supplier<@Nullable ConfigScreenState> stateSupplier = null;
+	private @Nullable Consumer<ConfigScreenState> stateConsumer = null;
+
 	public DandelionConfigScreenImpl(ConfigManager<T> manager, TriFunction<T, T, Builder, Builder> screenBuilder) {
 		this.manager = Objects.requireNonNull(manager, "manager must not be null");
 		Objects.requireNonNull(screenBuilder, "screenBuilder must not be null");
@@ -35,6 +41,8 @@ public class DandelionConfigScreenImpl<T> implements DandelionConfigScreen {
 		this.categories = builder.categories;
 		this.search = builder.search;
 		this.platformLinks = builder.platformLinks;
+		this.stateSupplier = builder.stateSupplier;
+		this.stateConsumer = builder.stateConsumer;
 	}
 
 	@Override
@@ -42,7 +50,7 @@ public class DandelionConfigScreenImpl<T> implements DandelionConfigScreen {
 		Objects.requireNonNull(configType, "configType must not be null");
 		return switch (configType) {
 			case ConfigType.YACL -> YACLScreenAdapter.generateYaclScreen(this.manager, this.title, this.categories, parent);
-			case ConfigType.MOUL_CONFIG -> new MoulConfigAdapter(this.manager, this.title, this.platformLinks).generateMoulConfigScreen(this.categories, parent, this.search);
+			case ConfigType.MOUL_CONFIG -> new MoulConfigAdapter(this.manager, this.title, this.platformLinks).generateMoulConfigScreen(this.categories, parent, this.search, this.stateSupplier, this.stateConsumer);
 			default -> throw new UnsupportedOperationException("The requested backend is unavailable.");
 		};
 	}
@@ -52,6 +60,9 @@ public class DandelionConfigScreenImpl<T> implements DandelionConfigScreen {
 		private List<ConfigCategory> categories = new ArrayList<>();
 		private String search = "";
 		private @Nullable PlatformLinks platformLinks = null;
+
+		private @Nullable Supplier<@Nullable ConfigScreenState> stateSupplier = null;
+		private @Nullable Consumer<ConfigScreenState> stateConsumer = null;
 
 		@Override
 		public Builder title(Component title) {
@@ -74,6 +85,13 @@ public class DandelionConfigScreenImpl<T> implements DandelionConfigScreen {
 		@Override
 		public Builder platformLinks(PlatformLinks links) {
 			this.platformLinks = Objects.requireNonNull(links, "links must not be null");
+			return this;
+		}
+
+		@Override
+		public Builder withState(Supplier<ConfigScreenState> stateSupplier, Consumer<ConfigScreenState> stateConsumer) {
+			this.stateSupplier = stateSupplier;
+			this.stateConsumer = stateConsumer;
 			return this;
 		}
 	}

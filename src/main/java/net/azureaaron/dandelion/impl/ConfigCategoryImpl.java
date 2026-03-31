@@ -95,4 +95,16 @@ public class ConfigCategoryImpl implements ConfigCategory {
 			return new ConfigCategoryImpl(this.id, this.name, this.description, new OptionGroupImpl(null, Component.empty(), List.of(), List.of(), false, List.copyOf(this.rootOptions)), List.copyOf(this.groups));
 		}
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass()) return false;
+		ConfigCategoryImpl that = (ConfigCategoryImpl) o;
+		return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(rootGroup, that.rootGroup) && Objects.equals(groups, that.groups);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, description, rootGroup, groups);
+	}
 }
