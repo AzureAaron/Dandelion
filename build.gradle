@@ -38,19 +38,17 @@ repositories {
 	//mavenLocal()
 }
 
-dependencies {
-	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+sourceSets {
+	main {
+		java {
+			//exclude("**/impl/moulconfig/**")
+		}
+	}
 
-	// Fabric API. This is technically optional, but you probably want it anyway.
-	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-	// YACL
-	implementation("dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric")
-
-	// MoulConfig
-	shadowMe(compileOnly("org.notenoughupdates.moulconfig:${project.moulconfig_flavour}:${project.moulconfig_version}"))
+	testmod {
+		compileClasspath += main.compileClasspath
+		runtimeClasspath += main.runtimeClasspath
+	}
 }
 
 loom {
@@ -64,14 +62,34 @@ loom {
 					)
 		}
 	}
-}
 
-sourceSets {
-	main {
-		java {
-			//exclude("**/impl/moulconfig/**")
+	runs {
+		testmodClient {
+			client()
+			ideConfigGenerated = project.rootProject == project
+			name = "Testmod Client"
+			source = sourceSets.testmod
 		}
 	}
+}
+
+dependencies {
+	// To change the versions see the gradle.properties file
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+	// Fabric API. This is technically optional, but you probably want it anyway.
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+	// YACL
+	implementation("dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric")
+
+	// MoulConfig
+	shadowMe(compileOnly("org.notenoughupdates.moulconfig:${project.moulconfig_flavour}:${project.moulconfig_version}"))
+
+	// Test mod stuff
+	testmodImplementation sourceSets.main.output
+	testmodImplementation "org.notenoughupdates.moulconfig:${project.moulconfig_flavour}:${project.moulconfig_version}"
 }
 
 processResources {
