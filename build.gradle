@@ -82,10 +82,13 @@ dependencies {
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	// YACL
-	implementation("dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric")
+	compileOnly("dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric")
 
 	// MoulConfig
 	shadowMe(compileOnly("org.notenoughupdates.moulconfig:${project.moulconfig_flavour}:${project.moulconfig_version}"))
+
+	// Fabric Language Kotlin (for MoulConfig)
+	implementation "net.fabricmc:fabric-language-kotlin:${project.flk_version}"
 
 	// Test mod stuff
 	testmodImplementation sourceSets.main.output

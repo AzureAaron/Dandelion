@@ -50,7 +50,7 @@ public class MoulConfigAdapter {
 		//Use a custom close handler to save the config and open the parent screen
 		moulConfigScreenComponent.getGuiContext().setCloseRequestHandler(() -> {
 			this.manager.save();
-			Screens.getMinecraft(moulConfigScreenComponent).setScreen(moulConfigScreenComponent.getPreviousScreen());
+			Screens.getMinecraft(moulConfigScreenComponent).gui.setScreen(moulConfigScreenComponent.getPreviousScreen());
 		});
 
 		if (!search.isEmpty()) {

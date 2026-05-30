@@ -53,7 +53,7 @@ public class MoulConfigEditableOptionAdapter {
 
 			@Override
 			public Object get() {
-				return (Runnable) () -> ((ButtonOption) this.option).action().accept(Minecraft.getInstance().screen);
+				return (Runnable) () -> ((ButtonOption) this.option).action().accept(Minecraft.getInstance().gui.screen());
 			}
 
 			@Override

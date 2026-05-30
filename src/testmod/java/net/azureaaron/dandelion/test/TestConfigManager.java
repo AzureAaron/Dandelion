@@ -38,7 +38,7 @@ public class TestConfigManager {
 
 	protected static Screen createGui() {
 		return DandelionConfigScreen.create(CONFIG_MANAGER, (defaults, config, builder) -> builder
-				.title(Component.literal("Dandelion Test Mod 1.0.0"))
+				.title(Component.literal("Dandelion Test Mod 1.0.0 on " + DandelionTestMod.MINECRAFT_VERSION))
 				.category(createPrimaryCategory(defaults, config))
 				.category(createSecondaryCategory(defaults, config))
 				.platformLinks(PlatformLinks.createBuilder()
