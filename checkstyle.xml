@@ -96,6 +96,7 @@
 
         <module name="UnusedCatchParameterShouldBeUnnamed"/>
         <module name="UnusedLambdaParameterShouldBeUnnamed"/>
+        <module name="UnusedTryResourceShouldBeUnnamed"/>
 
         <module name="ModifierOrder"/>
         <module name="RedundantModifier"/>
