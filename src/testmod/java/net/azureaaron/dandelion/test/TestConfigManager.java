@@ -4,12 +4,15 @@ import java.awt.Color;
 import java.nio.file.Path;
 import java.util.function.UnaryOperator;
 
+import org.apache.commons.lang3.function.Consumers;
+
 import net.azureaaron.dandelion.api.ButtonOption;
 import net.azureaaron.dandelion.api.ConfigCategory;
 import net.azureaaron.dandelion.api.ConfigManager;
 import net.azureaaron.dandelion.api.ConfigType;
 import net.azureaaron.dandelion.api.DandelionConfigScreen;
 import net.azureaaron.dandelion.api.Option;
+import net.azureaaron.dandelion.api.OptionFlag;
 import net.azureaaron.dandelion.api.OptionGroup;
 import net.azureaaron.dandelion.api.PlatformLinks;
 import net.azureaaron.dandelion.api.controllers.BooleanController;
@@ -151,6 +154,15 @@ public class TestConfigManager {
 						.name(Component.literal("Play Sound").withColor(CommonColors.SOFT_YELLOW))
 						.prompt(Component.literal("Click"))
 						.action(_ -> Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.AMETHYST_BLOCK_STEP, 1f, 1f)))
+						.build())
+				.option(Option.<Boolean>createBuilder()
+						.name(Component.literal("Reload Assets").withColor(CommonColors.LIGHTER_GRAY))
+						.description(Component.literal("The slider state won't change but the option flag still gets trieggered."))
+						.binding(true,
+								() -> true,
+								Consumers.nop())
+						.controller(BooleanController.createBuilder().build())
+						.flags(OptionFlag.ASSET_RELOAD)
 						.build())
 				.option(Option.<Item>createBuilder()
 						.name(Component.literal("Item").withColor(0xFF5517))
