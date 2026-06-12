@@ -76,6 +76,17 @@ public class TestConfigManager {
 								.coloured(true)
 								.build())
 						.build())
+				.option(Option.<Boolean>createBuilder()
+						.name(Component.literal("Blocked Boolean"))
+						.binding(defaults.bool,
+								() -> config.bool,
+								newValue -> config.bool = newValue)
+						.controller(BooleanController.createBuilder()
+								.booleanStyle(BooleanController.BooleanStyle.YES_NO)
+								.coloured(true)
+								.build())
+						.modifiable(false)
+						.build())
 
 				// Colour
 				.group(OptionGroup.createBuilder()

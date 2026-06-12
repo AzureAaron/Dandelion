@@ -13,6 +13,7 @@ import net.azureaaron.dandelion.api.controllers.FloatController;
 import net.azureaaron.dandelion.api.controllers.IntegerController;
 import net.azureaaron.dandelion.api.controllers.ItemController;
 import net.azureaaron.dandelion.api.controllers.StringController;
+import net.azureaaron.dandelion.impl.moulconfig.editor.DandelionBlockedOptionEditor;
 import net.azureaaron.dandelion.impl.moulconfig.editor.DandelionColourEditor;
 import net.azureaaron.dandelion.impl.moulconfig.editor.DandelionItemEditor;
 import net.azureaaron.dandelion.impl.moulconfig.editor.DandelionNumberFieldEditor;
@@ -24,7 +25,7 @@ import java.util.Arrays;
 
 public class MoulConfigOptionEditorAdapter {
 	public static <T> GuiOptionEditor createMoulConfigEditor(Option<T> option, ProcessedOption moulConfigOption, MoulConfigDefinition configDefinition) {
-		return switch (option.controller()) {
+		GuiOptionEditor optionEditor = switch (option.controller()) {
 			case BooleanController _ -> new GuiOptionEditorBoolean(moulConfigOption, -1, configDefinition);
 			case ColourController colourController -> new DandelionColourEditor(moulConfigOption, colourController.hasAlpha());
 			case @SuppressWarnings("rawtypes") EnumController enumController -> {
@@ -46,5 +47,11 @@ public class MoulConfigOptionEditorAdapter {
 			case StringController _ -> new GuiOptionEditorText(moulConfigOption, "§");
 			default -> throw new UnsupportedOperationException(String.format("The controller %s is not supported by the MoulConfig backend.", option.controller().getClass().getName()));
 		};
+
+		if (option.modifiable()) {
+			return optionEditor;
+		} else {
+			return new DandelionBlockedOptionEditor(optionEditor);
+		}
 	}
 }
