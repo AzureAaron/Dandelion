@@ -14,17 +14,21 @@ import io.github.notenoughupdates.moulconfig.common.text.StructuredText;
 import io.github.notenoughupdates.moulconfig.platform.MoulConfigPlatform;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedOption;
 import net.azureaaron.dandelion.api.ConfigManager;
+import net.azureaaron.dandelion.api.Option;
 import net.azureaaron.dandelion.api.OptionFlag;
 import net.azureaaron.dandelion.api.PlatformLinks;
+import net.azureaaron.dandelion.impl.ConfigManagerImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 
 public class MoulConfigDefinition extends Config {
+	private final ConfigManager<?> manager;
 	private final Component title;
 	private final @Nullable PlatformLinks platformLinks;
 	private final Set<OptionFlag> queuedOptionFlags = new HashSet<>();
 
 	protected MoulConfigDefinition(ConfigManager<?> manager, Component title, @Nullable PlatformLinks platformLinks) {
+		this.manager = manager;
 		this.title = title;
 		this.platformLinks = platformLinks;
 
@@ -62,6 +66,11 @@ public class MoulConfigDefinition extends Config {
 	/// @implNote Each unique option flag will only execute once.
 	public void queueOptionFlags(List<OptionFlag> flags) {
 		this.queuedOptionFlags.addAll(flags);
+	}
+
+	/// {@return whether the {@code option} is patched}
+	public boolean isOptionPatched(Option<?> option) {
+		return ((ConfigManagerImpl<?>) this.manager).isOptionPatched(option.id());
 	}
 
 	@Override

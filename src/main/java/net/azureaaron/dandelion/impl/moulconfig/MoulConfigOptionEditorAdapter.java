@@ -48,7 +48,7 @@ public class MoulConfigOptionEditorAdapter {
 			default -> throw new UnsupportedOperationException(String.format("The controller %s is not supported by the MoulConfig backend.", option.controller().getClass().getName()));
 		};
 
-		if (option.modifiable()) {
+		if (option.modifiable() && !configDefinition.isOptionPatched(option)) {
 			return optionEditor;
 		} else {
 			return new DandelionBlockedOptionEditor(optionEditor);

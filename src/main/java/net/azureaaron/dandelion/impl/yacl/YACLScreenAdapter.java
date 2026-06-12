@@ -18,7 +18,7 @@ public class YACLScreenAdapter {
 				.save(manager::save);
 
 		if (!categories.isEmpty()) {
-			yaclScreenBuilder = yaclScreenBuilder.categories(YACLConfigCategoryAdapter.toYaclConfigCategories(categories));
+			yaclScreenBuilder = yaclScreenBuilder.categories(YACLConfigCategoryAdapter.toYaclConfigCategories(manager, categories));
 		}
 
 		return yaclScreenBuilder
