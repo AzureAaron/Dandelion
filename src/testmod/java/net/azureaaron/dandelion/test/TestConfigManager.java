@@ -11,6 +11,7 @@ import net.azureaaron.dandelion.api.ConfigCategory;
 import net.azureaaron.dandelion.api.ConfigManager;
 import net.azureaaron.dandelion.api.ConfigType;
 import net.azureaaron.dandelion.api.DandelionConfigScreen;
+import net.azureaaron.dandelion.api.KeyMappingOption;
 import net.azureaaron.dandelion.api.Option;
 import net.azureaaron.dandelion.api.OptionFlag;
 import net.azureaaron.dandelion.api.OptionGroup;
@@ -63,7 +64,7 @@ public class TestConfigManager {
 								() -> config.configType,
 								newValue -> config.configType = newValue)
 						.controller(EnumController.<ConfigType>createBuilder()
-								.dropdown(true)
+								.dropdown(false)
 								.build())
 						.build())
 				.option(Option.<Boolean>createBuilder()
@@ -190,6 +191,11 @@ public class TestConfigManager {
 								newValue -> config.text = newValue)
 						.controller(StringController.createBuilder()
 								.build())
+						.build())
+				.option(KeyMappingOption.createBuilder()
+						.name(Component.literal("Key Mapping"))
+						.description(Component.literal("Dandelion's test key mapping."))
+						.keyMapping(DandelionTestMod.TEST_KEY_MAPPING)
 						.build())
 
 				.build();

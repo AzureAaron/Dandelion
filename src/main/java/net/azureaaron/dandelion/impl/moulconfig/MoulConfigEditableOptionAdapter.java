@@ -7,9 +7,11 @@ import io.github.notenoughupdates.moulconfig.gui.GuiOptionEditor;
 import io.github.notenoughupdates.moulconfig.gui.editors.GuiOptionEditorButton;
 import io.github.notenoughupdates.moulconfig.platform.MoulConfigPlatform;
 import net.azureaaron.dandelion.api.ButtonOption;
+import net.azureaaron.dandelion.api.KeyMappingOption;
 import net.azureaaron.dandelion.api.LabelOption;
 import net.azureaaron.dandelion.api.Option;
 import net.azureaaron.dandelion.api.controllers.IntegerController;
+import net.azureaaron.dandelion.impl.moulconfig.editor.DandelionKeyMappingEditor;
 import net.azureaaron.dandelion.impl.moulconfig.editor.DandelionLabelEditor;
 import net.minecraft.client.Minecraft;
 
@@ -18,6 +20,7 @@ public class MoulConfigEditableOptionAdapter {
 	public static <T> BiFunction<Integer, MoulConfigDefinition, DandelionProcessedEditableOption<?>> createEditableOptionFactory(Option<T> option) {
 		return switch (option) {
 			case ButtonOption button -> createButtonOption(button);
+			case KeyMappingOption keyMapping -> createKeyMappingOption(keyMapping);
 			case LabelOption label -> createLabelOption(label);
 			case Option<T> _ when option.controller() instanceof IntegerController -> (accordionId, configDefinition) -> new DandelionProcessedEditableOption<>(option, accordionId, configDefinition) {
 				@Override
@@ -60,6 +63,15 @@ public class MoulConfigEditableOptionAdapter {
 			protected GuiOptionEditor createEditor() {
 				ButtonOption instance = (ButtonOption) this.option;
 				return new GuiOptionEditorButton(this, -1, MoulConfigPlatform.wrap(instance.prompt()), this.getConfig());
+			}
+		};
+	}
+
+	private static BiFunction<Integer, MoulConfigDefinition, DandelionProcessedEditableOption<?>> createKeyMappingOption(KeyMappingOption keyMapping) {
+		return (accordionId, configDefinition) -> new DandelionProcessedEditableOption<>(keyMapping, accordionId, configDefinition) {
+			@Override
+			protected GuiOptionEditor createEditor() {
+				return new DandelionKeyMappingEditor(this, ((KeyMappingOption) this.option).keyMapping());
 			}
 		};
 	}

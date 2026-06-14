@@ -3,11 +3,15 @@ package net.azureaaron.dandelion.impl.yacl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mojang.blaze3d.platform.InputConstants;
+
 import dev.isxander.yacl3.api.OptionDescription;
 import dev.isxander.yacl3.api.OptionEventListener;
 import net.azureaaron.dandelion.api.ConfigManager;
 import net.azureaaron.dandelion.api.OptionListener;
 import net.azureaaron.dandelion.impl.ConfigManagerImpl;
+import net.azureaaron.dandelion.mixins.KeyMappingAccessor;
+import net.minecraft.client.KeyMapping;
 
 public class YACLOptionAdapter {
 
@@ -32,6 +36,22 @@ public class YACLOptionAdapter {
 						.build())
 				.text(button.prompt())
 				.action((screen, _) -> button.action().accept(screen))
+				.build();
+			}
+
+			case net.azureaaron.dandelion.api.KeyMappingOption keyMapping -> {
+				yield (dev.isxander.yacl3.api.Option<T>) dev.isxander.yacl3.api.Option.<InputConstants.Key>createBuilder()
+				.name(keyMapping.name())
+				.description(OptionDescription.createBuilder()
+						.text(keyMapping.description())
+						.build())
+				.binding(keyMapping.keyMapping().getDefaultKey(),
+						() -> ((KeyMappingAccessor) keyMapping.keyMapping()).getKey(),
+						newValue -> {
+							keyMapping.keyMapping().setKey(newValue);
+							KeyMapping.resetMapping();
+						})
+				.customController(KeyMappingController::new)
 				.build();
 			}
 
