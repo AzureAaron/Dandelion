@@ -15,6 +15,7 @@ import net.azureaaron.dandelion.api.ConfigSerializer;
 import net.azureaaron.dandelion.api.patching.ConfigPatch;
 import net.azureaaron.dandelion.impl.patching.ConfigPatcher;
 import net.azureaaron.dandelion.impl.utils.ReflectionUtils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
 
 public class ConfigManagerImpl<T> implements ConfigManager<T> {
@@ -98,6 +99,14 @@ public class ConfigManagerImpl<T> implements ConfigManager<T> {
 		this.updatePatchedInstance();
 
 		return result;
+	}
+
+	/// Saves both the config and Minecraft's built-in options.
+	public boolean saveAll() {
+		// Ensure key updated mappings are saved
+		Minecraft.getInstance().options.save();
+
+		return this.save();
 	}
 
 	@Override

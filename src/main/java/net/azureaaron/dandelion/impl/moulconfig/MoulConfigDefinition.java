@@ -32,7 +32,7 @@ public class MoulConfigDefinition extends Config {
 		this.title = title;
 		this.platformLinks = platformLinks;
 
-		this.saveRunnables.add(manager::save);
+		this.saveRunnables.add(((ConfigManagerImpl<?>) manager)::saveAll);
 	}
 
 	@Override
