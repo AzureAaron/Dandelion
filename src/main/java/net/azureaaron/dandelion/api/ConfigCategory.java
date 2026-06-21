@@ -1,6 +1,7 @@
 package net.azureaaron.dandelion.api;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 import org.jspecify.annotations.Nullable;
 
@@ -36,6 +37,12 @@ public interface ConfigCategory {
 
 		@Override
 		default Builder optionIf(boolean condition, Option<?> option) {
+			OptionAdder.super.optionIf(condition, option);
+			return this;
+		}
+
+		@Override
+		default Builder optionIf(boolean condition, Supplier<Option<?>> option) {
 			OptionAdder.super.optionIf(condition, option);
 			return this;
 		}
