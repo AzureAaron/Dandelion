@@ -5,10 +5,12 @@ import java.nio.file.Path;
 import java.util.function.UnaryOperator;
 
 import org.apache.commons.lang3.function.Consumers;
+import org.jspecify.annotations.Nullable;
 
 import net.azureaaron.dandelion.api.ButtonOption;
 import net.azureaaron.dandelion.api.ConfigCategory;
 import net.azureaaron.dandelion.api.ConfigManager;
+import net.azureaaron.dandelion.api.ConfigScreenState;
 import net.azureaaron.dandelion.api.ConfigType;
 import net.azureaaron.dandelion.api.DandelionConfigScreen;
 import net.azureaaron.dandelion.api.KeyMappingOption;
@@ -35,6 +37,7 @@ import net.minecraft.world.item.Item;
 public class TestConfigManager {
 	public static final Path PATH = FabricLoader.getInstance().getConfigDir().resolve("dandelion-testmod.json");
 	private static final ConfigManager<TestConfig> CONFIG_MANAGER = ConfigManager.create(TestConfig.class, PATH, UnaryOperator.identity());
+	private static @Nullable ConfigScreenState state;
 
 	protected static void init() {
 		CONFIG_MANAGER.load();
@@ -45,6 +48,7 @@ public class TestConfigManager {
 				.title(Component.literal("Dandelion Test Mod 1.0.0 on " + DandelionTestMod.MINECRAFT_VERSION))
 				.category(createPrimaryCategory(defaults, config))
 				.category(createSecondaryCategory(defaults, config))
+				.withStateIf(CONFIG_MANAGER.instance().shouldSaveState, () -> state, (newState) -> state = newState)
 				.platformLinks(PlatformLinks.createBuilder()
 						.link(Component.literal("GitHub"), PlatformLinks.GITHUB_ICON, "https://github.com/AzureAaron/Dandelion")
 						.link(Component.literal("Modrinth"), PlatformLinks.MODRINTH_ICON, "https://modrinth.com/mod/aaron-mod")
@@ -67,6 +71,16 @@ public class TestConfigManager {
 								.dropdown(false)
 								.build())
 						.build())
+				.option(Option.<Boolean>createBuilder()
+					.name(Component.literal("Save Config State"))
+					.binding(defaults.shouldSaveState,
+						() -> config.shouldSaveState,
+						newValue -> config.shouldSaveState = newValue)
+					.controller(BooleanController.createBuilder()
+						.booleanStyle(BooleanController.BooleanStyle.ON_OFF)
+						.coloured(true)
+						.build())
+					.build())
 				.option(Option.<Boolean>createBuilder()
 						.name(Component.literal("Boolean"))
 						.binding(defaults.bool,
