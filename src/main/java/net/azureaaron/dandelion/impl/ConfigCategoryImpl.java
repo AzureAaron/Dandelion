@@ -97,7 +97,7 @@ public class ConfigCategoryImpl implements ConfigCategory {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(@Nullable Object o) {
 		if (o == null || getClass() != o.getClass()) return false;
 		ConfigCategoryImpl that = (ConfigCategoryImpl) o;
 		return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(rootGroup, that.rootGroup) && Objects.equals(groups, that.groups);

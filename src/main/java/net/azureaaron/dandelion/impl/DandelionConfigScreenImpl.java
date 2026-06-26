@@ -62,7 +62,7 @@ public class DandelionConfigScreenImpl<T> implements DandelionConfigScreen {
 		private @Nullable PlatformLinks platformLinks = null;
 
 		private @Nullable Supplier<@Nullable ConfigScreenState> stateSupplier = null;
-		private @Nullable Consumer<ConfigScreenState> stateConsumer = null;
+		private @Nullable Consumer<@Nullable ConfigScreenState> stateConsumer = null;
 
 		@Override
 		public Builder title(Component title) {
@@ -89,7 +89,7 @@ public class DandelionConfigScreenImpl<T> implements DandelionConfigScreen {
 		}
 
 		@Override
-		public Builder withState(Supplier<ConfigScreenState> stateSupplier, Consumer<ConfigScreenState> stateConsumer) {
+		public Builder withState(Supplier<@Nullable ConfigScreenState> stateSupplier, Consumer<@Nullable ConfigScreenState> stateConsumer) {
 			this.stateSupplier = stateSupplier;
 			this.stateConsumer = stateConsumer;
 			return this;

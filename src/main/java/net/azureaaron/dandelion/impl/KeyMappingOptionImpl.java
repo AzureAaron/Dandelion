@@ -86,7 +86,7 @@ public class KeyMappingOptionImpl implements KeyMappingOption {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(@Nullable Object o) {
 		if (o == null || getClass() != o.getClass()) return false;
 		KeyMappingOptionImpl that = (KeyMappingOptionImpl) o;
 		return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(tags, that.tags) && Objects.equals(keyMapping, that.keyMapping);

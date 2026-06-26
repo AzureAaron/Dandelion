@@ -78,7 +78,7 @@ public class LabelOptionImpl implements LabelOption {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(@Nullable Object o) {
 		if (o == null || getClass() != o.getClass()) return false;
 		LabelOptionImpl that = (LabelOptionImpl) o;
 		return Objects.equals(label, that.label);

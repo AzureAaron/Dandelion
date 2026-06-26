@@ -34,7 +34,7 @@ public class ButtonOptionImpl implements ButtonOption {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(@Nullable Object o) {
 		if (o == null || getClass() != o.getClass()) return false;
 		ButtonOptionImpl that = (ButtonOptionImpl) o;
 		return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(prompt, that.prompt) && Objects.equals(tags, that.tags);
