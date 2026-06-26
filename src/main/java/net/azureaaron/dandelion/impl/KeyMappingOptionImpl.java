@@ -85,6 +85,18 @@ public class KeyMappingOptionImpl implements KeyMappingOption {
 		return this.keyMapping;
 	}
 
+	@Override
+	public boolean equals(@Nullable Object o) {
+		if (o == null || getClass() != o.getClass()) return false;
+		KeyMappingOptionImpl that = (KeyMappingOptionImpl) o;
+		return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(tags, that.tags) && Objects.equals(keyMapping, that.keyMapping);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, description, tags, keyMapping);
+	}
+
 	public static class KeyMappingOptionBuilder implements KeyMappingOption.Builder {
 		private @Nullable Identifier id = null;
 		private Component name = Component.empty();
