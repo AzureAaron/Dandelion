@@ -48,7 +48,7 @@ public class TestConfigManager {
 				.title(Component.literal("Dandelion Test Mod 1.0.0 on " + DandelionTestMod.MINECRAFT_VERSION))
 				.category(createPrimaryCategory(defaults, config))
 				.category(createSecondaryCategory(defaults, config))
-				.withStateIf(CONFIG_MANAGER.instance().shouldSaveState, () -> state, (newState) -> state = newState)
+				.withStateIf(CONFIG_MANAGER.instance().shouldSaveState, () -> state, newState -> state = newState)
 				.platformLinks(PlatformLinks.createBuilder()
 						.link(Component.literal("GitHub"), PlatformLinks.GITHUB_ICON, "https://github.com/AzureAaron/Dandelion")
 						.link(Component.literal("Modrinth"), PlatformLinks.MODRINTH_ICON, "https://modrinth.com/mod/aaron-mod")

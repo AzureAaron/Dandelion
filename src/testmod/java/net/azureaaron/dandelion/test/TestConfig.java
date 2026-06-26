@@ -11,7 +11,7 @@ import net.minecraft.world.item.Items;
 public class TestConfig {
 	ConfigType configType = ConfigType.MOUL_CONFIG;
 
-    boolean shouldSaveState = false;
+	boolean shouldSaveState = false;
 
 	boolean bool = true;
 
