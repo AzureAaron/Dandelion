@@ -13,11 +13,11 @@ import io.github.notenoughupdates.moulconfig.gui.editors.ComponentEditor;
 import io.github.notenoughupdates.moulconfig.observer.GetSetter;
 import io.github.notenoughupdates.moulconfig.platform.MoulConfigPlatform;
 import io.github.notenoughupdates.moulconfig.processor.ProcessedOption;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ItemLike;
 
 public class DandelionItemEditor extends ComponentEditor {
 	private final GuiComponent component;
@@ -35,7 +35,18 @@ public class DandelionItemEditor extends ComponentEditor {
 		GetSetter<IItemStack> itemStackGetter = new GetSetter<>() {
 			@Override
 			public IItemStack get() {
-				return MoulConfigPlatform.wrap(new ItemStack((ItemLike) option.get()));
+				Item item = (Item) option.get();
+				@SuppressWarnings("deprecation")
+				Holder<Item> itemHolder = item.builtInRegistryHolder();
+				ItemStack stack;
+
+				if (itemHolder.isBound() && itemHolder.areComponentsBound()) {
+					stack = new ItemStack(item);
+				} else {
+					stack = ItemStack.EMPTY;
+				}
+
+				return MoulConfigPlatform.wrap(stack);
 			}
 
 			@Override

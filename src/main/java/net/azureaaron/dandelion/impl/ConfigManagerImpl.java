@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
 
+import org.jspecify.annotations.Nullable;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -13,6 +15,8 @@ import net.azureaaron.dandelion.api.ConfigSerializer;
 import net.azureaaron.dandelion.api.patching.ConfigPatch;
 import net.azureaaron.dandelion.impl.patching.ConfigPatcher;
 import net.azureaaron.dandelion.impl.utils.ReflectionUtils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.resources.Identifier;
 
 public class ConfigManagerImpl<T> implements ConfigManager<T> {
 	private final Class<T> configClass;
@@ -47,6 +51,22 @@ public class ConfigManagerImpl<T> implements ConfigManager<T> {
 		ConfigPatcher.applyPatches(this.instance, this.patches);
 	}
 
+	/// {@return whether the option with the corresponding {@code id} is patched}
+	public boolean isOptionPatched(@Nullable Identifier id) {
+		// Short circuit for options without an id
+		if (id == null) {
+			return false;
+		}
+
+		for (ConfigPatch patch : this.patches) {
+			if (patch.optionId().isPresent() && patch.optionId().get().equals(id)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	@Override
 	public void setPatches(List<ConfigPatch> patches) {
 		this.patches = Objects.requireNonNull(patches, "patches must not be null");
@@ -79,6 +99,14 @@ public class ConfigManagerImpl<T> implements ConfigManager<T> {
 		this.updatePatchedInstance();
 
 		return result;
+	}
+
+	/// Saves both the config and Minecraft's built-in options.
+	public boolean saveAll() {
+		// Ensure key updated mappings are saved
+		Minecraft.getInstance().options.save();
+
+		return this.save();
 	}
 
 	@Override

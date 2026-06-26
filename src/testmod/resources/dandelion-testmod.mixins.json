@@ -1,11 +1,8 @@
 {
 	"required": true,
-	"package": "net.azureaaron.dandelion.mixins",
+	"package": "net.azureaaron.dandelion.test.mixins",
 	"compatibilityLevel": "JAVA_25",
 	"client": [
-		"GuiOptionEditorDropdownAccessor",
-		"KeyMappingAccessor",
-		"MoulConfigScreenComponentMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

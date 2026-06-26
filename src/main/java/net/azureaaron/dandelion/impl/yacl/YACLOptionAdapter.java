@@ -3,24 +3,30 @@ package net.azureaaron.dandelion.impl.yacl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mojang.blaze3d.platform.InputConstants;
+
 import dev.isxander.yacl3.api.OptionDescription;
 import dev.isxander.yacl3.api.OptionEventListener;
+import net.azureaaron.dandelion.api.ConfigManager;
 import net.azureaaron.dandelion.api.OptionListener;
+import net.azureaaron.dandelion.impl.ConfigManagerImpl;
+import net.azureaaron.dandelion.mixins.KeyMappingAccessor;
+import net.minecraft.client.KeyMapping;
 
 public class YACLOptionAdapter {
 
-	protected static List<dev.isxander.yacl3.api.Option<?>> toYaclOptions(List<? extends net.azureaaron.dandelion.api.Option<?>> options) {
+	protected static List<dev.isxander.yacl3.api.Option<?>> toYaclOptions(ConfigManager<?> manager, List<? extends net.azureaaron.dandelion.api.Option<?>> options) {
 		List<dev.isxander.yacl3.api.Option<?>> yaclOptions = new ArrayList<>();
 
 		for (var option : options) {
-			yaclOptions.add(toYaclOption(option));
+			yaclOptions.add(toYaclOption(manager, option));
 		}
 
 		return yaclOptions;
 	}
 
 	@SuppressWarnings("unchecked")
-	private static <T> dev.isxander.yacl3.api.Option<T> toYaclOption(net.azureaaron.dandelion.api.Option<T> option) {
+	private static <T> dev.isxander.yacl3.api.Option<T> toYaclOption(ConfigManager<?> manager, net.azureaaron.dandelion.api.Option<T> option) {
 		return switch (option) {
 			case net.azureaaron.dandelion.api.ButtonOption button -> {
 				yield (dev.isxander.yacl3.api.Option<T>) dev.isxander.yacl3.api.ButtonOption.createBuilder()
@@ -30,6 +36,22 @@ public class YACLOptionAdapter {
 						.build())
 				.text(button.prompt())
 				.action((screen, _) -> button.action().accept(screen))
+				.build();
+			}
+
+			case net.azureaaron.dandelion.api.KeyMappingOption keyMapping -> {
+				yield (dev.isxander.yacl3.api.Option<T>) dev.isxander.yacl3.api.Option.<InputConstants.Key>createBuilder()
+				.name(keyMapping.name())
+				.description(OptionDescription.createBuilder()
+						.text(keyMapping.description())
+						.build())
+				.binding(keyMapping.keyMapping().getDefaultKey(),
+						() -> ((KeyMappingAccessor) keyMapping.keyMapping()).getKey(),
+						newValue -> {
+							keyMapping.keyMapping().setKey(newValue);
+							KeyMapping.resetMapping();
+						})
+				.customController(KeyMappingController::new)
 				.build();
 			}
 
@@ -50,7 +72,7 @@ public class YACLOptionAdapter {
 						option.binding()::set)
 				.addListeners(toYaclOptionEventListener(option))
 				.controller(yaclOption -> option.controller().controllerYACL(yaclOption, option.type()))
-				.available(option.modifiable())
+				.available(option.modifiable() && !((ConfigManagerImpl<?>) manager).isOptionPatched(option.id()))
 				.flags(toYaclOptionFlags(option))
 				.build();
 			}

@@ -8,7 +8,7 @@ import com.mojang.serialization.DataResult;
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.api.VersionParsingException;
 
-public class CodecUtils {
+public final class CodecUtils {
 	public static final Codec<Color> COLOUR_CODEC = Codec.INT.xmap(argb -> new Color(argb, true), Color::getRGB);
 	public static final Codec<SemanticVersion> SEMANTIC_VERSION_CODEC = Codec.STRING.comapFlatMap(version -> {
 		try {
@@ -17,4 +17,6 @@ public class CodecUtils {
 			return DataResult.error(() -> "Failed to parse semantic version from string: " + version);
 		}
 	}, SemanticVersion::toString);
+
+	private CodecUtils() {}
 }

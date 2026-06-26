@@ -33,16 +33,14 @@ public class MoulConfigAdapter {
 	 * The id of the accordion which is at the root of each category.
 	 */
 	private static final int ROOT_ACCORDION = -1;
-	private final ConfigManager<?> manager;
 	private final Component title;
 	private final MoulConfigDefinition configDefinition;
 	//LinkedHashMap to preserve insertion order
 	private final Map<Option<?>, BiFunction<Integer, MoulConfigDefinition, DandelionProcessedEditableOption<?>>> editableOptionFactories = new LinkedHashMap<>();
 
 	public MoulConfigAdapter(ConfigManager<?> manager, Component title, @Nullable PlatformLinks platformLinks) {
-		this.manager = manager;
 		this.title = title;
-		this.configDefinition = new MoulConfigDefinition(title, platformLinks);
+		this.configDefinition = new MoulConfigDefinition(manager, title, platformLinks);
 	}
 
 	public Screen generateMoulConfigScreen(List<ConfigCategory> categories, @Nullable Screen parent, String search, @Nullable Supplier<@Nullable ConfigScreenState> supplier, @Nullable Consumer<ConfigScreenState> consumer) {
@@ -63,9 +61,10 @@ public class MoulConfigAdapter {
 
 			//Use a custom close handler to save the config and open the parent screen
 			moulConfigScreenComponent.getGuiContext().setCloseRequestHandler(() -> {
-				this.manager.save();
-				Screens.getMinecraft(moulConfigScreenComponent).setScreen(moulConfigScreenComponent.getPreviousScreen());
-			});
+
+				Screens.getMinecraft(moulConfigScreenComponent).gui.setScreen(moulConfigScreenComponent.getPreviousScreen());
+			this.configDefinition.saveNow();
+		});
 
 			configScreenState.categoriesHash = categories.hashCode();
 			configScreenState.moulConfig.editor = editor;

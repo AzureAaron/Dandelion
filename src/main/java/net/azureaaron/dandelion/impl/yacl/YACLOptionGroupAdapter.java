@@ -4,23 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev.isxander.yacl3.api.OptionDescription;
+import net.azureaaron.dandelion.api.ConfigManager;
 import net.azureaaron.dandelion.api.ListOption;
 import net.azureaaron.dandelion.api.OptionGroup;
+import net.azureaaron.dandelion.impl.ConfigManagerImpl;
 
 public class YACLOptionGroupAdapter {
 
-	protected static List<dev.isxander.yacl3.api.OptionGroup> toYaclOptionGroups(List<net.azureaaron.dandelion.api.OptionGroup> groups) {
+	protected static List<dev.isxander.yacl3.api.OptionGroup> toYaclOptionGroups(ConfigManager<?> manager, List<net.azureaaron.dandelion.api.OptionGroup> groups) {
 		List<dev.isxander.yacl3.api.OptionGroup> yaclGroups = new ArrayList<>();
 
 		for (var group : groups) {
-			yaclGroups.add(toYaclOptionGroup(group));
+			yaclGroups.add(toYaclOptionGroup(manager, group));
 		}
 
 		return yaclGroups;
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	private static dev.isxander.yacl3.api.OptionGroup toYaclOptionGroup(net.azureaaron.dandelion.api.OptionGroup group) {
+	private static dev.isxander.yacl3.api.OptionGroup toYaclOptionGroup(ConfigManager<?> manager, net.azureaaron.dandelion.api.OptionGroup group) {
 		return switch (group) {
 			case ListOption listOption -> dev.isxander.yacl3.api.ListOption.createBuilder()
 					.name(listOption.name())
@@ -33,7 +35,7 @@ public class YACLOptionGroupAdapter {
 					.controller(yaclOption -> listOption.entryController().controllerYACL(yaclOption, listOption.entryType()))
 					.initial(listOption.initialValue())
 					.collapsed(listOption.collapsed())
-					.available(listOption.modifiable())
+					.available(listOption.modifiable() && !((ConfigManagerImpl<?>) manager).isOptionPatched(listOption.id()))
 					.flags(YACLOptionAdapter.toYaclOptionFlags(listOption))
 					.addListeners(YACLOptionAdapter.toYaclOptionEventListener(listOption))
 					.build();
@@ -47,7 +49,7 @@ public class YACLOptionGroupAdapter {
 						.collapsed(optionGroup.collapsed());
 
 				if (!optionGroup.options().isEmpty()) {
-					yaclGroup = yaclGroup.options(YACLOptionAdapter.toYaclOptions(optionGroup.options()));
+					yaclGroup = yaclGroup.options(YACLOptionAdapter.toYaclOptions(manager, optionGroup.options()));
 				}
 
 				yield yaclGroup.build();

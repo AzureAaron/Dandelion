@@ -1,6 +1,8 @@
 package net.azureaaron.dandelion.impl.utils;
 
-public class ReflectionUtils {
+public final class ReflectionUtils {
+
+	private ReflectionUtils() {}
 
 	public static <T> T createNewDefaultInstance(Class<T> clazz) {
 		try {

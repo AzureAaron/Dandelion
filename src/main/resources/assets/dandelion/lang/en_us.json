@@ -1,4 +1,7 @@
 {
 	"text.dandelion.configType.YACL": "YACL",
-	"text.dandelion.configType.MOUL_CONFIG": "MoulConfig"
+	"text.dandelion.configType.MOUL_CONFIG": "MoulConfig",
+	"text.dandelion.option.unavailable": "This option is currently unavailable.",
+	"text.dandelion.option.keyMapping.reset": "Reset to Default",
+	"text.dandelion.option.keyMapping.awaitingPress": "Press a key..."
 }

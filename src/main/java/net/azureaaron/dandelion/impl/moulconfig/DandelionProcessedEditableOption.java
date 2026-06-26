@@ -78,7 +78,8 @@ public abstract class DandelionProcessedEditableOption<T> extends DandelionProce
 
 	@Override
 	public void explicitNotifyChange() {
-		this.option.listeners().forEach(listener -> listener.onUpdate(option, OptionListener.UpdateType.VALUE_CHANGE));
+		this.option.listeners().forEach(listener -> listener.onUpdate(this.option, OptionListener.UpdateType.VALUE_CHANGE));
+		((MoulConfigDefinition) this.getConfig()).queueOptionFlags(this.option.flags());
 	}
 
 	@Override
