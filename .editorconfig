@@ -1,5 +1,13 @@
-[*.java]
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
 indent_style = tab
+insert_final_newline = false
+tab_width = 4
+
+[*.java]
 # Imports
 ij_java_names_count_to_use_import_on_demand = 999
 ij_java_class_count_to_use_import_on_demand = 999
