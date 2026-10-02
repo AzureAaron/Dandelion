@@ -1,48 +1,48 @@
 {
-	"schemaVersion": 1,
-	"id": "dandelion",
-	"version": "${version}",
-	"name": "Dandelion",
-	"description": "Dandelion is a config abstraction that supports both YACL and MoulConfig backends.",
-	"authors": [
-		"AzureAaron"
-	],
-	"contributors": [
-		"nea89",
-		"kevinthegreat1",
-		"Alex33856",
-		"viciscat",
-		"Bedrock Armor"
-	],
-	"contact": {
-		"homepage": "https://azureaaron.net/",
-		"sources": "https://github.com/AzureAaron/Dandelion"
-	},
-	"license": "LGPL-3.0-or-later",
-	"icon": "assets/dandelion/icon.png",
-	"environment": "client",
-	"entrypoints": {
-		"client": [
-			"net.azureaaron.dandelion.Dandelion"
-		]
-	},
-	"mixins": [
-		"dandelion.mixins.json"
-	],
-	"accessWidener": "dandelion.classtweaker",
-	"depends": {
-		"fabricloader": ">=0.19.3",
-		"minecraft": "~26.2",
-		"java": ">=25",
-		"fabric-api": "*",
-		"fabric-language-kotlin": "*"
-	},
-	"custom": {
-		"modmenu": {
-			"badges": [
-				"library"
-			],
-			"update_checker": false
-		}
-	}
+  "schemaVersion": 1,
+  "id": "dandelion",
+  "version": "${version}",
+  "name": "Dandelion",
+  "description": "Dandelion is a config abstraction that supports both YACL and MoulConfig backends.",
+  "authors": [
+    "AzureAaron"
+  ],
+  "contributors": [
+    "nea89",
+    "kevinthegreat1",
+    "Alex33856",
+    "viciscat",
+    "Bedrock Armor"
+  ],
+  "contact": {
+    "homepage": "https://azureaaron.net/",
+    "sources": "https://github.com/AzureAaron/Dandelion"
+  },
+  "license": "LGPL-3.0-or-later",
+  "icon": "assets/dandelion/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "net.azureaaron.dandelion.Dandelion"
+    ]
+  },
+  "mixins": [
+    "dandelion.mixins.json"
+  ],
+  "accessWidener": "dandelion.classtweaker",
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~26.3",
+    "java": ">=25",
+    "fabric-api": ">=0.161.0+26.3",
+    "fabric-language-kotlin": ">=1.14.1+kotlin.2.4.20"
+  },
+  "custom": {
+    "modmenu": {
+      "badges": [
+        "library"
+      ],
+      "update_checker": false
+    }
+  }
 }

@@ -7,7 +7,6 @@ import io.github.notenoughupdates.moulconfig.common.MyResourceLocation;
 import io.github.notenoughupdates.moulconfig.common.text.StructuredText;
 import io.github.notenoughupdates.moulconfig.platform.MoulConfigPlatform;
 import net.azureaaron.dandelion.api.PlatformLinks;
-import net.minecraft.util.Util;
 
 // Custom class for implementing social links since the built-in one has a bug where clicking on the button
 // does not open the link in the browser.
@@ -24,7 +23,7 @@ public class DandelionSocialLink extends Social {
 
 	@Override
 	public void onClick() {
-		Util.getPlatform().openUri(this.link);
+		com.mojang.blaze3d.Blaze3D.openUri(java.net.URI.create(this.link));
 	}
 
 	@Override
