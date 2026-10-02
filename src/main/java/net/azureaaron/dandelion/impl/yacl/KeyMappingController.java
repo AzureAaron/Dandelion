@@ -62,7 +62,7 @@ public class KeyMappingController implements Controller<InputConstants.Key> {
 		@Override
 		public boolean keyPressed(KeyEvent event) {
 			if (this.awaitingKeyPress) {
-				this.control.option().requestSet(InputConstants.Type.KEYSYM.getOrCreate(event.key()));
+				this.control.option().requestSet(InputConstants.Type.KEYBOARD.getOrCreate(event.key()));
 				this.awaitingKeyPress = false;
 				return true;
 			}

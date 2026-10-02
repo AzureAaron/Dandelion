@@ -18,6 +18,9 @@ base {
 }
 
 repositories {
+	if (providers.gradleProperty("moulconfigPortRepository").isPresent()) {
+		maven { url = uri(providers.gradleProperty("moulconfigPortRepository").get()) }
+	}
 	maven {
 		url = "https://maven.isxander.dev/releases"
 
@@ -66,12 +69,12 @@ loom {
 	runs {
 		testmodClient {
 			client()
-			displayName = "Testmod Client"
-			sourceSet = "testmod"
+			name "Testmod Client"
+			source sourceSets.testmod
 		}
 
 		configureEach {
-			preferGradleTask = true
+			ideConfigGenerated(true)
 		}
 	}
 }
@@ -113,15 +116,11 @@ tasks.withType(JavaCompile).configureEach {
 
 tasks.named("shadowJar").configure {
 	configurations = [project.configurations.shadowMe]
-	duplicatesStrategy = DuplicatesStrategy.INCLUDE
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	filesMatching("META-INF/services/**") { duplicatesStrategy = DuplicatesStrategy.INCLUDE }
 
 	relocate("io.github.notenoughupdates.moulconfig", "net.azureaaron.dandelion.deps.moulconfig")
 
-	// Adds our original FMJ, CT, and license into the shadow jar (to overwrite the MoulConfig ones)
-	from(sourceSets.main.output.resourcesDir) {
-		include("fabric.mod.json")
-		include("*.classtweaker")
-	}
 
 	from(projectDir) {
 		include("LICENSE")
@@ -144,6 +143,7 @@ java {
 }
 
 jar {
+	archiveClassifier = "dev"
 	def archivesName = project.base.archivesName
 	inputs.property "archivesName", archivesName
 
@@ -187,7 +187,8 @@ publishing {
 		create("mavenJava", MavenPublication) {
 			groupId = "net.azureaaron"
 			artifactId = project.archives_base_name
-			from components.java
+			artifact(tasks.named("shadowJar"))
+			artifact(tasks.named("sourcesJar"))
 		}
 	}
 
@@ -200,5 +201,11 @@ publishing {
 				password = System.getenv("AARON_MAVEN_PASS")
 			}
 		}
+	}
+}
+if (providers.gradleProperty("portMavenRepository").isPresent()) {
+	publishing.repositories.maven {
+		name = "portWorkspace"
+		url = uri(providers.gradleProperty("portMavenRepository").get())
 	}
 }
