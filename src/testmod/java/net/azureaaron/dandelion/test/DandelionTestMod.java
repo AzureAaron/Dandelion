@@ -2,8 +2,6 @@ package net.azureaaron.dandelion.test;
 
 import java.util.List;
 
-import org.lwjgl.glfw.GLFW;
-
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.brigadier.Command;
 
@@ -27,7 +25,7 @@ import net.minecraft.resources.Identifier;
 public class DandelionTestMod implements ClientModInitializer {
 	protected static final String MINECRAFT_VERSION = SharedConstants.getCurrentVersion().id();
 	private static final KeyMapping.Category KEY_MAPPING_CATEGORY = KeyMapping.Category.register(Dandelion.id("general"));
-	protected static final KeyMapping TEST_KEY_MAPPING = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.dandelion.test", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_H, KEY_MAPPING_CATEGORY));
+	protected static final KeyMapping TEST_KEY_MAPPING = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.dandelion.test", InputConstants.Type.KEYBOARD, InputConstants.KEY_H, KEY_MAPPING_CATEGORY));
 
 	@Override
 	public void onInitializeClient() {

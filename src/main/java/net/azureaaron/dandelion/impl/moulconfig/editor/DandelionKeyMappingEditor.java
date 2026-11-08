@@ -2,8 +2,6 @@ package net.azureaaron.dandelion.impl.moulconfig.editor;
 
 import java.util.List;
 
-import org.lwjgl.glfw.GLFW;
-
 import com.mojang.blaze3d.platform.InputConstants;
 
 import io.github.notenoughupdates.moulconfig.GuiTextures;
@@ -87,7 +85,7 @@ public class DandelionKeyMappingEditor extends ComponentEditor {
 					return true;
 				}
 
-				if (click.getMouseState() && click.getMouseButton() == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
+				if (click.getMouseState() && click.getMouseButton() == InputConstants.MOUSE_BUTTON_LEFT) {
 					int height = getHeight();
 					int width = getHeight();
 					int mouseX = context.getMouseX();
@@ -123,7 +121,7 @@ public class DandelionKeyMappingEditor extends ComponentEditor {
 						keycode = KeyboardConstants.INSTANCE.getNone();
 					}
 
-					this.setKey(InputConstants.Type.KEYSYM.getOrCreate(keycode));
+					this.setKey(InputConstants.Type.KEYBOARD.getOrCreate(keycode));
 					return true;
 				} else {
 					return false;

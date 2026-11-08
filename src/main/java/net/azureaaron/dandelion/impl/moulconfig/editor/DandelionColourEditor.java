@@ -2,6 +2,8 @@ package net.azureaaron.dandelion.impl.moulconfig.editor;
 
 import java.awt.Color;
 
+import com.mojang.blaze3d.platform.InputConstants;
+
 import io.github.notenoughupdates.moulconfig.ChromaColour;
 import io.github.notenoughupdates.moulconfig.GuiTextures;
 import io.github.notenoughupdates.moulconfig.common.MyResourceLocation;
@@ -80,7 +82,7 @@ public class DandelionColourEditor extends ComponentEditor {
 		@SuppressWarnings("deprecation")
 		@Override
 		public boolean mouseEvent(MouseEvent mouseEvent, GuiImmediateContext context) {
-			if (mouseEvent instanceof MouseEvent.Click click && click.getMouseState() && click.getMouseButton() == 0 && context.isHovered()) {
+			if (mouseEvent instanceof MouseEvent.Click click && click.getMouseState() && click.getMouseButton() == InputConstants.MOUSE_BUTTON_LEFT && context.isHovered()) {
 				ColorSelectComponent component = new ColorSelectComponent(0, 0, this.toChromaColour().toLegacyString(), this::fromChromaColourString, this.editor::closeOverlay, this.hasAlpha, true);
 				//Clamp the Y so that the colour picker can't go off screen
 				int scaledHeight = context.getRenderContext().getMinecraft().getScaledHeight();
