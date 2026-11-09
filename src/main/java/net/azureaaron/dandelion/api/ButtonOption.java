@@ -17,7 +17,6 @@ public interface ButtonOption extends Option<Consumer<Screen>> {
 
 	Consumer<Screen> action();
 
-	//TODO consider allowing to "gray out" the option
 	interface Builder {
 		Builder id(Identifier id);
 
@@ -30,6 +29,8 @@ public interface ButtonOption extends Option<Consumer<Screen>> {
 		Builder prompt(Component prompt);
 
 		Builder action(Consumer<Screen> action);
+
+		Builder available(boolean available);
 
 		ButtonOption build();
 	}

@@ -36,6 +36,7 @@ public class YACLOptionAdapter {
 						.build())
 				.text(button.prompt())
 				.action((screen, _) -> button.action().accept(screen))
+				.available(button.modifiable())
 				.build();
 			}
 

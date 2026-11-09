@@ -22,14 +22,16 @@ public class ButtonOptionImpl implements ButtonOption {
 	private final List<Component> description;
 	private final Component prompt;
 	private final Consumer<Screen> action;
+	private final boolean available;
 	private final List<Component> tags;
 
-	protected ButtonOptionImpl(@Nullable Identifier id, Component name, List<Component> description, List<Component> tags, Component prompt, Consumer<Screen> action) {
+	protected ButtonOptionImpl(@Nullable Identifier id, Component name, List<Component> description, List<Component> tags, Component prompt, Consumer<Screen> action, boolean available) {
 		this.id = id;
 		this.name = Objects.requireNonNull(name, "name must not be null");
 		this.description = Objects.requireNonNull(description, "description must not be null");
 		this.prompt = Objects.requireNonNull(prompt, "prompt must not be null");
 		this.action = Objects.requireNonNull(action, "action must not be null");
+		this.available = available;
 		this.tags = Objects.requireNonNull(tags, "tags must not be null");
 	}
 
@@ -65,8 +67,7 @@ public class ButtonOptionImpl implements ButtonOption {
 
 	@Override
 	public boolean modifiable() {
-		//NYI
-		return true;
+		return available;
 	}
 
 	@Override
@@ -102,6 +103,7 @@ public class ButtonOptionImpl implements ButtonOption {
 		private List<Component> tags = List.of();
 		private Component prompt = Component.nullToEmpty("Execute");
 		private Consumer<Screen> action = Consumers.nop();
+		private boolean available = true;
 
 		@Override
 		public net.azureaaron.dandelion.api.ButtonOption.Builder id(Identifier id) {
@@ -140,8 +142,14 @@ public class ButtonOptionImpl implements ButtonOption {
 		}
 
 		@Override
+		public net.azureaaron.dandelion.api.ButtonOption.Builder available(boolean available) {
+			this.available = available;
+			return this;
+		}
+
+		@Override
 		public ButtonOption build() {
-			return new ButtonOptionImpl(this.id, this.name, this.description, this.tags, this.prompt, this.action);
+			return new ButtonOptionImpl(this.id, this.name, this.description, this.tags, this.prompt, this.action, this.available);
 		}
 	}
 }

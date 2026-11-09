@@ -167,9 +167,16 @@ public class TestConfigManager {
 						.prompt(Component.literal("Click"))
 						.action(_ -> Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.AMETHYST_BLOCK_STEP, 1f, 1f)))
 						.build())
+				.option(ButtonOption.createBuilder()
+						.name(Component.literal("Disabled Button"))
+						.action(_ -> {
+							throw new UnsupportedOperationException("Disabled button should not be clickable!");
+						})
+						.available(false)
+						.build())
 				.option(Option.<Boolean>createBuilder()
 						.name(Component.literal("Reload Assets").withColor(CommonColors.LIGHTER_GRAY))
-						.description(Component.literal("The slider state won't change but the option flag still gets trieggered."))
+						.description(Component.literal("The slider state won't change but the option flag still gets triggered."))
 						.binding(true,
 								() -> true,
 								Consumers.nop())

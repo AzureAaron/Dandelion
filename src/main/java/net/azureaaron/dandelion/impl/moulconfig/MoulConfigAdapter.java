@@ -32,7 +32,7 @@ public class MoulConfigAdapter {
 	private final Component title;
 	private final MoulConfigDefinition configDefinition;
 	//LinkedHashMap to preserve insertion order
-	private final Map<Option<?>, BiFunction<Integer, MoulConfigDefinition, DandelionProcessedEditableOption<?>>> editableOptionFactories = new LinkedHashMap<>();
+	private final Map<Option<?>, BiFunction<Integer, MoulConfigDefinition, DandelionProcessedEditableOption<?, ?>>> editableOptionFactories = new LinkedHashMap<>();
 
 	public MoulConfigAdapter(ConfigManager<?> manager, Component title, @Nullable PlatformLinks platformLinks) {
 		this.title = title;
@@ -103,7 +103,7 @@ public class MoulConfigAdapter {
 		for (Option<?> option : options) {
 			//Each option should be in the map unless its not supported (at which point an exception would be thrown when
 			//attempting to create the factory)
-			DandelionProcessedEditableOption<?> processedOption = this.editableOptionFactories.get(option).apply(groupAccordionId, this.configDefinition);
+			DandelionProcessedEditableOption<?, ?> processedOption = this.editableOptionFactories.get(option).apply(groupAccordionId, this.configDefinition);
 			processedOptions.add(processedOption);
 		}
 	}

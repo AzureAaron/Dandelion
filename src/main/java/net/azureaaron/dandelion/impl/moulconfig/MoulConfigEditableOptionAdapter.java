@@ -11,13 +11,14 @@ import net.azureaaron.dandelion.api.KeyMappingOption;
 import net.azureaaron.dandelion.api.LabelOption;
 import net.azureaaron.dandelion.api.Option;
 import net.azureaaron.dandelion.api.controllers.IntegerController;
+import net.azureaaron.dandelion.impl.moulconfig.editor.DandelionBlockedOptionEditor;
 import net.azureaaron.dandelion.impl.moulconfig.editor.DandelionKeyMappingEditor;
 import net.azureaaron.dandelion.impl.moulconfig.editor.DandelionLabelEditor;
 import net.minecraft.client.Minecraft;
 
 public class MoulConfigEditableOptionAdapter {
 
-	public static <T> BiFunction<Integer, MoulConfigDefinition, DandelionProcessedEditableOption<?>> createEditableOptionFactory(Option<T> option) {
+	public static <T> BiFunction<Integer, MoulConfigDefinition, DandelionProcessedEditableOption<?, ?>> createEditableOptionFactory(Option<T> option) {
 		return switch (option) {
 			case ButtonOption button -> createButtonOption(button);
 			case KeyMappingOption keyMapping -> createKeyMappingOption(keyMapping);
@@ -47,7 +48,7 @@ public class MoulConfigEditableOptionAdapter {
 		};
 	}
 
-	private static BiFunction<Integer, MoulConfigDefinition, DandelionProcessedEditableOption<?>> createButtonOption(ButtonOption button) {
+	private static BiFunction<Integer, MoulConfigDefinition, DandelionProcessedEditableOption<?, ?>> createButtonOption(ButtonOption button) {
 		return (accordionId, configDefinition) -> new DandelionProcessedEditableOption<>(button, accordionId, configDefinition) {
 			@Override
 			public Type getType() {
@@ -55,32 +56,32 @@ public class MoulConfigEditableOptionAdapter {
 			}
 
 			@Override
-			public Object get() {
-				return (Runnable) () -> ((ButtonOption) this.option).action().accept(Minecraft.getInstance().gui.screen());
+			public Runnable get() {
+				return () -> this.option.action().accept(Minecraft.getInstance().gui.screen());
 			}
 
 			@Override
 			protected GuiOptionEditor createEditor() {
-				ButtonOption instance = (ButtonOption) this.option;
-				return new GuiOptionEditorButton(this, -1, MoulConfigPlatform.wrap(instance.prompt()), this.getConfig());
+				GuiOptionEditorButton editor = new GuiOptionEditorButton(this, -1, MoulConfigPlatform.wrap(this.option.prompt()), this.getConfig());
+				return this.option.modifiable() ? editor : new DandelionBlockedOptionEditor(editor);
 			}
 		};
 	}
 
-	private static BiFunction<Integer, MoulConfigDefinition, DandelionProcessedEditableOption<?>> createKeyMappingOption(KeyMappingOption keyMapping) {
+	private static BiFunction<Integer, MoulConfigDefinition, DandelionProcessedEditableOption<?, ?>> createKeyMappingOption(KeyMappingOption keyMapping) {
 		return (accordionId, configDefinition) -> new DandelionProcessedEditableOption<>(keyMapping, accordionId, configDefinition) {
 			@Override
 			protected GuiOptionEditor createEditor() {
-				return new DandelionKeyMappingEditor(this, ((KeyMappingOption) this.option).keyMapping());
+				return new DandelionKeyMappingEditor(this, this.option.keyMapping());
 			}
 		};
 	}
 
-	private static BiFunction<Integer, MoulConfigDefinition, DandelionProcessedEditableOption<?>> createLabelOption(LabelOption label) {
+	private static BiFunction<Integer, MoulConfigDefinition, DandelionProcessedEditableOption<?, ?>> createLabelOption(LabelOption label) {
 		return (accordionId, configDefinition) -> new DandelionProcessedEditableOption<>(label, accordionId, configDefinition) {
 			@Override
 			protected GuiOptionEditor createEditor() {
-				return new DandelionLabelEditor(this, MoulConfigPlatform.wrap(((LabelOption) this.option).label()));
+				return new DandelionLabelEditor(this, MoulConfigPlatform.wrap(this.option.label()));
 			}
 		};
 	}

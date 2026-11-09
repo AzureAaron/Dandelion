@@ -20,11 +20,11 @@ import net.minecraft.network.chat.Component;
  * root determined by it's {@code accordionId} which respectively links this either to a group/accordion or to the root of the
  * category.
  */
-public abstract class DandelionProcessedEditableOption<T> extends DandelionProcessedOption {
+public abstract class DandelionProcessedEditableOption<O extends Option<T>, T> extends DandelionProcessedOption {
 	private static final Logger LOGGER = LogUtils.getLogger();
-	protected final Option<T> option;
+	protected final O option;
 
-	protected DandelionProcessedEditableOption(Option<T> option, int accordionId, Config config) {
+	protected DandelionProcessedEditableOption(O option, int accordionId, Config config) {
 		super(accordionId, config);
 		this.option = option;
 	}
