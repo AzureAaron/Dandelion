@@ -1,6 +1,7 @@
 package net.azureaaron.dandelion.impl.moulconfig;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
@@ -13,11 +14,12 @@ import io.github.notenoughupdates.moulconfig.common.text.StructuredText;
 import io.github.notenoughupdates.moulconfig.platform.MoulConfigPlatform;
 import net.azureaaron.dandelion.api.Option;
 import net.azureaaron.dandelion.api.OptionListener;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 
 /**
  * Represents an actual option which can be edited in the config, this option will either lie within a group or under the
- * root determined by it's {@code accordionId} which respectively links this either to a group/accordion or to the root of the
+ * root determined by its {@code accordionId} which respectively links this either to a group/accordion or to the root of the
  * category.
  */
 public abstract class DandelionProcessedEditableOption<T> extends DandelionProcessedOption {
@@ -37,7 +39,14 @@ public abstract class DandelionProcessedEditableOption<T> extends DandelionProce
 	@Override
 	public StructuredText getDescription() {
 		Component concat = Component.empty();
-		concat.getSiblings().addAll(this.option.description());
+		List<Component> siblings = concat.getSiblings();
+
+		// Add a new line between description components to match YACL.
+		Component last = this.option.description().isEmpty() ? null : this.option.description().getLast();
+		for (Component component : this.option.description()) {
+			siblings.add(component);
+			if (component != last) siblings.add(CommonComponents.NEW_LINE);
+		}
 
 		return MoulConfigPlatform.wrap(concat);
 	}

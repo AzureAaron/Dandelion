@@ -17,6 +17,8 @@ public class TestConfig {
 
 	String text = "Dandelion is the best!";
 
+	String longDescription = "This is a complicated option...";
+
 	ColourOptions colourOptions = new ColourOptions();
 
 	Numbers numbers = new Numbers();

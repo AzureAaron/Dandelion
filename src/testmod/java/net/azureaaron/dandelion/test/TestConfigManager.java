@@ -169,7 +169,7 @@ public class TestConfigManager {
 						.build())
 				.option(Option.<Boolean>createBuilder()
 						.name(Component.literal("Reload Assets").withColor(CommonColors.LIGHTER_GRAY))
-						.description(Component.literal("The slider state won't change but the option flag still gets trieggered."))
+						.description(Component.literal("The slider state won't change but the option flag still gets triggered."))
 						.binding(true,
 								() -> true,
 								Consumers.nop())
@@ -192,6 +192,16 @@ public class TestConfigManager {
 						.controller(StringController.createBuilder()
 								.build())
 						.build())
+				.option(Option.<String>createBuilder()
+					.name(Component.literal("Long Description").withColor(CommonColors.SOFT_YELLOW))
+					.description(Component.literal("1. ..."), Component.literal("2. ..."),
+						Component.literal("3. ..."), Component.literal("4. ..."), Component.literal("5. ..."))
+					.binding(defaults.longDescription,
+						() -> config.longDescription,
+						newValue -> config.longDescription = newValue)
+					.controller(StringController.createBuilder()
+						.build())
+					.build())
 				.option(KeyMappingOption.createBuilder()
 						.name(Component.literal("Key Mapping"))
 						.description(Component.literal("Dandelion's test key mapping."))
